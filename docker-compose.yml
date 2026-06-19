@@ -1,12 +1,16 @@
 services:
   backend:
-    build: ./backend
+    build:
+      context: ./backend
+      network: host
     restart: unless-stopped
     networks:
       - tlm-net
 
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      network: host
     restart: unless-stopped
     ports:
       - "3030:80"
