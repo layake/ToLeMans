@@ -22,9 +22,9 @@ export default function DirectorStep({ onSelect }) {
   }, [])
 
   return (
-    <div>
+    <div className="screen-enter">
       <div className="step-header">
-        <div className="step-label">Étape 4 / 11</div>
+        <div className="step-eyebrow">Étape 4 / 11 · Direction</div>
         <div className="step-title">Directeur Technique</div>
         <div className="step-desc">
           Choix libre. Il influence la fiabilité de votre équipe et apporte
