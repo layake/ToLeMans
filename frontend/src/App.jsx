@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import HomeStep from './steps/HomeStep'
 import StrategyStep from './steps/StrategyStep'
@@ -35,6 +35,13 @@ export default function App() {
     chosenPilotIds: [],
   })
   const [simResult, setSimResult] = useState(null)
+
+  // Recale le scroll en haut à chaque changement d'étape
+  useEffect(() => {
+    const sc = document.querySelector('.app-body')
+    if (sc) sc.scrollTop = 0
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }, [phase])
 
   const drawnCarIds = [game.car1?.id, game.car2?.id].filter(Boolean)
   const currentPilotIndex = phase.startsWith('pilot') ? parseInt(phase.replace('pilot', '')) : -1
