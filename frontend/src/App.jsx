@@ -94,7 +94,7 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <div className="app-logo">TLM <span>Vers Le Mans</span></div>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
+        <div className="header-right">
           {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
             <div className="rerolls">
               REROLLS
