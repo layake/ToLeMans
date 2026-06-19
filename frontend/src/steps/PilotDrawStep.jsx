@@ -215,7 +215,7 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, strate
 
       {teams && (
         <>
-          <div style={{ display: 'flex', gap: 12, marginBottom: 16 }}>
+          <div className="team-cards-row" style={{ display: "flex", gap: 12, marginBottom: 16 }}>
             <TeamCard team={teams.team1} onSelect={setSelected} disabled={selected !== null} />
             <TeamCard team={teams.team2} onSelect={setSelected} disabled={selected !== null} />
           </div>
