@@ -7,9 +7,36 @@
     "constructor": "Ferrari",
     "era": "Hypercar",
     "pilots": [
-      {"id": "antonio-fuoco", "name": "Antonio Fuoco", "nationality": "🇮🇹", "pace": 86, "night_skill": 84, "endurance": 85, "reliability": 86, "profile": "Jeune talent"},
-      {"id": "miguel-molina", "name": "Miguel Molina", "nationality": "🇪🇸", "pace": 85, "night_skill": 85, "endurance": 87, "reliability": 88, "profile": "Régulier"},
-      {"id": "nicklas-nielsen", "name": "Nicklas Nielsen", "nationality": "🇩🇰", "pace": 84, "night_skill": 83, "endurance": 86, "reliability": 87, "profile": "Endurant"}
+      {
+        "id": "antonio-fuoco",
+        "name": "Antonio Fuoco",
+        "nationality": "🇮🇹",
+        "pace": 86,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 86,
+        "profile": "Jeune talent"
+      },
+      {
+        "id": "miguel-molina",
+        "name": "Miguel Molina",
+        "nationality": "🇪🇸",
+        "pace": 85,
+        "night_skill": 85,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "nicklas-nielsen",
+        "name": "Nicklas Nielsen",
+        "nationality": "🇩🇰",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Endurant"
+      }
     ]
   },
   {
@@ -20,9 +47,36 @@
     "constructor": "Ferrari",
     "era": "Hypercar",
     "pilots": [
-      {"id": "pier-guidi", "name": "A. Pier Guidi", "nationality": "🇮🇹", "pace": 89, "night_skill": 87, "endurance": 88, "reliability": 89, "profile": "Leader"},
-      {"id": "james-calado", "name": "James Calado", "nationality": "🇬🇧", "pace": 87, "night_skill": 85, "endurance": 87, "reliability": 88, "profile": "Solide"},
-      {"id": "antonio-giovinazzi", "name": "A. Giovinazzi", "nationality": "🇮🇹", "pace": 88, "night_skill": 84, "endurance": 85, "reliability": 85, "profile": "Rapide"}
+      {
+        "id": "pier-guidi",
+        "name": "A. Pier Guidi",
+        "nationality": "🇮🇹",
+        "pace": 89,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Leader"
+      },
+      {
+        "id": "james-calado",
+        "name": "James Calado",
+        "nationality": "🇬🇧",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Solide"
+      },
+      {
+        "id": "antonio-giovinazzi",
+        "name": "A. Giovinazzi",
+        "nationality": "🇮🇹",
+        "pace": 88,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 85,
+        "profile": "Rapide"
+      }
     ]
   },
   {
@@ -33,9 +87,36 @@
     "constructor": "Toyota",
     "era": "Hypercar",
     "pilots": [
-      {"id": "mike-conway", "name": "Mike Conway", "nationality": "🇬🇧", "pace": 87, "night_skill": 86, "endurance": 88, "reliability": 88, "profile": "Régulier"},
-      {"id": "kamui-kobayashi", "name": "Kamui Kobayashi", "nationality": "🇯🇵", "pace": 89, "night_skill": 85, "endurance": 86, "reliability": 86, "profile": "Explosif"},
-      {"id": "jose-maria-lopez", "name": "J.M. López", "nationality": "🇦🇷", "pace": 87, "night_skill": 87, "endurance": 88, "reliability": 88, "profile": "Expérimenté"}
+      {
+        "id": "mike-conway",
+        "name": "Mike Conway",
+        "nationality": "🇬🇧",
+        "pace": 87,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "kamui-kobayashi",
+        "name": "Kamui Kobayashi",
+        "nationality": "🇯🇵",
+        "pace": 89,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Explosif"
+      },
+      {
+        "id": "jose-maria-lopez",
+        "name": "J.M. López",
+        "nationality": "🇦🇷",
+        "pace": 87,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Expérimenté"
+      }
     ]
   },
   {
@@ -46,9 +127,36 @@
     "constructor": "Toyota",
     "era": "Hypercar",
     "pilots": [
-      {"id": "sebastien-buemi", "name": "Sébastien Buemi", "nationality": "🇨🇭", "pace": 90, "night_skill": 87, "endurance": 88, "reliability": 88, "profile": "Complet"},
-      {"id": "brendon-hartley", "name": "Brendon Hartley", "nationality": "🇳🇿", "pace": 88, "night_skill": 86, "endurance": 87, "reliability": 87, "profile": "Polyvalent"},
-      {"id": "ryo-hirakawa", "name": "Ryo Hirakawa", "nationality": "🇯🇵", "pace": 85, "night_skill": 84, "endurance": 86, "reliability": 87, "profile": "Endurant"}
+      {
+        "id": "sebastien-buemi",
+        "name": "Sébastien Buemi",
+        "nationality": "🇨🇭",
+        "pace": 90,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Complet"
+      },
+      {
+        "id": "brendon-hartley",
+        "name": "Brendon Hartley",
+        "nationality": "🇳🇿",
+        "pace": 88,
+        "night_skill": 86,
+        "endurance": 87,
+        "reliability": 87,
+        "profile": "Polyvalent"
+      },
+      {
+        "id": "ryo-hirakawa",
+        "name": "Ryo Hirakawa",
+        "nationality": "🇯🇵",
+        "pace": 85,
+        "night_skill": 84,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Endurant"
+      }
     ]
   },
   {
@@ -59,9 +167,36 @@
     "constructor": "Porsche",
     "era": "Hypercar",
     "pilots": [
-      {"id": "kevin-estre", "name": "Kévin Estre", "nationality": "🇫🇷", "pace": 90, "night_skill": 87, "endurance": 87, "reliability": 87, "profile": "Qualifié"},
-      {"id": "andre-lotterer", "name": "André Lotterer", "nationality": "🇩🇪", "pace": 89, "night_skill": 88, "endurance": 89, "reliability": 88, "profile": "Mr Endurance"},
-      {"id": "laurens-vanthoor", "name": "L. Vanthoor", "nationality": "🇧🇪", "pace": 88, "night_skill": 86, "endurance": 88, "reliability": 89, "profile": "Solide"}
+      {
+        "id": "kevin-estre",
+        "name": "Kévin Estre",
+        "nationality": "🇫🇷",
+        "pace": 90,
+        "night_skill": 87,
+        "endurance": 87,
+        "reliability": 87,
+        "profile": "Qualifié"
+      },
+      {
+        "id": "andre-lotterer",
+        "name": "André Lotterer",
+        "nationality": "🇩🇪",
+        "pace": 89,
+        "night_skill": 88,
+        "endurance": 89,
+        "reliability": 88,
+        "profile": "Mr Endurance"
+      },
+      {
+        "id": "laurens-vanthoor",
+        "name": "L. Vanthoor",
+        "nationality": "🇧🇪",
+        "pace": 88,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Solide"
+      }
     ]
   },
   {
@@ -72,9 +207,36 @@
     "constructor": "Porsche",
     "era": "Hypercar",
     "pilots": [
-      {"id": "felipe-nasr", "name": "Felipe Nasr", "nationality": "🇧🇷", "pace": 87, "night_skill": 84, "endurance": 86, "reliability": 87, "profile": "Régulier"},
-      {"id": "dane-cameron", "name": "Dane Cameron", "nationality": "🇺🇸", "pace": 85, "night_skill": 83, "endurance": 87, "reliability": 88, "profile": "Endurant"},
-      {"id": "matt-campbell", "name": "Matt Campbell", "nationality": "🇦🇺", "pace": 88, "night_skill": 85, "endurance": 86, "reliability": 86, "profile": "Rapide"}
+      {
+        "id": "felipe-nasr",
+        "name": "Felipe Nasr",
+        "nationality": "🇧🇷",
+        "pace": 87,
+        "night_skill": 84,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Régulier"
+      },
+      {
+        "id": "dane-cameron",
+        "name": "Dane Cameron",
+        "nationality": "🇺🇸",
+        "pace": 85,
+        "night_skill": 83,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Endurant"
+      },
+      {
+        "id": "matt-campbell",
+        "name": "Matt Campbell",
+        "nationality": "🇦🇺",
+        "pace": 88,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Rapide"
+      }
     ]
   },
   {
@@ -85,9 +247,36 @@
     "constructor": "Toyota",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "sebastien-buemi", "name": "Sébastien Buemi", "nationality": "🇨🇭", "pace": 90, "night_skill": 87, "endurance": 88, "reliability": 88, "profile": "Complet"},
-      {"id": "kazuki-nakajima", "name": "Kazuki Nakajima", "nationality": "🇯🇵", "pace": 86, "night_skill": 85, "endurance": 88, "reliability": 89, "profile": "Endurant"},
-      {"id": "fernando-alonso", "name": "Fernando Alonso", "nationality": "🇪🇸", "pace": 95, "night_skill": 89, "endurance": 87, "reliability": 88, "profile": "Champion"}
+      {
+        "id": "sebastien-buemi",
+        "name": "Sébastien Buemi",
+        "nationality": "🇨🇭",
+        "pace": 90,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Complet"
+      },
+      {
+        "id": "kazuki-nakajima",
+        "name": "Kazuki Nakajima",
+        "nationality": "🇯🇵",
+        "pace": 86,
+        "night_skill": 85,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Endurant"
+      },
+      {
+        "id": "fernando-alonso",
+        "name": "Fernando Alonso",
+        "nationality": "🇪🇸",
+        "pace": 95,
+        "night_skill": 89,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Champion"
+      }
     ]
   },
   {
@@ -98,9 +287,36 @@
     "constructor": "Toyota",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "mike-conway", "name": "Mike Conway", "nationality": "🇬🇧", "pace": 87, "night_skill": 86, "endurance": 88, "reliability": 88, "profile": "Régulier"},
-      {"id": "kamui-kobayashi", "name": "Kamui Kobayashi", "nationality": "🇯🇵", "pace": 89, "night_skill": 85, "endurance": 86, "reliability": 86, "profile": "Explosif"},
-      {"id": "jose-maria-lopez", "name": "J.M. López", "nationality": "🇦🇷", "pace": 87, "night_skill": 87, "endurance": 88, "reliability": 88, "profile": "Expérimenté"}
+      {
+        "id": "mike-conway",
+        "name": "Mike Conway",
+        "nationality": "🇬🇧",
+        "pace": 87,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "kamui-kobayashi",
+        "name": "Kamui Kobayashi",
+        "nationality": "🇯🇵",
+        "pace": 89,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Explosif"
+      },
+      {
+        "id": "jose-maria-lopez",
+        "name": "J.M. López",
+        "nationality": "🇦🇷",
+        "pace": 87,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Expérimenté"
+      }
     ]
   },
   {
@@ -111,9 +327,36 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "marcel-fassler", "name": "Marcel Fässler", "nationality": "🇨🇭", "pace": 87, "night_skill": 85, "endurance": 88, "reliability": 89, "profile": "Fiable"},
-      {"id": "andre-lotterer", "name": "André Lotterer", "nationality": "🇩🇪", "pace": 89, "night_skill": 88, "endurance": 89, "reliability": 88, "profile": "Mr Endurance"},
-      {"id": "benoit-treluyer", "name": "Benoît Tréluyer", "nationality": "🇫🇷", "pace": 86, "night_skill": 86, "endurance": 88, "reliability": 89, "profile": "Régulier"}
+      {
+        "id": "marcel-fassler",
+        "name": "Marcel Fässler",
+        "nationality": "🇨🇭",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Fiable"
+      },
+      {
+        "id": "andre-lotterer",
+        "name": "André Lotterer",
+        "nationality": "🇩🇪",
+        "pace": 89,
+        "night_skill": 88,
+        "endurance": 89,
+        "reliability": 88,
+        "profile": "Mr Endurance"
+      },
+      {
+        "id": "benoit-treluyer",
+        "name": "Benoît Tréluyer",
+        "nationality": "🇫🇷",
+        "pace": 86,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Régulier"
+      }
     ]
   },
   {
@@ -124,9 +367,36 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "tom-kristensen", "name": "Tom Kristensen", "nationality": "🇩🇰", "pace": 90, "night_skill": 94, "endurance": 96, "reliability": 94, "profile": "Mr Le Mans"},
-      {"id": "loic-duval", "name": "Loïc Duval", "nationality": "🇫🇷", "pace": 87, "night_skill": 85, "endurance": 86, "reliability": 87, "profile": "Rapide"},
-      {"id": "allan-mcnish", "name": "Allan McNish", "nationality": "🇬🇧", "pace": 89, "night_skill": 87, "endurance": 88, "reliability": 86, "profile": "Polyvalent"}
+      {
+        "id": "tom-kristensen",
+        "name": "Tom Kristensen",
+        "nationality": "🇩🇰",
+        "pace": 90,
+        "night_skill": 94,
+        "endurance": 96,
+        "reliability": 94,
+        "profile": "Mr Le Mans"
+      },
+      {
+        "id": "loic-duval",
+        "name": "Loïc Duval",
+        "nationality": "🇫🇷",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Rapide"
+      },
+      {
+        "id": "allan-mcnish",
+        "name": "Allan McNish",
+        "nationality": "🇬🇧",
+        "pace": 89,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 86,
+        "profile": "Polyvalent"
+      }
     ]
   },
   {
@@ -137,9 +407,36 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "rinaldo-capello", "name": "Rinaldo Capello", "nationality": "🇮🇹", "pace": 87, "night_skill": 86, "endurance": 88, "reliability": 89, "profile": "Solide"},
-      {"id": "tom-kristensen", "name": "Tom Kristensen", "nationality": "🇩🇰", "pace": 90, "night_skill": 94, "endurance": 96, "reliability": 94, "profile": "Mr Le Mans"},
-      {"id": "allan-mcnish", "name": "Allan McNish", "nationality": "🇬🇧", "pace": 89, "night_skill": 87, "endurance": 88, "reliability": 86, "profile": "Polyvalent"}
+      {
+        "id": "rinaldo-capello",
+        "name": "Rinaldo Capello",
+        "nationality": "🇮🇹",
+        "pace": 87,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Solide"
+      },
+      {
+        "id": "tom-kristensen",
+        "name": "Tom Kristensen",
+        "nationality": "🇩🇰",
+        "pace": 90,
+        "night_skill": 94,
+        "endurance": 96,
+        "reliability": 94,
+        "profile": "Mr Le Mans"
+      },
+      {
+        "id": "allan-mcnish",
+        "name": "Allan McNish",
+        "nationality": "🇬🇧",
+        "pace": 89,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 86,
+        "profile": "Polyvalent"
+      }
     ]
   },
   {
@@ -150,9 +447,36 @@
     "constructor": "Peugeot",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "marc-gene", "name": "Marc Gené", "nationality": "🇪🇸", "pace": 86, "night_skill": 84, "endurance": 87, "reliability": 88, "profile": "Endurant"},
-      {"id": "nicolas-minassian", "name": "N. Minassian", "nationality": "🇫🇷", "pace": 84, "night_skill": 83, "endurance": 86, "reliability": 85, "profile": "Régulier"},
-      {"id": "pedro-lamy", "name": "Pedro Lamy", "nationality": "🇵🇹", "pace": 83, "night_skill": 85, "endurance": 88, "reliability": 88, "profile": "Vétéran"}
+      {
+        "id": "marc-gene",
+        "name": "Marc Gené",
+        "nationality": "🇪🇸",
+        "pace": 86,
+        "night_skill": 84,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Endurant"
+      },
+      {
+        "id": "nicolas-minassian",
+        "name": "N. Minassian",
+        "nationality": "🇫🇷",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Régulier"
+      },
+      {
+        "id": "pedro-lamy",
+        "name": "Pedro Lamy",
+        "nationality": "🇵🇹",
+        "pace": 83,
+        "night_skill": 85,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Vétéran"
+      }
     ]
   },
   {
@@ -163,9 +487,36 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "pilots": [
-      {"id": "frank-biela", "name": "Frank Biela", "nationality": "🇩🇪", "pace": 85, "night_skill": 88, "endurance": 90, "reliability": 91, "profile": "Fiable"},
-      {"id": "tom-kristensen", "name": "Tom Kristensen", "nationality": "🇩🇰", "pace": 90, "night_skill": 94, "endurance": 96, "reliability": 94, "profile": "Mr Le Mans"},
-      {"id": "emanuele-pirro", "name": "Emanuele Pirro", "nationality": "🇮🇹", "pace": 86, "night_skill": 87, "endurance": 89, "reliability": 90, "profile": "Vétéran"}
+      {
+        "id": "frank-biela",
+        "name": "Frank Biela",
+        "nationality": "🇩🇪",
+        "pace": 85,
+        "night_skill": 88,
+        "endurance": 90,
+        "reliability": 91,
+        "profile": "Fiable"
+      },
+      {
+        "id": "tom-kristensen",
+        "name": "Tom Kristensen",
+        "nationality": "🇩🇰",
+        "pace": 90,
+        "night_skill": 94,
+        "endurance": 96,
+        "reliability": 94,
+        "profile": "Mr Le Mans"
+      },
+      {
+        "id": "emanuele-pirro",
+        "name": "Emanuele Pirro",
+        "nationality": "🇮🇹",
+        "pace": 86,
+        "night_skill": 87,
+        "endurance": 89,
+        "reliability": 90,
+        "profile": "Vétéran"
+      }
     ]
   },
   {
@@ -176,9 +527,36 @@
     "constructor": "BMW",
     "era": "GT1",
     "pilots": [
-      {"id": "jorg-muller", "name": "Jörg Müller", "nationality": "🇩🇪", "pace": 85, "night_skill": 83, "endurance": 87, "reliability": 87, "profile": "Régulier"},
-      {"id": "pierluigi-martini", "name": "P. Martini", "nationality": "🇮🇹", "pace": 83, "night_skill": 82, "endurance": 86, "reliability": 87, "profile": "Endurant"},
-      {"id": "joachim-winkelhock", "name": "J. Winkelhock", "nationality": "🇩🇪", "pace": 86, "night_skill": 85, "endurance": 87, "reliability": 86, "profile": "Solide"}
+      {
+        "id": "jorg-muller",
+        "name": "Jörg Müller",
+        "nationality": "🇩🇪",
+        "pace": 85,
+        "night_skill": 83,
+        "endurance": 87,
+        "reliability": 87,
+        "profile": "Régulier"
+      },
+      {
+        "id": "pierluigi-martini",
+        "name": "P. Martini",
+        "nationality": "🇮🇹",
+        "pace": 83,
+        "night_skill": 82,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Endurant"
+      },
+      {
+        "id": "joachim-winkelhock",
+        "name": "J. Winkelhock",
+        "nationality": "🇩🇪",
+        "pace": 86,
+        "night_skill": 85,
+        "endurance": 87,
+        "reliability": 86,
+        "profile": "Solide"
+      }
     ]
   },
   {
@@ -189,9 +567,36 @@
     "constructor": "Toyota",
     "era": "GT1",
     "pilots": [
-      {"id": "thierry-boutsen", "name": "Thierry Boutsen", "nationality": "🇧🇪", "pace": 84, "night_skill": 83, "endurance": 86, "reliability": 86, "profile": "Vétéran"},
-      {"id": "allan-mcnish", "name": "Allan McNish", "nationality": "🇬🇧", "pace": 89, "night_skill": 87, "endurance": 88, "reliability": 86, "profile": "Polyvalent"},
-      {"id": "laurent-aiello", "name": "Laurent Aïello", "nationality": "🇫🇷", "pace": 85, "night_skill": 84, "endurance": 85, "reliability": 85, "profile": "Rapide"}
+      {
+        "id": "thierry-boutsen",
+        "name": "Thierry Boutsen",
+        "nationality": "🇧🇪",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Vétéran"
+      },
+      {
+        "id": "allan-mcnish",
+        "name": "Allan McNish",
+        "nationality": "🇬🇧",
+        "pace": 89,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 86,
+        "profile": "Polyvalent"
+      },
+      {
+        "id": "laurent-aiello",
+        "name": "Laurent Aïello",
+        "nationality": "🇫🇷",
+        "pace": 85,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 85,
+        "profile": "Rapide"
+      }
     ]
   },
   {
@@ -202,9 +607,36 @@
     "constructor": "McLaren",
     "era": "GT1",
     "pilots": [
-      {"id": "yannick-dalmas", "name": "Yannick Dalmas", "nationality": "🇫🇷", "pace": 85, "night_skill": 90, "endurance": 91, "reliability": 89, "profile": "Spécialiste Le Mans"},
-      {"id": "jj-lehto", "name": "JJ Lehto", "nationality": "🇫🇮", "pace": 89, "night_skill": 85, "endurance": 84, "reliability": 86, "profile": "Qualifié"},
-      {"id": "masanori-sekiya", "name": "M. Sekiya", "nationality": "🇯🇵", "pace": 80, "night_skill": 82, "endurance": 88, "reliability": 90, "profile": "Endurant"}
+      {
+        "id": "yannick-dalmas",
+        "name": "Yannick Dalmas",
+        "nationality": "🇫🇷",
+        "pace": 85,
+        "night_skill": 90,
+        "endurance": 91,
+        "reliability": 89,
+        "profile": "Spécialiste Le Mans"
+      },
+      {
+        "id": "jj-lehto",
+        "name": "JJ Lehto",
+        "nationality": "🇫🇮",
+        "pace": 89,
+        "night_skill": 85,
+        "endurance": 84,
+        "reliability": 86,
+        "profile": "Qualifié"
+      },
+      {
+        "id": "masanori-sekiya",
+        "name": "M. Sekiya",
+        "nationality": "🇯🇵",
+        "pace": 80,
+        "night_skill": 82,
+        "endurance": 88,
+        "reliability": 90,
+        "profile": "Endurant"
+      }
     ]
   },
   {
@@ -215,9 +647,36 @@
     "constructor": "McLaren",
     "era": "GT1",
     "pilots": [
-      {"id": "jeff-allam", "name": "Jeff Allam", "nationality": "🇬🇧", "pace": 81, "night_skill": 80, "endurance": 85, "reliability": 86, "profile": "Vétéran"},
-      {"id": "olivier-grouillard", "name": "O. Grouillard", "nationality": "🇫🇷", "pace": 83, "night_skill": 82, "endurance": 84, "reliability": 83, "profile": "Régulier"},
-      {"id": "derek-bell", "name": "Derek Bell", "nationality": "🇬🇧", "pace": 83, "night_skill": 90, "endurance": 92, "reliability": 93, "profile": "Spécialiste nuit"}
+      {
+        "id": "jeff-allam",
+        "name": "Jeff Allam",
+        "nationality": "🇬🇧",
+        "pace": 81,
+        "night_skill": 80,
+        "endurance": 85,
+        "reliability": 86,
+        "profile": "Vétéran"
+      },
+      {
+        "id": "olivier-grouillard",
+        "name": "O. Grouillard",
+        "nationality": "🇫🇷",
+        "pace": 83,
+        "night_skill": 82,
+        "endurance": 84,
+        "reliability": 83,
+        "profile": "Régulier"
+      },
+      {
+        "id": "derek-bell",
+        "name": "Derek Bell",
+        "nationality": "🇬🇧",
+        "pace": 83,
+        "night_skill": 90,
+        "endurance": 92,
+        "reliability": 93,
+        "profile": "Spécialiste nuit"
+      }
     ]
   },
   {
@@ -228,9 +687,36 @@
     "constructor": "Jaguar",
     "era": "Groupe C",
     "pilots": [
-      {"id": "jan-lammers", "name": "Jan Lammers", "nationality": "🇳🇱", "pace": 85, "night_skill": 84, "endurance": 88, "reliability": 87, "profile": "Régulier"},
-      {"id": "johnny-dumfries", "name": "Johnny Dumfries", "nationality": "🇬🇧", "pace": 83, "night_skill": 83, "endurance": 86, "reliability": 85, "profile": "Endurant"},
-      {"id": "andy-wallace", "name": "Andy Wallace", "nationality": "🇬🇧", "pace": 84, "night_skill": 85, "endurance": 87, "reliability": 87, "profile": "Polyvalent"}
+      {
+        "id": "jan-lammers",
+        "name": "Jan Lammers",
+        "nationality": "🇳🇱",
+        "pace": 85,
+        "night_skill": 84,
+        "endurance": 88,
+        "reliability": 87,
+        "profile": "Régulier"
+      },
+      {
+        "id": "johnny-dumfries",
+        "name": "Johnny Dumfries",
+        "nationality": "🇬🇧",
+        "pace": 83,
+        "night_skill": 83,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Endurant"
+      },
+      {
+        "id": "andy-wallace",
+        "name": "Andy Wallace",
+        "nationality": "🇬🇧",
+        "pace": 84,
+        "night_skill": 85,
+        "endurance": 87,
+        "reliability": 87,
+        "profile": "Polyvalent"
+      }
     ]
   },
   {
@@ -241,9 +727,36 @@
     "constructor": "Porsche",
     "era": "Groupe C",
     "pilots": [
-      {"id": "derek-bell", "name": "Derek Bell", "nationality": "🇬🇧", "pace": 83, "night_skill": 90, "endurance": 92, "reliability": 93, "profile": "Spécialiste nuit"},
-      {"id": "hans-stuck", "name": "Hans-J. Stuck", "nationality": "🇩🇪", "pace": 84, "night_skill": 86, "endurance": 88, "reliability": 87, "profile": "Expérimenté"},
-      {"id": "jochen-mass", "name": "Jochen Mass", "nationality": "🇩🇪", "pace": 82, "night_skill": 88, "endurance": 90, "reliability": 91, "profile": "Vétéran nuit"}
+      {
+        "id": "derek-bell",
+        "name": "Derek Bell",
+        "nationality": "🇬🇧",
+        "pace": 83,
+        "night_skill": 90,
+        "endurance": 92,
+        "reliability": 93,
+        "profile": "Spécialiste nuit"
+      },
+      {
+        "id": "hans-stuck",
+        "name": "Hans-J. Stuck",
+        "nationality": "🇩🇪",
+        "pace": 84,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 87,
+        "profile": "Expérimenté"
+      },
+      {
+        "id": "jochen-mass",
+        "name": "Jochen Mass",
+        "nationality": "🇩🇪",
+        "pace": 82,
+        "night_skill": 88,
+        "endurance": 90,
+        "reliability": 91,
+        "profile": "Vétéran nuit"
+      }
     ]
   },
   {
@@ -254,9 +767,596 @@
     "constructor": "Sauber-Mercedes",
     "era": "Groupe C",
     "pilots": [
-      {"id": "jochen-mass", "name": "Jochen Mass", "nationality": "🇩🇪", "pace": 82, "night_skill": 88, "endurance": 90, "reliability": 91, "profile": "Vétéran nuit"},
-      {"id": "manuel-reuter", "name": "Manuel Reuter", "nationality": "🇩🇪", "pace": 84, "night_skill": 83, "endurance": 86, "reliability": 86, "profile": "Solide"},
-      {"id": "stanley-dickens", "name": "Stanley Dickens", "nationality": "🇸🇪", "pace": 81, "night_skill": 82, "endurance": 85, "reliability": 85, "profile": "Régulier"}
+      {
+        "id": "jochen-mass",
+        "name": "Jochen Mass",
+        "nationality": "🇩🇪",
+        "pace": 82,
+        "night_skill": 88,
+        "endurance": 90,
+        "reliability": 91,
+        "profile": "Vétéran nuit"
+      },
+      {
+        "id": "manuel-reuter",
+        "name": "Manuel Reuter",
+        "nationality": "🇩🇪",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Solide"
+      },
+      {
+        "id": "stanley-dickens",
+        "name": "Stanley Dickens",
+        "nationality": "🇸🇪",
+        "pace": 81,
+        "night_skill": 82,
+        "endurance": 85,
+        "reliability": 85,
+        "profile": "Régulier"
+      }
+    ]
+  },
+  {
+    "id": "ford-2-1966",
+    "year": 1966,
+    "car": "Ford GT40 Mk II",
+    "number": "2",
+    "constructor": "Ford",
+    "era": "Sport Proto 60s",
+    "pilots": [
+      {
+        "id": "bruce-mclaren",
+        "name": "Bruce McLaren",
+        "nationality": "🇳🇿",
+        "pace": 90,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 84,
+        "profile": "Pionnier"
+      },
+      {
+        "id": "chris-amon",
+        "name": "Chris Amon",
+        "nationality": "🇳🇿",
+        "pace": 89,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 83,
+        "profile": "Rapide"
+      },
+      {
+        "id": "denny-hulme",
+        "name": "Denny Hulme",
+        "nationality": "🇳🇿",
+        "pace": 88,
+        "night_skill": 84,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Costaud"
+      }
+    ]
+  },
+  {
+    "id": "ford-1-1967",
+    "year": 1967,
+    "car": "Ford GT40 Mk IV",
+    "number": "1",
+    "constructor": "Ford",
+    "era": "Sport Proto 60s",
+    "pilots": [
+      {
+        "id": "dan-gurney",
+        "name": "Dan Gurney",
+        "nationality": "🇺🇸",
+        "pace": 91,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Légende"
+      },
+      {
+        "id": "aj-foyt",
+        "name": "A.J. Foyt",
+        "nationality": "🇺🇸",
+        "pace": 89,
+        "night_skill": 83,
+        "endurance": 87,
+        "reliability": 84,
+        "profile": "Indy 500"
+      },
+      {
+        "id": "lloyd-ruby",
+        "name": "Lloyd Ruby",
+        "nationality": "🇺🇸",
+        "pace": 84,
+        "night_skill": 82,
+        "endurance": 85,
+        "reliability": 84,
+        "profile": "Régulier"
+      }
+    ]
+  },
+  {
+    "id": "ferrari-21-1967",
+    "year": 1967,
+    "car": "Ferrari 330 P4",
+    "number": "21",
+    "constructor": "Ferrari",
+    "era": "Sport Proto 60s",
+    "pilots": [
+      {
+        "id": "ludovico-scarfiotti",
+        "name": "L. Scarfiotti",
+        "nationality": "🇮🇹",
+        "pace": 87,
+        "night_skill": 84,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Élégant"
+      },
+      {
+        "id": "mike-parkes",
+        "name": "Mike Parkes",
+        "nationality": "🇬🇧",
+        "pace": 86,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 85,
+        "profile": "Ingénieur-pilote"
+      },
+      {
+        "id": "willy-mairesse",
+        "name": "Willy Mairesse",
+        "nationality": "🇧🇪",
+        "pace": 85,
+        "night_skill": 83,
+        "endurance": 83,
+        "reliability": 81,
+        "profile": "Fonceur"
+      }
+    ]
+  },
+  {
+    "id": "porsche-23-1970",
+    "year": 1970,
+    "car": "Porsche 917K",
+    "number": "23",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "pilots": [
+      {
+        "id": "hans-herrmann",
+        "name": "Hans Herrmann",
+        "nationality": "🇩🇪",
+        "pace": 87,
+        "night_skill": 88,
+        "endurance": 90,
+        "reliability": 91,
+        "profile": "Vétéran"
+      },
+      {
+        "id": "richard-attwood",
+        "name": "Richard Attwood",
+        "nationality": "🇬🇧",
+        "pace": 86,
+        "night_skill": 88,
+        "endurance": 89,
+        "reliability": 91,
+        "profile": "Régulier prudent"
+      },
+      {
+        "id": "willi-kauhsen",
+        "name": "Willi Kauhsen",
+        "nationality": "🇩🇪",
+        "pace": 82,
+        "night_skill": 83,
+        "endurance": 85,
+        "reliability": 86,
+        "profile": "Équipier"
+      }
+    ]
+  },
+  {
+    "id": "porsche-20-1970",
+    "year": 1970,
+    "car": "Porsche 917K",
+    "number": "20",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "pilots": [
+      {
+        "id": "jo-siffert",
+        "name": "Jo Siffert",
+        "nationality": "🇨🇭",
+        "pace": 90,
+        "night_skill": 87,
+        "endurance": 86,
+        "reliability": 84,
+        "profile": "Star 917"
+      },
+      {
+        "id": "brian-redman",
+        "name": "Brian Redman",
+        "nationality": "🇬🇧",
+        "pace": 88,
+        "night_skill": 88,
+        "endurance": 89,
+        "reliability": 88,
+        "profile": "Endurance pure"
+      },
+      {
+        "id": "pedro-rodriguez",
+        "name": "Pedro Rodríguez",
+        "nationality": "🇲🇽",
+        "pace": 90,
+        "night_skill": 89,
+        "endurance": 86,
+        "reliability": 84,
+        "profile": "Maestro pluie"
+      }
+    ]
+  },
+  {
+    "id": "porsche-22-1971",
+    "year": 1971,
+    "car": "Porsche 917K",
+    "number": "22",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "pilots": [
+      {
+        "id": "helmut-marko",
+        "name": "Helmut Marko",
+        "nationality": "🇦🇹",
+        "pace": 89,
+        "night_skill": 88,
+        "endurance": 88,
+        "reliability": 87,
+        "profile": "Recordman"
+      },
+      {
+        "id": "gijs-van-lennep",
+        "name": "Gijs van Lennep",
+        "nationality": "🇳🇱",
+        "pace": 86,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Solide"
+      },
+      {
+        "id": "vic-elford",
+        "name": "Vic Elford",
+        "nationality": "🇬🇧",
+        "pace": 89,
+        "night_skill": 89,
+        "endurance": 86,
+        "reliability": 84,
+        "profile": "Quick Vic"
+      }
+    ]
+  },
+  {
+    "id": "porsche-20-1976",
+    "year": 1976,
+    "car": "Porsche 936",
+    "number": "20",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "pilots": [
+      {
+        "id": "jacky-ickx",
+        "name": "Jacky Ickx",
+        "nationality": "🇧🇪",
+        "pace": 92,
+        "night_skill": 93,
+        "endurance": 92,
+        "reliability": 89,
+        "profile": "Mr Le Mans"
+      },
+      {
+        "id": "gijs-van-lennep-76",
+        "name": "Gijs van Lennep",
+        "nationality": "🇳🇱",
+        "pace": 86,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Solide"
+      },
+      {
+        "id": "jurgen-barth",
+        "name": "Jürgen Barth",
+        "nationality": "🇩🇪",
+        "pace": 84,
+        "night_skill": 85,
+        "endurance": 88,
+        "reliability": 90,
+        "profile": "Endurant"
+      }
+    ]
+  },
+  {
+    "id": "porsche-1-1982",
+    "year": 1982,
+    "car": "Porsche 956",
+    "number": "1",
+    "constructor": "Porsche",
+    "era": "Groupe C",
+    "pilots": [
+      {
+        "id": "jacky-ickx-82",
+        "name": "Jacky Ickx",
+        "nationality": "🇧🇪",
+        "pace": 91,
+        "night_skill": 93,
+        "endurance": 92,
+        "reliability": 90,
+        "profile": "Mr Le Mans"
+      },
+      {
+        "id": "derek-bell-82",
+        "name": "Derek Bell",
+        "nationality": "🇬🇧",
+        "pace": 85,
+        "night_skill": 91,
+        "endurance": 92,
+        "reliability": 93,
+        "profile": "Spécialiste nuit"
+      },
+      {
+        "id": "jochen-mass-82",
+        "name": "Jochen Mass",
+        "nationality": "🇩🇪",
+        "pace": 84,
+        "night_skill": 88,
+        "endurance": 90,
+        "reliability": 91,
+        "profile": "Vétéran nuit"
+      }
+    ]
+  },
+  {
+    "id": "mazda-55-1991",
+    "year": 1991,
+    "car": "Mazda 787B",
+    "number": "55",
+    "constructor": "Mazda",
+    "era": "Groupe C",
+    "pilots": [
+      {
+        "id": "volker-weidler",
+        "name": "Volker Weidler",
+        "nationality": "🇩🇪",
+        "pace": 85,
+        "night_skill": 84,
+        "endurance": 86,
+        "reliability": 86,
+        "profile": "Discret"
+      },
+      {
+        "id": "johnny-herbert-91m",
+        "name": "Johnny Herbert",
+        "nationality": "🇬🇧",
+        "pace": 88,
+        "night_skill": 84,
+        "endurance": 83,
+        "reliability": 85,
+        "profile": "Rapide"
+      },
+      {
+        "id": "bertrand-gachot-91m",
+        "name": "Bertrand Gachot",
+        "nationality": "🇧🇪",
+        "pace": 86,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 82,
+        "profile": "Explosif"
+      }
+    ]
+  },
+  {
+    "id": "audi-3-2005",
+    "year": 2005,
+    "car": "Audi R8",
+    "number": "3",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "pilots": [
+      {
+        "id": "jj-lehto-05",
+        "name": "JJ Lehto",
+        "nationality": "🇫🇮",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Qualifié"
+      },
+      {
+        "id": "marco-werner",
+        "name": "Marco Werner",
+        "nationality": "🇩🇪",
+        "pace": 86,
+        "night_skill": 85,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "tom-kristensen-05",
+        "name": "Tom Kristensen",
+        "nationality": "🇩🇰",
+        "pace": 90,
+        "night_skill": 94,
+        "endurance": 95,
+        "reliability": 93,
+        "profile": "Mr Le Mans"
+      }
+    ]
+  },
+  {
+    "id": "porsche-19-2015",
+    "year": 2015,
+    "car": "Porsche 919 Hybrid",
+    "number": "19",
+    "constructor": "Porsche",
+    "era": "Prototype Moderne",
+    "pilots": [
+      {
+        "id": "nico-hulkenberg",
+        "name": "Nico Hülkenberg",
+        "nationality": "🇩🇪",
+        "pace": 91,
+        "night_skill": 85,
+        "endurance": 84,
+        "reliability": 86,
+        "profile": "Pilote F1"
+      },
+      {
+        "id": "earl-bamber",
+        "name": "Earl Bamber",
+        "nationality": "🇳🇿",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Montant"
+      },
+      {
+        "id": "nick-tandy",
+        "name": "Nick Tandy",
+        "nationality": "🇬🇧",
+        "pace": 88,
+        "night_skill": 87,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Polyvalent"
+      }
+    ]
+  },
+  {
+    "id": "porsche-2-2016",
+    "year": 2016,
+    "car": "Porsche 919 Hybrid",
+    "number": "2",
+    "constructor": "Porsche",
+    "era": "Prototype Moderne",
+    "pilots": [
+      {
+        "id": "romain-dumas",
+        "name": "Romain Dumas",
+        "nationality": "🇫🇷",
+        "pace": 87,
+        "night_skill": 87,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Complet"
+      },
+      {
+        "id": "neel-jani",
+        "name": "Neel Jani",
+        "nationality": "🇨🇭",
+        "pace": 89,
+        "night_skill": 86,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Qualifié"
+      },
+      {
+        "id": "marc-lieb",
+        "name": "Marc Lieb",
+        "nationality": "🇩🇪",
+        "pace": 86,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 89,
+        "profile": "Endurant"
+      }
+    ]
+  },
+  {
+    "id": "ferrari-50-2024",
+    "year": 2024,
+    "car": "Ferrari 499P",
+    "number": "50",
+    "constructor": "Ferrari",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "antonio-fuoco-24",
+        "name": "Antonio Fuoco",
+        "nationality": "🇮🇹",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 87,
+        "profile": "Rapide"
+      },
+      {
+        "id": "miguel-molina-24",
+        "name": "Miguel Molina",
+        "nationality": "🇪🇸",
+        "pace": 86,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "nicklas-nielsen-24",
+        "name": "Nicklas Nielsen",
+        "nationality": "🇩🇰",
+        "pace": 85,
+        "night_skill": 84,
+        "endurance": 87,
+        "reliability": 88,
+        "profile": "Endurant"
+      }
+    ]
+  },
+  {
+    "id": "toyota-7-2024",
+    "year": 2024,
+    "car": "Toyota GR010 Hybrid",
+    "number": "7",
+    "constructor": "Toyota",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "mike-conway-24",
+        "name": "Mike Conway",
+        "nationality": "🇬🇧",
+        "pace": 87,
+        "night_skill": 86,
+        "endurance": 88,
+        "reliability": 88,
+        "profile": "Régulier"
+      },
+      {
+        "id": "kamui-kobayashi-24",
+        "name": "Kamui Kobayashi",
+        "nationality": "🇯🇵",
+        "pace": 89,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Explosif"
+      },
+      {
+        "id": "nyck-de-vries",
+        "name": "Nyck de Vries",
+        "nationality": "🇳🇱",
+        "pace": 88,
+        "night_skill": 85,
+        "endurance": 85,
+        "reliability": 86,
+        "profile": "Pilote F1"
+      }
     ]
   }
 ]
