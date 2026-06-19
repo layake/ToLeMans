@@ -501,7 +501,8 @@ body {
   .app-header { padding: 14px 16px; }
   .app-logo { font-size: 20px; }
   .app-logo span { display: none; }
-  .app-body { flex-direction: column; }
+  .app-body { flex-direction: column; align-items: stretch; }
+  .main-panel { align-self: flex-start; }
   .sidebar { display: none; }
   .main-panel { max-width: 100%; }
   .step-title { font-size: 36px; }
