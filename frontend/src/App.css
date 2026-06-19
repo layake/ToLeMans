@@ -502,7 +502,7 @@ body {
   /* Layout vertical plein écran, calé en haut */
   .app { height: 100dvh; min-height: 100dvh; overflow: hidden; }
   .app-body { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
-  .main-panel { padding-top: 18px; padding-bottom: 28px; }
+  .main-panel { padding-top: 18px; padding-bottom: 16px; }
 
   .app-header { padding: 14px 16px; position: static; }
   .app-logo { font-size: 20px; }
