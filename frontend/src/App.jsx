@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import HomeStep from './steps/HomeStep'
 import StrategyStep from './steps/StrategyStep'
 import CarDrawStep from './steps/CarDrawStep'
 import DirectorStep from './steps/DirectorStep'
@@ -23,7 +24,7 @@ const STRATEGY_LABELS = { attaque: 'Attaque', conservation: 'Conservation', equi
 const phaseOrder = ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'review']
 
 export default function App() {
-  const [phase, setPhase] = useState('strategy')
+  const [phase, setPhase] = useState('home')
   const [rerolls, setRerolls] = useState(3)
   const [game, setGame] = useState({
     strategy: null,
@@ -83,7 +84,7 @@ export default function App() {
   }
 
   function restart() {
-    setPhase('strategy')
+    setPhase('home')
     setRerolls(3)
     setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
     setSimResult(null)
@@ -94,7 +95,7 @@ export default function App() {
       <header className="app-header">
         <div className="app-logo">TLM <span>Vers Le Mans</span></div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          {phase !== 'result' && phase !== 'simulation' && (
+          {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
             <div className="rerolls">
               REROLLS
               {[0, 1, 2].map(i => (
@@ -114,6 +115,7 @@ export default function App() {
 
       <div className="app-body">
         <div className="main-panel">
+          {phase === 'home' && <HomeStep onStart={() => setPhase('strategy')} />}
           {phase === 'strategy' && <StrategyStep onSelect={setStrategy} />}
           {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} />}
           {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} />}
@@ -136,7 +138,7 @@ export default function App() {
           {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} />}
         </div>
 
-        {phase !== 'result' && phase !== 'simulation' && (
+        {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
           <aside className="sidebar">
             {game.strategy && (
               <div className="sidebar-section">
