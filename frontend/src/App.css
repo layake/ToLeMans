@@ -911,3 +911,189 @@ body {
   background: var(--border-bright);
   border-radius: 3px;
 }
+
+/* ─── MOBILE ─── */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 14px 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .app-logo {
+    font-size: 22px;
+  }
+
+  .app-body {
+    flex-direction: column;
+  }
+
+  .main-panel {
+    padding: 20px 16px;
+    max-width: 100%;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .step-title {
+    font-size: 34px;
+  }
+
+  .strategy-grid {
+    gap: 10px;
+  }
+
+  .strategy-card {
+    padding: 16px 18px;
+  }
+
+  .strategy-name {
+    font-size: 22px;
+  }
+
+  .director-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-cars {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .result-verdict.wire_to_wire { font-size: 48px; }
+  .result-verdict.victoire     { font-size: 42px; }
+  .result-verdict.podium       { font-size: 40px; }
+  .result-verdict.finisher     { font-size: 38px; }
+  .result-verdict.abandon      { font-size: 38px; }
+
+  .draw-card-container {
+    width: 290px;
+    height: 180px;
+  }
+
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn {
+    text-align: center;
+  }
+}
+
+/* ─── RESPONSIVE MOBILE ─── */
+@media (max-width: 720px) {
+
+  .app-header {
+    padding: 14px 16px;
+  }
+
+  .app-logo {
+    font-size: 22px;
+  }
+
+  .app-logo span {
+    display: none;
+  }
+
+  .app-body {
+    flex-direction: column;
+  }
+
+  /* Cache la sidebar sur mobile */
+  .sidebar {
+    display: none;
+  }
+
+  .main-panel {
+    padding: 20px 16px;
+    max-width: 100%;
+  }
+
+  .step-title {
+    font-size: 34px;
+  }
+
+  .step-desc {
+    font-size: 14px;
+  }
+
+  /* Stratégie */
+  .strategy-card {
+    padding: 16px 18px;
+  }
+
+  .strategy-name {
+    font-size: 22px;
+  }
+
+  /* Directeurs : 1 colonne */
+  .director-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Review : 1 colonne */
+  .review-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Simulation : cartes en colonne */
+  .sim-cars {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  /* Écuries pilotes : colonne */
+  .team-cards-row {
+    flex-direction: column !important;
+  }
+
+  /* Rotation grid : plus compact */
+  .rotation-grid {
+    font-size: 8px;
+    overflow-x: auto;
+  }
+
+  /* Boutons full width sur mobile */
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn-row .btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Horloge : colonne */
+  .sim-clock-row {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 16px !important;
+  }
+
+  /* Result */
+  .result-verdict.wire_to_wire { font-size: 48px; }
+  .result-verdict.victoire     { font-size: 44px; }
+  .result-verdict.podium       { font-size: 42px; }
+  .result-verdict.finisher     { font-size: 40px; }
+  .result-verdict.abandon      { font-size: 40px; }
+
+  /* Draw card plus petit */
+  .draw-card-container {
+    width: 280px;
+    height: 175px;
+  }
+
+  /* Pilot slot info */
+  .pilot-slot-info {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
