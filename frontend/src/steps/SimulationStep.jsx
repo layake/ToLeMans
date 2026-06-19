@@ -185,7 +185,7 @@ export default function SimulationStep({ result, game, onDone }) {
 
       {/* Horloge analogique + infos course */}
       <div style={{
-        display: 'flex', alignItems: 'center', gap: 28,
+        display: "flex", alignItems: "center", gap: 28,
         background: 'var(--card)', border: '1px solid var(--border)',
         borderRadius: 'var(--radius-lg)', padding: '20px 24px', marginBottom: 24,
       }}>
