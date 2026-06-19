@@ -146,6 +146,7 @@ export default function App() {
           )}
           {phase.startsWith('pilot') && currentSlot && (
             <PilotDrawStep
+              key={phase}
               slot={currentSlot}
               pilotIndex={currentPilotIndex}
               totalPilots={6}
