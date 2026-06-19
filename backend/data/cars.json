@@ -1,20 +1,254 @@
 [
-  {"id": "jaguar-xjr9-1988", "year": 1988, "name": "Jaguar XJR-9 LM", "constructor": "Jaguar", "era": "Groupe C", "performance": 87, "reliability": 82},
-  {"id": "porsche-962c-1988", "year": 1988, "name": "Porsche 962C", "constructor": "Porsche", "era": "Groupe C", "performance": 86, "reliability": 88},
-  {"id": "sauber-c9-1989", "year": 1989, "name": "Sauber C9", "constructor": "Sauber-Mercedes", "era": "Groupe C", "performance": 92, "reliability": 84},
-  {"id": "mazda-787b-1991", "year": 1991, "name": "Mazda 787B", "constructor": "Mazda", "era": "Groupe C", "performance": 83, "reliability": 76},
-  {"id": "peugeot-905-1992", "year": 1992, "name": "Peugeot 905 Evo 1", "constructor": "Peugeot", "era": "Groupe C", "performance": 91, "reliability": 85},
-  {"id": "mclaren-f1-gtr-1995", "year": 1995, "name": "McLaren F1 GTR", "constructor": "McLaren", "era": "GT1", "performance": 85, "reliability": 88},
-  {"id": "ferrari-f40-gte-1995", "year": 1995, "name": "Ferrari F40 GTE", "constructor": "Ferrari", "era": "GT1", "performance": 80, "reliability": 82},
-  {"id": "toyota-gt-one-1999", "year": 1999, "name": "Toyota GT-One TS020", "constructor": "Toyota", "era": "GT1", "performance": 91, "reliability": 71},
-  {"id": "bmw-v12-lmr-1999", "year": 1999, "name": "BMW V12 LMR", "constructor": "BMW", "era": "GT1", "performance": 88, "reliability": 84},
-  {"id": "audi-r8-2001", "year": 2001, "name": "Audi R8", "constructor": "Audi", "era": "Prototype Moderne", "performance": 88, "reliability": 93},
-  {"id": "audi-r10-tdi-2006", "year": 2006, "name": "Audi R10 TDI", "constructor": "Audi", "era": "Prototype Moderne", "performance": 87, "reliability": 90},
-  {"id": "peugeot-908-2009", "year": 2009, "name": "Peugeot 908 HDi FAP", "constructor": "Peugeot", "era": "Prototype Moderne", "performance": 91, "reliability": 80},
-  {"id": "audi-r18-etron-2012", "year": 2012, "name": "Audi R18 e-tron quattro", "constructor": "Audi", "era": "Prototype Moderne", "performance": 92, "reliability": 88},
-  {"id": "toyota-ts050-2018", "year": 2018, "name": "Toyota TS050 Hybrid", "constructor": "Toyota", "era": "Prototype Moderne", "performance": 94, "reliability": 82},
-  {"id": "ferrari-499p-2023", "year": 2023, "name": "Ferrari 499P", "constructor": "Ferrari", "era": "Hypercar", "performance": 90, "reliability": 86},
-  {"id": "toyota-gr010-2023", "year": 2023, "name": "Toyota GR010 Hybrid", "constructor": "Toyota", "era": "Hypercar", "performance": 91, "reliability": 89},
-  {"id": "porsche-963-2023", "year": 2023, "name": "Porsche 963", "constructor": "Porsche", "era": "Hypercar", "performance": 88, "reliability": 87},
-  {"id": "cadillac-v-series-r-2023", "year": 2023, "name": "Cadillac V-Series.R", "constructor": "Cadillac", "era": "Hypercar", "performance": 86, "reliability": 85}
+  {
+    "id": "jaguar-xjr9-1988",
+    "year": 1988,
+    "name": "Jaguar XJR-9 LM",
+    "constructor": "Jaguar",
+    "era": "Groupe C",
+    "performance": 87,
+    "reliability": 82
+  },
+  {
+    "id": "porsche-962c-1988",
+    "year": 1988,
+    "name": "Porsche 962C",
+    "constructor": "Porsche",
+    "era": "Groupe C",
+    "performance": 86,
+    "reliability": 88
+  },
+  {
+    "id": "sauber-c9-1989",
+    "year": 1989,
+    "name": "Sauber C9",
+    "constructor": "Sauber-Mercedes",
+    "era": "Groupe C",
+    "performance": 92,
+    "reliability": 84
+  },
+  {
+    "id": "mazda-787b-1991",
+    "year": 1991,
+    "name": "Mazda 787B",
+    "constructor": "Mazda",
+    "era": "Groupe C",
+    "performance": 83,
+    "reliability": 76
+  },
+  {
+    "id": "peugeot-905-1992",
+    "year": 1992,
+    "name": "Peugeot 905 Evo 1",
+    "constructor": "Peugeot",
+    "era": "Groupe C",
+    "performance": 91,
+    "reliability": 85
+  },
+  {
+    "id": "mclaren-f1-gtr-1995",
+    "year": 1995,
+    "name": "McLaren F1 GTR",
+    "constructor": "McLaren",
+    "era": "GT1",
+    "performance": 85,
+    "reliability": 88
+  },
+  {
+    "id": "ferrari-f40-gte-1995",
+    "year": 1995,
+    "name": "Ferrari F40 GTE",
+    "constructor": "Ferrari",
+    "era": "GT1",
+    "performance": 80,
+    "reliability": 82
+  },
+  {
+    "id": "toyota-gt-one-1999",
+    "year": 1999,
+    "name": "Toyota GT-One TS020",
+    "constructor": "Toyota",
+    "era": "GT1",
+    "performance": 91,
+    "reliability": 71
+  },
+  {
+    "id": "bmw-v12-lmr-1999",
+    "year": 1999,
+    "name": "BMW V12 LMR",
+    "constructor": "BMW",
+    "era": "GT1",
+    "performance": 88,
+    "reliability": 84
+  },
+  {
+    "id": "audi-r8-2001",
+    "year": 2001,
+    "name": "Audi R8",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "performance": 88,
+    "reliability": 93
+  },
+  {
+    "id": "audi-r10-tdi-2006",
+    "year": 2006,
+    "name": "Audi R10 TDI",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "performance": 87,
+    "reliability": 90
+  },
+  {
+    "id": "peugeot-908-2009",
+    "year": 2009,
+    "name": "Peugeot 908 HDi FAP",
+    "constructor": "Peugeot",
+    "era": "Prototype Moderne",
+    "performance": 91,
+    "reliability": 80
+  },
+  {
+    "id": "audi-r18-etron-2012",
+    "year": 2012,
+    "name": "Audi R18 e-tron quattro",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "performance": 92,
+    "reliability": 88
+  },
+  {
+    "id": "toyota-ts050-2018",
+    "year": 2018,
+    "name": "Toyota TS050 Hybrid",
+    "constructor": "Toyota",
+    "era": "Prototype Moderne",
+    "performance": 94,
+    "reliability": 82
+  },
+  {
+    "id": "ferrari-499p-2023",
+    "year": 2023,
+    "name": "Ferrari 499P",
+    "constructor": "Ferrari",
+    "era": "Hypercar",
+    "performance": 90,
+    "reliability": 86
+  },
+  {
+    "id": "toyota-gr010-2023",
+    "year": 2023,
+    "name": "Toyota GR010 Hybrid",
+    "constructor": "Toyota",
+    "era": "Hypercar",
+    "performance": 91,
+    "reliability": 89
+  },
+  {
+    "id": "porsche-963-2023",
+    "year": 2023,
+    "name": "Porsche 963",
+    "constructor": "Porsche",
+    "era": "Hypercar",
+    "performance": 88,
+    "reliability": 87
+  },
+  {
+    "id": "cadillac-v-series-r-2023",
+    "year": 2023,
+    "name": "Cadillac V-Series.R",
+    "constructor": "Cadillac",
+    "era": "Hypercar",
+    "performance": 86,
+    "reliability": 85
+  },
+  {
+    "id": "ford-gt40-mk2-1966",
+    "year": 1966,
+    "name": "Ford GT40 Mk II",
+    "constructor": "Ford",
+    "era": "Sport Proto 60s",
+    "performance": 84,
+    "reliability": 80
+  },
+  {
+    "id": "ford-gt40-mk4-1967",
+    "year": 1967,
+    "name": "Ford GT40 Mk IV",
+    "constructor": "Ford",
+    "era": "Sport Proto 60s",
+    "performance": 86,
+    "reliability": 81
+  },
+  {
+    "id": "ferrari-330-p4-1967",
+    "year": 1967,
+    "name": "Ferrari 330 P4",
+    "constructor": "Ferrari",
+    "era": "Sport Proto 60s",
+    "performance": 85,
+    "reliability": 82
+  },
+  {
+    "id": "porsche-917k-1970",
+    "year": 1970,
+    "name": "Porsche 917K",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "performance": 89,
+    "reliability": 83
+  },
+  {
+    "id": "porsche-936-1976",
+    "year": 1976,
+    "name": "Porsche 936",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "performance": 88,
+    "reliability": 85
+  },
+  {
+    "id": "porsche-956-1982",
+    "year": 1982,
+    "name": "Porsche 956",
+    "constructor": "Porsche",
+    "era": "Groupe C",
+    "performance": 88,
+    "reliability": 89
+  },
+  {
+    "id": "porsche-919-2015",
+    "year": 2015,
+    "name": "Porsche 919 Hybrid",
+    "constructor": "Porsche",
+    "era": "Prototype Moderne",
+    "performance": 93,
+    "reliability": 85
+  },
+  {
+    "id": "porsche-919-2016",
+    "year": 2016,
+    "name": "Porsche 919 Hybrid",
+    "constructor": "Porsche",
+    "era": "Prototype Moderne",
+    "performance": 93,
+    "reliability": 87
+  },
+  {
+    "id": "ferrari-499p-2024",
+    "year": 2024,
+    "name": "Ferrari 499P",
+    "constructor": "Ferrari",
+    "era": "Hypercar",
+    "performance": 91,
+    "reliability": 88
+  },
+  {
+    "id": "toyota-gr010-2024",
+    "year": 2024,
+    "name": "Toyota GR010 Hybrid",
+    "constructor": "Toyota",
+    "era": "Hypercar",
+    "performance": 91,
+    "reliability": 89
+  }
 ]
