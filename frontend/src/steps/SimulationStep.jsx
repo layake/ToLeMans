@@ -275,22 +275,9 @@ export default function SimulationStep({ result, game, onDone }) {
       </div>
 
       {done && (
-        <>
-          <div style={{
-            display: 'flex', gap: 12, marginTop: 20, padding: '16px 20px',
-            background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)',
-          }}>
-            {[{ car: game.car1, res: result.car1 }, { car: game.car2, res: result.car2 }].map(({ car, res }, i) => (
-              <div key={i} style={{ flex: 1, textAlign: 'center' }}>
-                <div style={{ fontSize: 11, fontFamily: 'var(--font-mono)', color: 'var(--text-muted)', marginBottom: 6 }}>{car?.name}</div>
-                <PositionBadge position={res.position} dnf={res.dnf} />
-              </div>
-            ))}
-          </div>
-          <div className="btn-row" style={{ marginTop: 20 }}>
-            <button className="btn btn-primary btn-big" onClick={onDone}>Voir le résultat →</button>
-          </div>
-        </>
+        <div className="btn-row" style={{ marginTop: 24 }}>
+          <button className="btn btn-primary btn-big" onClick={onDone}>Voir le résultat →</button>
+        </div>
       )}
 
       {!done && (
