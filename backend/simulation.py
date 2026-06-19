@@ -150,13 +150,14 @@ def simulate_car(car, pilots, strategy, director):
         dt_bonus = compute_dt_bonus(director, phase["id"], has_rain)
         
         # Strategy modifier
-        strategy_mod = {"attaque": 3, "equilibre": 0, "conservation": -2}[strategy]
+        strategy_mod = {"attaque": 3, "equilibre": 1, "conservation": -1}[strategy]
         
         # Compose score
+        # Base = blend of pilot skill and BOP-normalized car, bonuses on top.
+        base = pilot_score * 0.55 + bop_perf * 0.45
         score = (
-            pilot_score * 0.50 +
-            bop_perf * 0.35 +
-            dt_bonus * 0.15 +
+            base +
+            dt_bonus * 0.35 +
             strategy_mod +
             random.gauss(0, 4)
         )
@@ -197,16 +198,16 @@ def simulate_car(car, pilots, strategy, director):
     final_score = sum(r["score"] for r in phase_results) / len(phase_results)
     
     # Map score to position (field of ~50 cars)
-    if final_score >= 92:
-        position = random.randint(1, 2)
-    elif final_score >= 87:
-        position = random.randint(1, 5)
+    if final_score >= 90:
+        position = random.randint(1, 3)
+    elif final_score >= 86:
+        position = random.randint(2, 7)
     elif final_score >= 82:
-        position = random.randint(3, 10)
-    elif final_score >= 75:
-        position = random.randint(8, 20)
+        position = random.randint(5, 14)
+    elif final_score >= 77:
+        position = random.randint(12, 25)
     else:
-        position = random.randint(15, 40)
+        position = random.randint(20, 45)
     
     wire_to_wire = (position == 1 and leading_phases == 5)
     
