@@ -148,6 +148,7 @@ export default function SimulationStep({ result, game, onDone }) {
   useEffect(() => {
     // Garde la page en haut au lancement de la course
     window.scrollTo({ top: 0, behavior: 'auto' })
+    const sc = document.querySelector('.app-body'); if (sc) sc.scrollTop = 0
     // Smooth analog clock animation
     startRef.current = performance.now()
     const animate = (now) => {
