@@ -3,12 +3,11 @@ import { useState } from 'react'
 const API = '/api'
 
 function StatBar({ label, value }) {
-  const color = value >= 88 ? '' : value >= 82 ? '' : 'red'
   return (
     <div className="stat-bar-row">
       <span className="stat-bar-label">{label}</span>
       <div className="stat-bar-bg">
-        <div className={`stat-bar-fill ${color}`} style={{ width: `${value}%` }} />
+        <div className="stat-bar-fill" style={{ width: `${value}%` }} />
       </div>
       <span className="stat-bar-val">{value}</span>
     </div>
@@ -19,9 +18,10 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
   const [pilot, setPilot] = useState(null)
   const [loading, setLoading] = useState(false)
   const [flipped, setFlipped] = useState(false)
+  const [localExclude, setLocalExclude] = useState([])
   const stepNum = 5 + pilotIndex
 
-  async function drawPilot() {
+  async function fetchPilot(exclude) {
     setLoading(true)
     setFlipped(false)
     setPilot(null)
@@ -29,9 +29,13 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
       const res = await fetch(`${API}/draw/pilot`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ exclude: excludeIds }),
+        body: JSON.stringify({ exclude }),
       })
       const data = await res.json()
+      if (data.error) {
+        console.error(data.error)
+        return
+      }
       setPilot(data)
       setTimeout(() => setFlipped(true), 100)
     } catch (e) {
@@ -41,10 +45,23 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
     }
   }
 
-  async function rerollPilot() {
+  function drawPilot() {
+    const allExclude = [...excludeIds, ...localExclude]
+    fetchPilot(allExclude)
+  }
+
+  function rerollPilot() {
     if (rerolls <= 0) return
     onReroll()
-    await drawPilot()
+    // Exclure aussi le pilote actuellement affiché
+    const newLocal = pilot ? [...localExclude, pilot.id] : localExclude
+    setLocalExclude(newLocal)
+    fetchPilot([...excludeIds, ...newLocal])
+  }
+
+  function confirmPilot() {
+    setLocalExclude([])
+    onSelect(pilot)
   }
 
   return (
@@ -108,7 +125,7 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
               </button>
               <button
                 className="btn btn-primary btn-big"
-                onClick={() => onSelect(pilot)}
+                onClick={confirmPilot}
               >
                 Confirmer →
               </button>
