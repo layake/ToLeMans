@@ -1,74 +1,74 @@
 const STEPS = [
-  { icon: '🎲', title: 'Tire ton équipe', text: 'Stratégie, 2 voitures et un directeur technique à travers toutes les époques du Mans.' },
-  { icon: '👥', title: 'Choisis tes pilotes', text: 'À chaque tour, 2 écuries te sont proposées. Pioche 1 pilote parmi les 6.' },
-  { icon: '🏁', title: 'Lance les 24 Heures', text: 'La course se simule heure par heure. Gère le jour, la nuit, la météo.' },
-  { icon: '🏆', title: 'Vise le parfait', text: 'Finir, gagner… ou réussir le Wire-to-Wire en menant de bout en bout.' },
+  { n: '01', title: 'Tire ton équipe', text: 'Stratégie, deux voitures et un directeur technique, à travers toutes les époques du Mans.' },
+  { n: '02', title: 'Choisis tes pilotes', text: 'À chaque tour, deux écuries te sont proposées. Pioche un pilote parmi les six.' },
+  { n: '03', title: 'Lance les 24 Heures', text: 'La course se simule, du départ à 16h jusqu\'au lendemain. Jour, nuit, météo, casse.' },
+  { n: '04', title: 'Vise le parfait', text: 'Finir, gagner… ou réussir le Wire-to-Wire en menant de bout en bout.' },
 ]
+
+// Affiche vintage dessinée — voiture + soleil + piste
+function PosterArt() {
+  return (
+    <svg viewBox="0 0 360 220" width="100%" style={{ maxWidth: 420, display: 'block', margin: '0 auto' }}>
+      {/* Soleil */}
+      <circle cx="180" cy="80" r="46" fill="#f4efe3" opacity="0.95" />
+      {/* Rayons */}
+      {Array.from({ length: 12 }).map((_, i) => {
+        const a = (i / 12) * Math.PI * 2
+        const x1 = 180 + Math.cos(a) * 54, y1 = 80 + Math.sin(a) * 54
+        const x2 = 180 + Math.cos(a) * 66, y2 = 80 + Math.sin(a) * 66
+        return <line key={i} x1={x1} y1={y1} x2={x2} y2={y2} stroke="#f4efe3" strokeWidth="3" opacity="0.5" />
+      })}
+      {/* Piste qui fuit */}
+      <path d="M60 220 L160 120 L200 120 L300 220 Z" fill="#0d2c52" opacity="0.55" />
+      <line x1="180" y1="120" x2="180" y2="220" stroke="#f4efe3" strokeWidth="3" strokeDasharray="8 10" opacity="0.6" />
+      {/* Voiture stylisée (proto) */}
+      <g transform="translate(150,150)">
+        <path d="M0 28 Q6 10 34 10 L52 10 Q66 10 70 22 L72 28 Q72 34 64 34 L8 34 Q0 34 0 28 Z" fill="#d83a2c" />
+        <path d="M30 12 Q34 4 46 4 L52 10 L34 10 Z" fill="#0a1a2f" opacity="0.85" />
+        <circle cx="16" cy="34" r="7" fill="#0a1a2f" />
+        <circle cx="56" cy="34" r="7" fill="#0a1a2f" />
+        <circle cx="16" cy="34" r="3" fill="#f4efe3" />
+        <circle cx="56" cy="34" r="3" fill="#f4efe3" />
+      </g>
+    </svg>
+  )
+}
 
 export default function HomeStep({ onStart }) {
   return (
-    <div style={{ maxWidth: 520, margin: '0 auto', paddingTop: 20 }}>
-      {/* Hero */}
-      <div style={{ textAlign: 'center', marginBottom: 40 }}>
-        <div style={{
-          fontFamily: 'var(--font-display)', fontSize: 64, letterSpacing: 4,
-          color: 'var(--yellow)', lineHeight: 1, marginBottom: 8,
-          textShadow: '0 0 30px rgba(240,192,64,0.3)',
-        }}>
+    <div className="screen-enter" style={{ maxWidth: 540, margin: '0 auto' }}>
+      <PosterArt />
+
+      <div style={{ textAlign: 'center', marginTop: 10, marginBottom: 32 }}>
+        <div style={{ fontFamily: 'var(--font-display)', fontSize: 68, letterSpacing: 3, color: 'var(--cream)', lineHeight: 0.9 }}>
           VERS LE MANS
         </div>
-        <div style={{ fontSize: 15, color: 'var(--text-muted)', lineHeight: 1.6, maxWidth: 400, margin: '0 auto' }}>
-          Constitue une écurie de rêve à travers toutes les époques
-          et tente de gagner les 24 Heures du Mans.
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', letterSpacing: 3, marginTop: 6 }}>
+          DREAM TEAM · 24 HEURES · TOUTES LES ÉPOQUES
         </div>
       </div>
 
-      {/* How to play */}
-      <div style={{ marginBottom: 36 }}>
-        <div style={{
-          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--yellow)',
-          letterSpacing: 2, textAlign: 'center', marginBottom: 20,
-        }}>
-          COMMENT JOUER
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-          {STEPS.map((s, i) => (
-            <div key={i} style={{
-              display: 'flex', alignItems: 'center', gap: 16,
-              background: 'var(--card)', border: '1px solid var(--border)',
-              borderRadius: 'var(--radius-lg)', padding: '16px 20px',
-            }}>
-              <div style={{
-                fontSize: 28, width: 44, height: 44, flexShrink: 0,
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                background: 'var(--surface)', borderRadius: 12,
-              }}>
-                {s.icon}
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--text)', marginBottom: 2 }}>
-                  <span style={{ color: 'var(--yellow)', fontFamily: 'var(--font-mono)', fontSize: 12, marginRight: 8 }}>
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  {s.title}
-                </div>
-                <div style={{ fontSize: 13, color: 'var(--text-muted)', lineHeight: 1.5 }}>{s.text}</div>
-              </div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginBottom: 30 }}>
+        {STEPS.map(s => (
+          <div key={s.n} style={{
+            display: 'flex', alignItems: 'flex-start', gap: 16,
+            background: 'var(--card)', border: '1px solid var(--border)',
+            borderRadius: 'var(--radius-lg)', padding: '15px 18px',
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-display)', fontSize: 30, lineHeight: 1,
+              color: 'var(--blue-sky)', minWidth: 36,
+            }}>{s.n}</div>
+            <div>
+              <div style={{ fontWeight: 700, fontSize: 15, color: 'var(--cream)', marginBottom: 3 }}>{s.title}</div>
+              <div style={{ fontSize: 13, color: 'var(--text-dim)', lineHeight: 1.5 }}>{s.text}</div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
 
-      {/* CTA */}
-      <button
-        className="btn btn-primary"
-        onClick={onStart}
-        style={{
-          width: '100%', padding: '18px', fontSize: 18, letterSpacing: 1,
-          fontFamily: 'var(--font-display)',
-        }}
-      >
-        🏁 COMMENCER LA PARTIE
+      <button className="btn btn-primary" onClick={onStart} style={{ width: '100%', padding: 18, fontSize: 20, letterSpacing: 1, fontFamily: 'var(--font-display)' }}>
+        COMMENCER LA PARTIE
       </button>
     </div>
   )
