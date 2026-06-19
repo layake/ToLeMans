@@ -31,9 +31,9 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart }) 
   }
 
   return (
-    <div>
+    <div className="screen-enter">
       <div className="step-header">
-        <div className="step-label">Étape 11 / 11</div>
+        <div className="step-eyebrow">Étape 11 / 11 · Revue</div>
         <div className="step-title">Revue d'Équipe</div>
         <div className="step-desc">
           Votre écurie est prête. Vérifiez la composition avant de lancer les 24 Heures.
