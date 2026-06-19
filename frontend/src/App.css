@@ -52,7 +52,7 @@ body {
 
 #root { min-height: 100vh; }
 
-.app { min-height: 100vh; display: flex; flex-direction: column; }
+.app { min-height: 100vh; min-height: 100dvh; display: flex; flex-direction: column; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
@@ -498,7 +498,13 @@ body {
 /* ─── RESPONSIVE ─── */
 @media (max-width: 720px) {
   :root { --pad-screen: 16px; }
-  .app-header { padding: 14px 16px; }
+
+  /* Layout vertical plein écran, calé en haut */
+  .app { height: 100dvh; min-height: 100dvh; overflow: hidden; }
+  .app-body { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .main-panel { padding-top: 18px; padding-bottom: 28px; }
+
+  .app-header { padding: 14px 16px; position: static; }
   .app-logo { font-size: 20px; }
   .app-logo span { display: none; }
   .app-body { flex-direction: column; align-items: stretch; }
