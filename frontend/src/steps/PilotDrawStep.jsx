@@ -151,6 +151,27 @@ function RotationGrid({ strategy, pilots, currentIndex }) {
   )
 }
 
+
+function CollapsibleRotation({ strategy, pilots, currentIndex }) {
+  const [open, setOpen] = useState(false)
+  return (
+    <div style={{ marginTop: 20 }}>
+      <button
+        onClick={() => setOpen(o => !o)}
+        style={{
+          background: 'none', border: '1px solid var(--border)', borderRadius: 'var(--radius)',
+          color: 'var(--text-muted)', padding: '8px 14px', cursor: 'pointer',
+          fontFamily: 'var(--font-mono)', fontSize: 11, letterSpacing: 1, width: '100%',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+        }}
+      >
+        {open ? '▲ MASQUER' : '▼ VOIR'} LA ROTATION DES PILOTES
+      </button>
+      {open && <RotationGrid strategy={strategy} pilots={pilots} currentIndex={currentIndex} />}
+    </div>
+  )
+}
+
 export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, strategy, currentPilots, rerolls, onReroll, onSelect }) {
   const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(false)
@@ -246,7 +267,7 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, strate
         </>
       )}
 
-      <RotationGrid strategy={strategy} pilots={currentPilots} currentIndex={pilotIndex} />
+      {teams && <CollapsibleRotation strategy={strategy} pilots={currentPilots} currentIndex={pilotIndex} />}
     </div>
   )
 }
