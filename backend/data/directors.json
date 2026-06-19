@@ -78,5 +78,35 @@
     "reliability_bonus": 10,
     "bonus_condition": "all",
     "bonus_value": 6
+  },
+  {
+    "id": "john-wyer",
+    "name": "John Wyer",
+    "era": "1950 – 1975",
+    "specialty": "Management légendaire",
+    "description": "Patron des Aston, Ford GT40 et Porsche 917 Gulf. La rigueur faite homme.",
+    "reliability_bonus": 13,
+    "bonus_condition": "all",
+    "bonus_value": 10
+  },
+  {
+    "id": "andre-de-cortanze",
+    "name": "André de Cortanze",
+    "era": "1975 – 2000",
+    "specialty": "Ingénierie châssis",
+    "description": "Concepteur de prototypes Renault, Peugeot et Toyota victorieux. Le sens du tout-terrain.",
+    "reliability_bonus": 9,
+    "bonus_condition": "pace",
+    "bonus_value": 14
+  },
+  {
+    "id": "leena-gade",
+    "name": "Leena Gade",
+    "era": "2010 – 2020",
+    "specialty": "Stratégie de course",
+    "description": "Ingénieure de course Audi, triple vainqueur au Mans. La décision juste au bon moment.",
+    "reliability_bonus": 8,
+    "bonus_condition": "strategy",
+    "bonus_value": 16
   }
 ]
