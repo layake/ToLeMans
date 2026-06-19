@@ -146,6 +146,8 @@ export default function SimulationStep({ result, game, onDone }) {
   const totalPhases = phases.length
 
   useEffect(() => {
+    // Garde la page en haut au lancement de la course
+    window.scrollTo({ top: 0, behavior: 'auto' })
     // Smooth analog clock animation
     startRef.current = performance.now()
     const animate = (now) => {
