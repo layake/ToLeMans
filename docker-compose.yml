@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./backend
+    restart: unless-stopped
+    networks:
+      - tlm-net
+
+  frontend:
+    build: ./frontend
+    restart: unless-stopped
+    ports:
+      - "3030:80"
+    depends_on:
+      - backend
+    networks:
+      - tlm-net
+
+networks:
+  tlm-net:
+    driver: bridge

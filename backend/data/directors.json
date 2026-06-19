@@ -1,0 +1,82 @@
+[
+  {
+    "id": "norbert-singer",
+    "name": "Norbert Singer",
+    "era": "1970 – 2005",
+    "specialty": "Fiabilité totale",
+    "description": "Architecte des victoires Porsche. 7 victoires au Mans. La fiabilité comme religion.",
+    "reliability_bonus": 15,
+    "bonus_condition": "all",
+    "bonus_value": 8
+  },
+  {
+    "id": "ross-brawn",
+    "name": "Ross Brawn",
+    "era": "1990 – 2013",
+    "specialty": "Stratégie",
+    "description": "Génie de la stratégie. Transforme un plan de course parfait en victoire certaine.",
+    "reliability_bonus": 8,
+    "bonus_condition": "strategy",
+    "bonus_value": 15
+  },
+  {
+    "id": "reinhold-joest",
+    "name": "Reinhold Joest",
+    "era": "1978 – 2018",
+    "specialty": "Management équipe",
+    "description": "Le meilleur patron d'équipe de l'histoire de l'endurance. Son équipe ne craque jamais.",
+    "reliability_bonus": 12,
+    "bonus_condition": "all",
+    "bonus_value": 12
+  },
+  {
+    "id": "pascal-vasselon",
+    "name": "Pascal Vasselon",
+    "era": "2012 – 2024",
+    "specialty": "Conditions mixtes & pluie",
+    "description": "Toyota WEC. Maître des conditions dégradées. La pluie est son alliée.",
+    "reliability_bonus": 7,
+    "bonus_condition": "rain",
+    "bonus_value": 20
+  },
+  {
+    "id": "rudi-lins",
+    "name": "Rudi Lins",
+    "era": "1980 – 1998",
+    "specialty": "Nuit",
+    "description": "Légende des réglages nocturnes. Son équipe accélère quand les autres ralentissent.",
+    "reliability_bonus": 6,
+    "bonus_condition": "night",
+    "bonus_value": 20
+  },
+  {
+    "id": "john-barnard",
+    "name": "John Barnard",
+    "era": "1985 – 2004",
+    "specialty": "Aérodynamique",
+    "description": "Révolutionnaire du design. Ses voitures filent plus vite que prévu… mais parfois s'arrêtent.",
+    "reliability_bonus": 3,
+    "bonus_condition": "pace",
+    "bonus_value": 18
+  },
+  {
+    "id": "walter-naher",
+    "name": "Walter Näher",
+    "era": "2000 – 2016",
+    "specialty": "Hybride & mécanique",
+    "description": "Pionnier des systèmes hybrides en endurance. La fiabilité mécanique comme obsession.",
+    "reliability_bonus": 14,
+    "bonus_condition": "pace",
+    "bonus_value": 8
+  },
+  {
+    "id": "tony-padgett",
+    "name": "Tony Padgett",
+    "era": "1995 – 2012",
+    "specialty": "Endurance pure",
+    "description": "Responsable technique BMW au Mans 1999. Prudence, régularité, zéro prise de risque inutile.",
+    "reliability_bonus": 10,
+    "bonus_condition": "all",
+    "bonus_value": 6
+  }
+]
