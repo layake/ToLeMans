@@ -16,16 +16,16 @@ app.add_middleware(
 with open("data/cars.json") as f:
     CARS = json.load(f)
 
-with open("data/pilots.json") as f:
-    PILOTS = json.load(f)
-
 with open("data/directors.json") as f:
     DIRECTORS = json.load(f)
+
+with open("data/team_entries.json") as f:
+    TEAM_ENTRIES = json.load(f)
 
 
 @app.get("/health")
 def health():
-    return {"status": "ok", "cars": len(CARS), "pilots": len(PILOTS), "directors": len(DIRECTORS)}
+    return {"status": "ok", "cars": len(CARS), "teams": len(TEAM_ENTRIES), "directors": len(DIRECTORS)}
 
 
 @app.get("/directors")
@@ -42,13 +42,22 @@ def draw_car(body: dict):
     return random.choice(available)
 
 
-@app.post("/draw/pilot")
-def draw_pilot(body: dict):
-    exclude = body.get("exclude", [])
-    available = [p for p in PILOTS if p["id"] not in exclude]
-    if not available:
-        return {"error": "No pilots available"}
-    return random.choice(available)
+@app.post("/draw/teams")
+def draw_teams(body: dict):
+    """Draw 2 team entries, excluding any team that contains an already-chosen pilot."""
+    chosen_pilot_ids = body.get("chosen_pilot_ids", [])
+
+    # Exclude teams that contain ANY already-chosen pilot
+    available = [
+        t for t in TEAM_ENTRIES
+        if not any(p["id"] in chosen_pilot_ids for p in t["pilots"])
+    ]
+
+    if len(available) < 2:
+        return {"error": "Not enough teams available", "available": len(available)}
+
+    selected = random.sample(available, 2)
+    return {"team1": selected[0], "team2": selected[1]}
 
 
 @app.post("/simulate")

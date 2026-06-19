@@ -8,8 +8,6 @@ import ReviewStep from './steps/ReviewStep'
 import SimulationStep from './steps/SimulationStep'
 import ResultStep from './steps/ResultStep'
 
-const TOTAL_STEPS = 11 // strategy, car1, car2, director, pilot1-6, review
-
 const PILOT_SLOTS = [
   { carNum: 1, slot: 1, label: 'Voiture 1 — Pilote 1' },
   { carNum: 1, slot: 2, label: 'Voiture 1 — Pilote 2' },
@@ -22,31 +20,28 @@ const PILOT_SLOTS = [
 const STRATEGY_ICONS = { attaque: '⚡', conservation: '🛡️', equilibre: '⚖️' }
 const STRATEGY_LABELS = { attaque: 'Attaque', conservation: 'Conservation', equilibre: 'Équilibré' }
 
+const phaseOrder = ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'review']
+
 export default function App() {
-  const [phase, setPhase] = useState('strategy') // strategy | car1 | car2 | director | pilot0..5 | review | simulation | result
+  const [phase, setPhase] = useState('strategy')
   const [rerolls, setRerolls] = useState(3)
   const [game, setGame] = useState({
     strategy: null,
     car1: null,
     car2: null,
     director: null,
-    pilots: [], // array of 6 pilots
+    pilots: [],
+    chosenPilotIds: [],
   })
   const [simResult, setSimResult] = useState(null)
 
-  const drawnPilotIds = game.pilots.map(p => p.id)
   const drawnCarIds = [game.car1?.id, game.car2?.id].filter(Boolean)
-
   const currentPilotIndex = phase.startsWith('pilot') ? parseInt(phase.replace('pilot', '')) : -1
   const currentSlot = currentPilotIndex >= 0 ? PILOT_SLOTS[currentPilotIndex] : null
-
-  // Compute step number for dot indicator
-  const phaseOrder = ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'review']
   const stepIndex = phaseOrder.indexOf(phase)
 
-  function handleReroll() {
-    if (rerolls > 0) setRerolls(r => r - 1)
-  }
+  const pilots_car1 = game.pilots.slice(0, 3)
+  const pilots_car2 = game.pilots.slice(3, 6)
 
   function setStrategy(s) {
     setGame(g => ({ ...g, strategy: s }))
@@ -69,13 +64,13 @@ export default function App() {
   }
 
   function addPilot(pilot) {
-    setGame(g => ({ ...g, pilots: [...g.pilots, pilot] }))
+    setGame(g => ({
+      ...g,
+      pilots: [...g.pilots, pilot],
+      chosenPilotIds: [...g.chosenPilotIds, pilot.id],
+    }))
     const nextIndex = currentPilotIndex + 1
-    if (nextIndex >= 6) {
-      setPhase('review')
-    } else {
-      setPhase(`pilot${nextIndex}`)
-    }
+    setPhase(nextIndex >= 6 ? 'review' : `pilot${nextIndex}`)
   }
 
   function startSimulation(result) {
@@ -90,19 +85,16 @@ export default function App() {
   function restart() {
     setPhase('strategy')
     setRerolls(3)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [] })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
     setSimResult(null)
   }
-
-  const pilots_car1 = game.pilots.slice(0, 3)
-  const pilots_car2 = game.pilots.slice(3, 6)
 
   return (
     <div className="app">
       <header className="app-header">
         <div className="app-logo">TLM <span>Vers Le Mans</span></div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 20 }}>
-          {rerolls >= 0 && phase !== 'result' && phase !== 'simulation' && (
+          {phase !== 'result' && phase !== 'simulation' && (
             <div className="rerolls">
               REROLLS
               {[0, 1, 2].map(i => (
@@ -123,67 +115,33 @@ export default function App() {
       <div className="app-body">
         <div className="main-panel">
           {phase === 'strategy' && <StrategyStep onSelect={setStrategy} />}
-          {phase === 'car1' && (
-            <CarDrawStep
-              carNum={1}
-              excludeIds={drawnCarIds}
-              rerolls={rerolls}
-              onReroll={handleReroll}
-              onSelect={setCar1}
-            />
-          )}
-          {phase === 'car2' && (
-            <CarDrawStep
-              carNum={2}
-              excludeIds={drawnCarIds}
-              rerolls={rerolls}
-              onReroll={handleReroll}
-              onSelect={setCar2}
-            />
-          )}
-          {phase === 'director' && (
-            <DirectorStep onSelect={setDirector} />
-          )}
+          {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} />}
+          {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} />}
+          {phase === 'director' && <DirectorStep onSelect={setDirector} />}
           {phase.startsWith('pilot') && currentSlot && (
             <PilotDrawStep
               key={phase}
               slot={currentSlot}
               pilotIndex={currentPilotIndex}
-              totalPilots={6}
-              excludeIds={drawnPilotIds}
+              chosenPilotIds={game.chosenPilotIds}
               rerolls={rerolls}
-              onReroll={handleReroll}
+              onReroll={() => setRerolls(r => r - 1)}
               onSelect={addPilot}
             />
           )}
-          {phase === 'review' && (
-            <ReviewStep
-              game={game}
-              pilots_car1={pilots_car1}
-              pilots_car2={pilots_car2}
-              onStart={startSimulation}
-            />
-          )}
-          {phase === 'simulation' && simResult && (
-            <SimulationStep result={simResult} game={game} onDone={showResult} />
-          )}
-          {phase === 'result' && simResult && (
-            <ResultStep result={simResult} game={game} onRestart={restart} />
-          )}
+          {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} />}
+          {phase === 'simulation' && simResult && <SimulationStep result={simResult} game={game} onDone={showResult} />}
+          {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} />}
         </div>
 
-        {/* Sidebar - persistent team overview */}
         {phase !== 'result' && phase !== 'simulation' && (
           <aside className="sidebar">
             {game.strategy && (
               <div className="sidebar-section">
                 <div className="sidebar-label">Stratégie</div>
-                <div className="sidebar-strategy">
-                  {STRATEGY_ICONS[game.strategy]} {STRATEGY_LABELS[game.strategy]}
-                </div>
+                <div className="sidebar-strategy">{STRATEGY_ICONS[game.strategy]} {STRATEGY_LABELS[game.strategy]}</div>
               </div>
             )}
-
             <div className="sidebar-section">
               <div className="sidebar-label">Voiture 1</div>
               {game.car1 ? (
@@ -191,17 +149,14 @@ export default function App() {
                   <div className="sidebar-item-name">{game.car1.name}</div>
                   <div className="sidebar-item-sub">{game.car1.year} · {game.car1.constructor}</div>
                 </div>
-              ) : (
-                <div className="sidebar-empty">À tirer</div>
-              )}
-              {pilots_car1.length > 0 && pilots_car1.map((p, i) => (
+              ) : <div className="sidebar-empty">À tirer</div>}
+              {pilots_car1.map((p, i) => (
                 <div key={p.id} className="sidebar-item">
                   <div className="sidebar-item-name">{p.nationality} {p.name}</div>
-                  <div className="sidebar-item-sub">P{i + 1} · {p.year}</div>
+                  <div className="sidebar-item-sub">P{i + 1}</div>
                 </div>
               ))}
             </div>
-
             <div className="sidebar-section">
               <div className="sidebar-label">Voiture 2</div>
               {game.car2 ? (
@@ -209,17 +164,14 @@ export default function App() {
                   <div className="sidebar-item-name">{game.car2.name}</div>
                   <div className="sidebar-item-sub">{game.car2.year} · {game.car2.constructor}</div>
                 </div>
-              ) : (
-                <div className="sidebar-empty">À tirer</div>
-              )}
-              {pilots_car2.length > 0 && pilots_car2.map((p, i) => (
+              ) : <div className="sidebar-empty">À tirer</div>}
+              {pilots_car2.map((p, i) => (
                 <div key={p.id} className="sidebar-item">
                   <div className="sidebar-item-name">{p.nationality} {p.name}</div>
-                  <div className="sidebar-item-sub">P{i + 1} · {p.year}</div>
+                  <div className="sidebar-item-sub">P{i + 1}</div>
                 </div>
               ))}
             </div>
-
             {game.director && (
               <div className="sidebar-section">
                 <div className="sidebar-label">Directeur Technique</div>

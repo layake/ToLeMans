@@ -2,42 +2,94 @@ import { useState } from 'react'
 
 const API = '/api'
 
-function StatBar({ label, value }) {
+function PilotButton({ pilot, onSelect, disabled }) {
   return (
-    <div className="stat-bar-row">
-      <span className="stat-bar-label">{label}</span>
-      <div className="stat-bar-bg">
-        <div className="stat-bar-fill" style={{ width: `${value}%` }} />
+    <button
+      onClick={() => !disabled && onSelect(pilot)}
+      disabled={disabled}
+      style={{
+        background: 'var(--surface)',
+        border: '1px solid var(--border)',
+        borderRadius: 'var(--radius)',
+        padding: '10px 14px',
+        cursor: disabled ? 'not-allowed' : 'pointer',
+        textAlign: 'left',
+        width: '100%',
+        transition: 'border-color 0.15s, background 0.15s',
+        opacity: disabled ? 0.4 : 1,
+      }}
+      onMouseEnter={e => { if (!disabled) { e.currentTarget.style.borderColor = 'var(--yellow)'; e.currentTarget.style.background = 'rgba(240,192,64,0.06)' } }}
+      onMouseLeave={e => { e.currentTarget.style.borderColor = 'var(--border)'; e.currentTarget.style.background = 'var(--surface)' }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+        <span style={{ fontWeight: 700, color: 'var(--text)', fontSize: 14 }}>{pilot.nationality} {pilot.name}</span>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)' }}>{pilot.profile}</span>
       </div>
-      <span className="stat-bar-val">{value}</span>
+      <div style={{ display: 'flex', gap: 10 }}>
+        {[['PACE', pilot.pace], ['NUIT', pilot.night_skill], ['ENDU', pilot.endurance], ['FIAB', pilot.reliability]].map(([label, val]) => (
+          <div key={label} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)' }}>{label}</span>
+            <span style={{ fontFamily: 'var(--font-mono)', fontSize: 13, fontWeight: 700, color: val >= 88 ? 'var(--green)' : val >= 83 ? 'var(--yellow)' : 'var(--text-dim)' }}>{val}</span>
+          </div>
+        ))}
+      </div>
+    </button>
+  )
+}
+
+function TeamCard({ team, onSelect, disabled }) {
+  return (
+    <div style={{
+      background: 'var(--card)',
+      border: '1px solid var(--border)',
+      borderRadius: 'var(--radius-lg)',
+      padding: '18px 16px',
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 8,
+    }}>
+      <div>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--yellow)', letterSpacing: 2, marginBottom: 4 }}>
+          #{team.number} · {team.year} · {team.era}
+        </div>
+        <div style={{ fontFamily: 'var(--font-display)', fontSize: 18, letterSpacing: 0.5, color: 'var(--text)', lineHeight: 1.2 }}>
+          {team.car}
+        </div>
+        <div style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>{team.constructor}</div>
+      </div>
+      <div style={{ height: 1, background: 'var(--border)', margin: '4px 0' }} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {team.pilots.map(pilot => (
+          <PilotButton key={pilot.id} pilot={pilot} onSelect={onSelect} disabled={disabled} />
+        ))}
+      </div>
     </div>
   )
 }
 
-export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeIds, rerolls, onReroll, onSelect }) {
-  const [pilot, setPilot] = useState(null)
+export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect }) {
+  const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(false)
-  const [flipped, setFlipped] = useState(false)
-  const [localExclude, setLocalExclude] = useState([])
+  const [selected, setSelected] = useState(null)
   const stepNum = 5 + pilotIndex
 
-  async function fetchPilot(exclude) {
+  async function fetchTeams(excludeIds) {
     setLoading(true)
-    setFlipped(false)
-    setPilot(null)
+    setTeams(null)
+    setSelected(null)
     try {
-      const res = await fetch(`${API}/draw/pilot`, {
+      const res = await fetch(`${API}/draw/teams`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ exclude }),
+        body: JSON.stringify({ chosen_pilot_ids: excludeIds }),
       })
       const data = await res.json()
       if (data.error) {
         console.error(data.error)
         return
       }
-      setPilot(data)
-      setTimeout(() => setFlipped(true), 100)
+      setTeams(data)
     } catch (e) {
       console.error(e)
     } finally {
@@ -45,23 +97,22 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
     }
   }
 
-  function drawPilot() {
-    const allExclude = [...excludeIds, ...localExclude]
-    fetchPilot(allExclude)
+  function draw() {
+    fetchTeams(chosenPilotIds)
   }
 
-  function rerollPilot() {
+  function reroll() {
     if (rerolls <= 0) return
     onReroll()
-    // Exclure aussi le pilote actuellement affiché
-    const newLocal = pilot ? [...localExclude, pilot.id] : localExclude
-    setLocalExclude(newLocal)
-    fetchPilot([...excludeIds, ...newLocal])
+    fetchTeams(chosenPilotIds)
   }
 
-  function confirmPilot() {
-    setLocalExclude([])
-    onSelect(pilot)
+  function pickPilot(pilot) {
+    setSelected(pilot)
+  }
+
+  function confirm() {
+    if (selected) onSelect(selected)
   }
 
   return (
@@ -74,65 +125,81 @@ export default function PilotDrawStep({ slot, pilotIndex, totalPilots, excludeId
           <span className="pilot-slot-pos">{slot.label.split('—')[1]?.trim()}</span>
         </div>
         <div className="step-desc">
-          Tirez un pilote ayant réellement couru au Mans. L'ordre est fixe :
-          il sera toujours en piste à ce slot de rotation.
+          Deux écuries sont proposées. Choisissez un pilote parmi les six.
+          Les écuries avec un pilote déjà choisi ne peuvent plus apparaître.
         </div>
       </div>
 
-      <div className="draw-area">
-        {!pilot && !loading && (
-          <button className="btn-draw" onClick={drawPilot}>
-            TIRER
-          </button>
-        )}
+      {!teams && !loading && (
+        <div className="draw-area">
+          <button className="btn-draw" onClick={draw}>TIRER</button>
+        </div>
+      )}
 
-        {loading && (
-          <div className="loading-overlay">
-            <div className="spinner" />
-            <div className="loading-text">TIRAGE EN COURS…</div>
+      {loading && (
+        <div className="loading-overlay">
+          <div className="spinner" />
+          <div className="loading-text">TIRAGE EN COURS…</div>
+        </div>
+      )}
+
+      {teams && (
+        <>
+          <div style={{ display: 'flex', gap: 14, marginBottom: 20 }}>
+            <TeamCard
+              team={teams.team1}
+              onSelect={pickPilot}
+              disabled={selected !== null}
+            />
+            <TeamCard
+              team={teams.team2}
+              onSelect={pickPilot}
+              disabled={selected !== null}
+            />
           </div>
-        )}
 
-        {pilot && (
-          <>
-            <div className="draw-card-container">
-              <div className={`draw-card ${flipped ? 'flipped' : ''}`}>
-                <div className="draw-card-face draw-card-back">
-                  <div className="draw-card-back-icon">👤</div>
-                  <span>Tirage...</span>
-                </div>
-                <div className="draw-card-face draw-card-front">
-                  <div className="card-year">{pilot.nationality} · {pilot.year}</div>
-                  <div className="card-name">{pilot.name}</div>
-                  <div className="card-subtitle" style={{ marginBottom: 8 }}>{pilot.profile}</div>
-                  <div className="stat-bar-wrap">
-                    <StatBar label="PACE" value={pilot.pace} />
-                    <StatBar label="NUIT" value={pilot.night_skill} />
-                    <StatBar label="ENDU" value={pilot.endurance} />
-                    <StatBar label="FIAB" value={pilot.reliability} />
-                  </div>
-                </div>
+          {selected && (
+            <div style={{
+              background: 'rgba(240,192,64,0.08)',
+              border: '1px solid var(--yellow)',
+              borderRadius: 'var(--radius)',
+              padding: '14px 20px',
+              marginBottom: 20,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+              <div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--yellow)', marginBottom: 4 }}>PILOTE SÉLECTIONNÉ</div>
+                <div style={{ fontWeight: 700, color: 'var(--text)' }}>{selected.nationality} {selected.name}</div>
               </div>
+              <button
+                style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 12 }}
+                onClick={() => setSelected(null)}
+              >
+                Changer
+              </button>
             </div>
+          )}
 
-            <div className="btn-row">
-              <button
-                className="btn btn-secondary"
-                onClick={rerollPilot}
-                disabled={rerolls <= 0}
-              >
-                🔄 Reroll ({rerolls})
-              </button>
-              <button
-                className="btn btn-primary btn-big"
-                onClick={confirmPilot}
-              >
-                Confirmer →
-              </button>
-            </div>
-          </>
-        )}
-      </div>
+          <div className="btn-row">
+            <button
+              className="btn btn-secondary"
+              onClick={reroll}
+              disabled={rerolls <= 0 || selected !== null}
+            >
+              🔄 Reroll ({rerolls})
+            </button>
+            <button
+              className="btn btn-primary btn-big"
+              onClick={confirm}
+              disabled={!selected}
+            >
+              Confirmer →
+            </button>
+          </div>
+        </>
+      )}
     </div>
   )
 }
