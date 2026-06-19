@@ -35,9 +35,9 @@ const STRATEGIES = [
 
 export default function StrategyStep({ onSelect }) {
   return (
-    <div>
+    <div className="screen-enter">
       <div className="step-header">
-        <div className="step-label">Étape 1 / 11</div>
+        <div className="step-eyebrow">Étape 1 / 11 · Stratégie</div>
         <div className="step-title">Stratégie</div>
         <div className="step-desc">
           Choisissez votre philosophie de course. Elle définit la durée de vos relais
