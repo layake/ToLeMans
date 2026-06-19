@@ -120,6 +120,8 @@ export default function App() {
           {phase === 'director' && <DirectorStep onSelect={setDirector} />}
           {phase.startsWith('pilot') && currentSlot && (
             <PilotDrawStep
+              strategy={game.strategy}
+              currentPilots={game.pilots}
               key={phase}
               slot={currentSlot}
               pilotIndex={currentPilotIndex}
