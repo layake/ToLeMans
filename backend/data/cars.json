@@ -385,5 +385,59 @@
     "era": "Hypercar",
     "performance": 91,
     "reliability": 89
+  },
+  {
+    "id": "bmw-mhybrid-2025",
+    "year": 2025,
+    "name": "BMW M Hybrid V8",
+    "constructor": "BMW",
+    "era": "Hypercar",
+    "performance": 85,
+    "reliability": 84
+  },
+  {
+    "id": "alpine-a424-2025",
+    "year": 2025,
+    "name": "Alpine A424",
+    "constructor": "Alpine",
+    "era": "Hypercar",
+    "performance": 83,
+    "reliability": 80
+  },
+  {
+    "id": "peugeot-9x8-2025",
+    "year": 2025,
+    "name": "Peugeot 9X8",
+    "constructor": "Peugeot",
+    "era": "Hypercar",
+    "performance": 84,
+    "reliability": 82
+  },
+  {
+    "id": "lamborghini-sc63-2024",
+    "year": 2024,
+    "name": "Lamborghini SC63",
+    "constructor": "Lamborghini",
+    "era": "Hypercar",
+    "performance": 82,
+    "reliability": 76
+  },
+  {
+    "id": "cadillac-vseriesr-2024",
+    "year": 2024,
+    "name": "Cadillac V-Series.R",
+    "constructor": "Cadillac",
+    "era": "Hypercar",
+    "performance": 86,
+    "reliability": 84
+  },
+  {
+    "id": "isotta-tipo6-2024",
+    "year": 2024,
+    "name": "Isotta Fraschini Tipo 6",
+    "constructor": "Isotta Fraschini",
+    "era": "Hypercar",
+    "performance": 79,
+    "reliability": 72
   }
 ]
