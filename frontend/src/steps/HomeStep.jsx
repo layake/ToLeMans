@@ -5,7 +5,7 @@ const STEPS = [
   { n: '04', title: 'Vise le parfait', text: 'Finir, gagner… ou réussir le Wire-to-Wire en menant de bout en bout.' },
 ]
 
-export default function HomeStep({ onStart }) {
+export default function HomeStep({ onStartFree, onStartDaily, dailyDone }) {
   return (
     <div className="screen-enter" style={{ maxWidth: 540, margin: '0 auto' }}>
       {/* Bandeau course façon affiche — pur CSS */}
@@ -47,9 +47,22 @@ export default function HomeStep({ onStart }) {
         ))}
       </div>
 
-      <button className="btn btn-primary" onClick={onStart} style={{ width: '100%', padding: 18, fontSize: 22, letterSpacing: 1, fontFamily: 'var(--font-display)' }}>
-        COMMENCER LA PARTIE
-      </button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <button className="btn btn-primary" onClick={onStartFree} style={{ width: '100%', padding: 18, fontSize: 22, letterSpacing: 1, fontFamily: 'var(--font-display)' }}>
+          PARTIE LIBRE
+        </button>
+        <button
+          className="btn btn-secondary"
+          onClick={onStartDaily}
+          style={{ width: '100%', padding: 16, fontSize: 18, letterSpacing: 1, fontFamily: 'var(--font-display)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}
+        >
+          DÉFI DU JOUR
+          {dailyDone && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--blue-sky)', letterSpacing: 1 }}>· DÉJÀ JOUÉ</span>}
+        </button>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', textAlign: 'center', marginTop: 2, lineHeight: 1.5 }}>
+          Défi du jour : mêmes tirages pour tous, stats cachées, sans reroll. Seul ton 1er score compte.
+        </div>
+      </div>
     </div>
   )
 }
