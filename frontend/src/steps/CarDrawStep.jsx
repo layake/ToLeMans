@@ -22,37 +22,54 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
   const spinRef = useRef(null)
   const stepNum = carNum === 1 ? 2 : 3
 
+  async function fetchCarWithRetry(tries = 4) {
+    for (let i = 0; i < tries; i++) {
+      try {
+        const res = await fetch(`${API}/draw/car`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ exclude: excludeIds || [] }),
+        })
+        if (!res.ok) throw new Error('HTTP ' + res.status)
+        const data = await res.json()
+        if (!data || data.error) throw new Error(data?.error || 'no data')
+        return data
+      } catch (e) {
+        if (i === tries - 1) throw e
+        await new Promise(r => setTimeout(r, 250 * (i + 1)))
+      }
+    }
+  }
+
   async function drawCar() {
     setPhase('spinning')
     setCar(null)
 
-    // Lance l'effet machine à sous
     let speed = 50
     let elapsed = 0
     const spin = () => {
       setSpinName(SPIN_NAMES[Math.floor(Math.random() * SPIN_NAMES.length)])
       elapsed += speed
-      speed *= 1.12 // ralentit progressivement
+      speed *= 1.12
       if (elapsed < 1400) {
         spinRef.current = setTimeout(spin, speed)
       }
     }
     spin()
 
-    // Fetch en parallèle
+    const startedAt = Date.now()
     try {
-      const res = await fetch(`${API}/draw/car`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ exclude: excludeIds }),
-      })
-      const data = await res.json()
-      // Attendre la fin de l'animation de spin
+      const data = await fetchCarWithRetry()
+      const wait = Math.max(0, 1500 - (Date.now() - startedAt))
       setTimeout(() => {
         if (spinRef.current) clearTimeout(spinRef.current)
         setCar(data)
         setPhase('revealed')
-      }, 1500)
-    } catch (e) { console.error(e); setPhase('idle') }
+      }, wait)
+    } catch (e) {
+      console.error('draw failed after retries', e)
+      if (spinRef.current) clearTimeout(spinRef.current)
+      setPhase('idle')
+    }
   }
 
   function rerollCar() {
