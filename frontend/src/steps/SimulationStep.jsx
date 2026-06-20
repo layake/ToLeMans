@@ -129,7 +129,7 @@ function scoreClass(score, dnf) {
 }
 
 function PositionBadge({ position, dnf }) {
-  if (dnf) return <span style={{ color: 'var(--red)', fontFamily: 'var(--font-display)', fontSize: 20 }}>DNF</span>
+  if (dnf) return <span style={{ color: '#e0533a', fontFamily: 'var(--font-display)', fontSize: 20 }}>DNF</span>
   if (!position) return null
   const color = position === 1 ? '#f0c040' : position <= 3 ? '#40b870' : 'var(--text-dim)'
   return <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, color, letterSpacing: 1 }}>P{position}</span>
@@ -194,7 +194,7 @@ export default function SimulationStep({ result, game, onDone }) {
       }}>
         <AnalogClock progress={progress} />
         <div style={{ flex: 1 }}>
-          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--yellow)', letterSpacing: 2, marginBottom: 10 }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#4ea3d9', letterSpacing: 2, marginBottom: 10 }}>
             PROGRESSION DE COURSE
           </div>
           {/* Linear bar */}
@@ -232,7 +232,7 @@ export default function SimulationStep({ result, game, onDone }) {
           const visible = i < visibleCount
           return (
             <div key={phase.phase_id} className={`sim-phase ${visible ? 'visible' : ''}`}
-              style={{ borderLeft: visible ? `3px solid ${meta?.color || 'var(--yellow)'}` : '3px solid transparent' }}>
+              style={{ borderLeft: visible ? `3px solid ${meta?.color || '#4ea3d9'}` : '3px solid transparent' }}>
               <div className="sim-phase-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontSize: 16 }}>{meta?.icon}</span>
@@ -252,7 +252,7 @@ export default function SimulationStep({ result, game, onDone }) {
                         {dnf ? '⛔ ABANDON' : label}
                       </div>
                       {!dnf && (
-                        <div style={{ height: 4, width: 56, background: 'var(--border)', borderRadius: 2, overflow: 'hidden' }}>
+                        <div style={{ height: 4, width: 56, background: 'rgba(255,255,255,0.15)', borderRadius: 2, overflow: 'hidden' }}>
                           <div style={{
                             height: '100%', width: `${score}%`,
                             background: score >= 88 ? '#40b870' : score >= 80 ? '#f0c040' : '#d44020',
