@@ -47,13 +47,25 @@ def draw_car(body: dict):
     return random.choice(available)
 
 
+# Map id -> nom de pilote (un même vrai pilote a plusieurs ids selon l'année)
+PILOT_NAME_BY_ID = {p["id"]: p["name"] for t in TEAM_ENTRIES for p in t["pilots"]}
+
+
+def chosen_names(chosen_pilot_ids):
+    """Résout les ids choisis en NOMS de pilotes, pour exclure un même vrai pilote
+    même s'il existe en plusieurs exemplaires (ids différents) dans la base."""
+    return {PILOT_NAME_BY_ID.get(pid, pid) for pid in chosen_pilot_ids}
+
+
 @app.post("/draw/teams")
 def draw_teams(body: dict):
-    """Draw 2 team entries, excluding any team that contains an already-chosen pilot."""
+    """Draw 2 team entries, excluding any team containing an already-chosen driver
+    (matched by name, so the same real driver can't appear twice)."""
     chosen_pilot_ids = body.get("chosen_pilot_ids", [])
+    taken = chosen_names(chosen_pilot_ids)
     available = [
         t for t in TEAM_ENTRIES
-        if not any(p["id"] in chosen_pilot_ids for p in t["pilots"])
+        if not any(p["name"] in taken for p in t["pilots"])
     ]
     if len(available) < 2:
         return {"error": "Not enough teams available", "available": len(available)}
@@ -93,6 +105,7 @@ def daily_teams(body: dict):
     en sautant les écuries contenant un pilote déjà choisi."""
     chosen_pilot_ids = body.get("chosen_pilot_ids", [])
     pool_order = body.get("team_pool_order", [])  # liste d'IDs fournie par /daily
+    taken = chosen_names(chosen_pilot_ids)
 
     teams_by_id = {t["id"]: t for t in TEAM_ENTRIES}
     available = []
@@ -100,7 +113,7 @@ def daily_teams(body: dict):
         t = teams_by_id.get(tid)
         if not t:
             continue
-        if any(p["id"] in chosen_pilot_ids for p in t["pilots"]):
+        if any(p["name"] in taken for p in t["pilots"]):
             continue
         available.append(t)
         if len(available) == 2:
