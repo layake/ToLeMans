@@ -35,6 +35,18 @@ export default function App() {
     chosenPilotIds: [],
   })
   const [simResult, setSimResult] = useState(null)
+  const [daily, setDaily] = useState(false)
+  const [dailyData, setDailyData] = useState(null)
+  const [dailyDone, setDailyDone] = useState(false)
+
+  const API = '/api'
+
+  // Vérifie si la daily du jour est déjà jouée
+  useEffect(() => {
+    const today = new Date().toISOString().slice(0, 10)
+    const done = localStorage.getItem('tlm_daily_' + today)
+    setDailyDone(!!done)
+  }, [phase])
 
   // Recale le scroll en haut à chaque changement d'étape
   useEffect(() => {
@@ -53,7 +65,7 @@ export default function App() {
 
   function setStrategy(s) {
     setGame(g => ({ ...g, strategy: s }))
-    setPhase('car1')
+    setPhase(daily ? 'director' : 'car1')
   }
 
   function setCar1(car) {
@@ -90,9 +102,32 @@ export default function App() {
     setPhase('result')
   }
 
+  function startFree() {
+    setDaily(false)
+    setDailyData(null)
+    setRerolls(3)
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
+    setPhase('strategy')
+  }
+
+  async function startDaily() {
+    try {
+      const res = await fetch(`${API}/daily`)
+      const data = await res.json()
+      setDailyData(data)
+      setDaily(true)
+      setRerolls(0)
+      // Voitures imposées directement
+      setGame({ strategy: null, car1: data.car1, car2: data.car2, director: null, pilots: [], chosenPilotIds: [] })
+      setPhase('strategy')
+    } catch (e) { console.error(e) }
+  }
+
   function restart() {
     setPhase('home')
     setRerolls(3)
+    setDaily(false)
+    setDailyData(null)
     setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
     setSimResult(null)
   }
@@ -102,7 +137,7 @@ export default function App() {
       <header className="app-header">
         <div className="app-logo">TLM <span>Vers Le Mans</span></div>
         <div className="header-right">
-          {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
+          {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && !daily && (
             <div className="rerolls">
               REROLLS
               {[0, 1, 2].map(i => (
@@ -122,7 +157,7 @@ export default function App() {
 
       <div className="app-body">
         <div className="main-panel">
-          {phase === 'home' && <HomeStep onStart={() => setPhase('strategy')} />}
+          {phase === 'home' && <HomeStep onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} />}
           {phase === 'strategy' && <StrategyStep onSelect={setStrategy} />}
           {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} />}
           {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} />}
@@ -138,11 +173,13 @@ export default function App() {
               rerolls={rerolls}
               onReroll={() => setRerolls(r => r - 1)}
               onSelect={addPilot}
+              daily={daily}
+              teamPoolOrder={dailyData?.team_pool_order}
             />
           )}
           {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} />}
           {phase === 'simulation' && simResult && <SimulationStep result={simResult} game={game} onDone={showResult} />}
-          {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} />}
+          {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} daily={daily} />}
         </div>
 
         {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
