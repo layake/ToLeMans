@@ -3,7 +3,7 @@ import { useState } from 'react'
 const API = '/api'
 const STRATEGY_LABELS = { attaque: '⚡ Attaque', conservation: '🛡️ Conservation', equilibre: '⚖️ Équilibré' }
 
-export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart }) {
+export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, t }) {
   const [loading, setLoading] = useState(false)
 
   async function launch() {
@@ -33,21 +33,19 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart }) 
   return (
     <div className="screen-enter">
       <div className="step-header">
-        <div className="step-eyebrow">Étape 11 / 11 · Revue</div>
-        <div className="step-title">Revue d'Équipe</div>
-        <div className="step-desc">
-          Votre écurie est prête. Vérifiez la composition avant de lancer les 24 Heures.
-        </div>
+        <div className="step-eyebrow">{t('review_eyebrow')}</div>
+        <div className="step-title">{t('review_title')}</div>
+        <div className="step-desc">{t('review_desc')}</div>
       </div>
 
       <div className="review-strategy-block">
-        {STRATEGY_LABELS[game.strategy]} — relais {game.strategy === 'attaque' ? '2h' : game.strategy === 'equilibre' ? '3h' : '4h'}
+        {STRATEGY_LABELS[game.strategy]} — {t('relay')} {game.strategy === 'attaque' ? '2h' : game.strategy === 'equilibre' ? '3h' : '4h'}
       </div>
 
       <div className="review-grid">
         {[{ car: game.car1, pilots: pilots_car1, num: 1 }, { car: game.car2, pilots: pilots_car2, num: 2 }].map(({ car, pilots, num }) => (
           <div key={num} className="review-car-block">
-            <div className="review-car-title">VOITURE {num}</div>
+            <div className="review-car-title">{t('review_car')} {num}</div>
             <div className="review-car-name">{car?.name}<br /><span style={{ fontSize: 13, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{car?.year} · {car?.constructor}</span></div>
             <div style={{ display: 'flex', gap: 12, marginBottom: 14 }}>
               <span className="tag">PERF {car?.performance}</span>
@@ -67,7 +65,7 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart }) 
       </div>
 
       <div className="review-director-block">
-        <div className="review-car-title">DIRECTEUR TECHNIQUE</div>
+        <div className="review-car-title">{t('review_dt')}</div>
         <div className="review-car-name">{game.director?.name}</div>
         <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 4 }}>{game.director?.description}</div>
       </div>
@@ -76,11 +74,11 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart }) 
         {loading ? (
           <div className="loading-overlay" style={{ padding: '20px 0' }}>
             <div className="spinner" />
-            <div className="loading-text">DÉPART IMMINENT…</div>
+            <div className="loading-text">{t('review_launching')}</div>
           </div>
         ) : (
           <button className="btn btn-primary btn-big" onClick={launch}>
-            🏁 Lancer les 24 Heures →
+            {t('review_launch')}
           </button>
         )}
       </div>
