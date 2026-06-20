@@ -5,8 +5,8 @@
     "name": "Jaguar XJR-9 LM",
     "constructor": "Jaguar",
     "era": "Groupe C",
-    "performance": 87,
-    "reliability": 82
+    "performance": 85,
+    "reliability": 77
   },
   {
     "id": "porsche-962c-1988",
@@ -14,8 +14,8 @@
     "name": "Porsche 962C",
     "constructor": "Porsche",
     "era": "Groupe C",
-    "performance": 86,
-    "reliability": 88
+    "performance": 83,
+    "reliability": 86
   },
   {
     "id": "sauber-c9-1989",
@@ -24,7 +24,7 @@
     "constructor": "Sauber-Mercedes",
     "era": "Groupe C",
     "performance": 92,
-    "reliability": 84
+    "reliability": 80
   },
   {
     "id": "mazda-787b-1991",
@@ -32,8 +32,8 @@
     "name": "Mazda 787B",
     "constructor": "Mazda",
     "era": "Groupe C",
-    "performance": 83,
-    "reliability": 76
+    "performance": 78,
+    "reliability": 67
   },
   {
     "id": "peugeot-905-1992",
@@ -42,7 +42,7 @@
     "constructor": "Peugeot",
     "era": "Groupe C",
     "performance": 91,
-    "reliability": 85
+    "reliability": 81
   },
   {
     "id": "mclaren-f1-gtr-1995",
@@ -50,8 +50,8 @@
     "name": "McLaren F1 GTR",
     "constructor": "McLaren",
     "era": "GT1",
-    "performance": 85,
-    "reliability": 88
+    "performance": 81,
+    "reliability": 86
   },
   {
     "id": "ferrari-f40-gte-1995",
@@ -59,8 +59,8 @@
     "name": "Ferrari F40 GTE",
     "constructor": "Ferrari",
     "era": "GT1",
-    "performance": 80,
-    "reliability": 82
+    "performance": 73,
+    "reliability": 77
   },
   {
     "id": "toyota-gt-one-1999",
@@ -69,7 +69,7 @@
     "constructor": "Toyota",
     "era": "GT1",
     "performance": 91,
-    "reliability": 71
+    "reliability": 59
   },
   {
     "id": "bmw-v12-lmr-1999",
@@ -77,8 +77,8 @@
     "name": "BMW V12 LMR",
     "constructor": "BMW",
     "era": "GT1",
-    "performance": 88,
-    "reliability": 84
+    "performance": 86,
+    "reliability": 80
   },
   {
     "id": "audi-r8-2001",
@@ -86,8 +86,8 @@
     "name": "Audi R8",
     "constructor": "Audi",
     "era": "Prototype Moderne",
-    "performance": 88,
-    "reliability": 93
+    "performance": 86,
+    "reliability": 92
   },
   {
     "id": "audi-r10-tdi-2006",
@@ -95,8 +95,8 @@
     "name": "Audi R10 TDI",
     "constructor": "Audi",
     "era": "Prototype Moderne",
-    "performance": 87,
-    "reliability": 90
+    "performance": 85,
+    "reliability": 89
   },
   {
     "id": "peugeot-908-2009",
@@ -105,7 +105,7 @@
     "constructor": "Peugeot",
     "era": "Prototype Moderne",
     "performance": 91,
-    "reliability": 80
+    "reliability": 73
   },
   {
     "id": "audi-r18-etron-2012",
@@ -114,7 +114,7 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "performance": 92,
-    "reliability": 88
+    "reliability": 86
   },
   {
     "id": "toyota-ts050-2018",
@@ -122,8 +122,8 @@
     "name": "Toyota TS050 Hybrid",
     "constructor": "Toyota",
     "era": "Prototype Moderne",
-    "performance": 94,
-    "reliability": 82
+    "performance": 93,
+    "reliability": 77
   },
   {
     "id": "ferrari-499p-2023",
@@ -131,8 +131,8 @@
     "name": "Ferrari 499P",
     "constructor": "Ferrari",
     "era": "Hypercar",
-    "performance": 90,
-    "reliability": 86
+    "performance": 89,
+    "reliability": 83
   },
   {
     "id": "toyota-gr010-2023",
@@ -141,7 +141,7 @@
     "constructor": "Toyota",
     "era": "Hypercar",
     "performance": 91,
-    "reliability": 89
+    "reliability": 88
   },
   {
     "id": "porsche-963-2023",
@@ -149,8 +149,8 @@
     "name": "Porsche 963",
     "constructor": "Porsche",
     "era": "Hypercar",
-    "performance": 88,
-    "reliability": 87
+    "performance": 86,
+    "reliability": 85
   },
   {
     "id": "cadillac-v-series-r-2023",
@@ -158,8 +158,8 @@
     "name": "Cadillac V-Series.R",
     "constructor": "Cadillac",
     "era": "Hypercar",
-    "performance": 86,
-    "reliability": 85
+    "performance": 83,
+    "reliability": 81
   },
   {
     "id": "ford-gt40-mk2-1966",
@@ -167,8 +167,8 @@
     "name": "Ford GT40 Mk II",
     "constructor": "Ford",
     "era": "Sport Proto 60s",
-    "performance": 84,
-    "reliability": 80
+    "performance": 80,
+    "reliability": 73
   },
   {
     "id": "ford-gt40-mk4-1967",
@@ -176,8 +176,8 @@
     "name": "Ford GT40 Mk IV",
     "constructor": "Ford",
     "era": "Sport Proto 60s",
-    "performance": 86,
-    "reliability": 81
+    "performance": 83,
+    "reliability": 75
   },
   {
     "id": "ferrari-330-p4-1967",
@@ -185,8 +185,8 @@
     "name": "Ferrari 330 P4",
     "constructor": "Ferrari",
     "era": "Sport Proto 60s",
-    "performance": 85,
-    "reliability": 82
+    "performance": 81,
+    "reliability": 77
   },
   {
     "id": "porsche-917k-1970",
@@ -194,8 +194,8 @@
     "name": "Porsche 917K",
     "constructor": "Porsche",
     "era": "Sport Proto 70s",
-    "performance": 89,
-    "reliability": 83
+    "performance": 88,
+    "reliability": 78
   },
   {
     "id": "porsche-936-1976",
@@ -203,8 +203,8 @@
     "name": "Porsche 936",
     "constructor": "Porsche",
     "era": "Sport Proto 70s",
-    "performance": 88,
-    "reliability": 85
+    "performance": 86,
+    "reliability": 81
   },
   {
     "id": "porsche-956-1982",
@@ -212,8 +212,8 @@
     "name": "Porsche 956",
     "constructor": "Porsche",
     "era": "Groupe C",
-    "performance": 88,
-    "reliability": 89
+    "performance": 86,
+    "reliability": 88
   },
   {
     "id": "porsche-919-2015",
@@ -221,8 +221,8 @@
     "name": "Porsche 919 Hybrid",
     "constructor": "Porsche",
     "era": "Prototype Moderne",
-    "performance": 93,
-    "reliability": 85
+    "performance": 92,
+    "reliability": 81
   },
   {
     "id": "porsche-919-2016",
@@ -230,8 +230,8 @@
     "name": "Porsche 919 Hybrid",
     "constructor": "Porsche",
     "era": "Prototype Moderne",
-    "performance": 93,
-    "reliability": 87
+    "performance": 92,
+    "reliability": 85
   },
   {
     "id": "ferrari-499p-2024",
@@ -240,7 +240,7 @@
     "constructor": "Ferrari",
     "era": "Hypercar",
     "performance": 91,
-    "reliability": 88
+    "reliability": 86
   },
   {
     "id": "toyota-gr010-2024",
@@ -249,7 +249,7 @@
     "constructor": "Toyota",
     "era": "Hypercar",
     "performance": 91,
-    "reliability": 89
+    "reliability": 88
   },
   {
     "id": "jaguar-ctype-1951",
@@ -257,8 +257,8 @@
     "name": "Jaguar C-Type",
     "constructor": "Jaguar",
     "era": "Années 50",
-    "performance": 80,
-    "reliability": 82
+    "performance": 73,
+    "reliability": 77
   },
   {
     "id": "ferrari-375-1954",
@@ -266,8 +266,8 @@
     "name": "Ferrari 375 Plus",
     "constructor": "Ferrari",
     "era": "Années 50",
-    "performance": 83,
-    "reliability": 76
+    "performance": 78,
+    "reliability": 67
   },
   {
     "id": "jaguar-dtype-1955",
@@ -275,8 +275,8 @@
     "name": "Jaguar D-Type",
     "constructor": "Jaguar",
     "era": "Années 50",
-    "performance": 84,
-    "reliability": 83
+    "performance": 80,
+    "reliability": 78
   },
   {
     "id": "ferrari-250tr-1958",
@@ -284,8 +284,8 @@
     "name": "Ferrari 250 TR",
     "constructor": "Ferrari",
     "era": "Années 50",
-    "performance": 84,
-    "reliability": 82
+    "performance": 80,
+    "reliability": 77
   },
   {
     "id": "aston-dbr1-1959",
@@ -293,8 +293,8 @@
     "name": "Aston Martin DBR1",
     "constructor": "Aston Martin",
     "era": "Années 50",
-    "performance": 83,
-    "reliability": 84
+    "performance": 78,
+    "reliability": 80
   },
   {
     "id": "ferrari-250p-1963",
@@ -302,8 +302,8 @@
     "name": "Ferrari 250 P",
     "constructor": "Ferrari",
     "era": "Sport Proto 60s",
-    "performance": 85,
-    "reliability": 82
+    "performance": 81,
+    "reliability": 77
   },
   {
     "id": "gulf-mirage-1975",
@@ -311,8 +311,8 @@
     "name": "Gulf Mirage GR8",
     "constructor": "Gulf",
     "era": "Sport Proto 70s",
-    "performance": 86,
-    "reliability": 85
+    "performance": 83,
+    "reliability": 81
   },
   {
     "id": "renault-a442-1978",
@@ -320,8 +320,8 @@
     "name": "Renault Alpine A442B",
     "constructor": "Renault",
     "era": "Sport Proto 70s",
-    "performance": 88,
-    "reliability": 82
+    "performance": 86,
+    "reliability": 77
   },
   {
     "id": "porsche-962c-1987",
@@ -329,8 +329,8 @@
     "name": "Porsche 962C",
     "constructor": "Porsche",
     "era": "Groupe C",
-    "performance": 87,
-    "reliability": 88
+    "performance": 85,
+    "reliability": 86
   },
   {
     "id": "peugeot-905-1993",
@@ -339,7 +339,7 @@
     "constructor": "Peugeot",
     "era": "Groupe C",
     "performance": 91,
-    "reliability": 86
+    "reliability": 83
   },
   {
     "id": "porsche-911gt1-1998",
@@ -347,8 +347,8 @@
     "name": "Porsche 911 GT1-98",
     "constructor": "Porsche",
     "era": "GT1",
-    "performance": 89,
-    "reliability": 86
+    "performance": 88,
+    "reliability": 83
   },
   {
     "id": "bentley-speed8-2003",
@@ -356,8 +356,8 @@
     "name": "Bentley Speed 8",
     "constructor": "Bentley",
     "era": "Prototype Moderne",
-    "performance": 89,
-    "reliability": 88
+    "performance": 88,
+    "reliability": 86
   },
   {
     "id": "audi-r15-2010",
@@ -365,8 +365,8 @@
     "name": "Audi R15 TDI Plus",
     "constructor": "Audi",
     "era": "Prototype Moderne",
-    "performance": 89,
-    "reliability": 90
+    "performance": 88,
+    "reliability": 89
   },
   {
     "id": "audi-r18-2014",
@@ -375,7 +375,7 @@
     "constructor": "Audi",
     "era": "Prototype Moderne",
     "performance": 91,
-    "reliability": 88
+    "reliability": 86
   },
   {
     "id": "ferrari-499p-2025",
@@ -384,7 +384,7 @@
     "constructor": "Ferrari",
     "era": "Hypercar",
     "performance": 91,
-    "reliability": 89
+    "reliability": 88
   },
   {
     "id": "bmw-mhybrid-2025",
@@ -392,8 +392,8 @@
     "name": "BMW M Hybrid V8",
     "constructor": "BMW",
     "era": "Hypercar",
-    "performance": 85,
-    "reliability": 84
+    "performance": 81,
+    "reliability": 80
   },
   {
     "id": "alpine-a424-2025",
@@ -401,8 +401,8 @@
     "name": "Alpine A424",
     "constructor": "Alpine",
     "era": "Hypercar",
-    "performance": 83,
-    "reliability": 80
+    "performance": 78,
+    "reliability": 73
   },
   {
     "id": "peugeot-9x8-2025",
@@ -410,8 +410,8 @@
     "name": "Peugeot 9X8",
     "constructor": "Peugeot",
     "era": "Hypercar",
-    "performance": 84,
-    "reliability": 82
+    "performance": 80,
+    "reliability": 77
   },
   {
     "id": "lamborghini-sc63-2024",
@@ -419,8 +419,8 @@
     "name": "Lamborghini SC63",
     "constructor": "Lamborghini",
     "era": "Hypercar",
-    "performance": 82,
-    "reliability": 76
+    "performance": 77,
+    "reliability": 67
   },
   {
     "id": "cadillac-vseriesr-2024",
@@ -428,8 +428,8 @@
     "name": "Cadillac V-Series.R",
     "constructor": "Cadillac",
     "era": "Hypercar",
-    "performance": 86,
-    "reliability": 84
+    "performance": 83,
+    "reliability": 80
   },
   {
     "id": "isotta-tipo6-2024",
@@ -437,8 +437,8 @@
     "name": "Isotta Fraschini Tipo 6",
     "constructor": "Isotta Fraschini",
     "era": "Hypercar",
-    "performance": 79,
-    "reliability": 72
+    "performance": 72,
+    "reliability": 61
   },
   {
     "id": "porsche-356sl-1951",
@@ -446,8 +446,8 @@
     "name": "Porsche 356 SL",
     "constructor": "Porsche",
     "era": "Années 50",
-    "performance": 72,
-    "reliability": 83
+    "performance": 61,
+    "reliability": 78
   },
   {
     "id": "porsche-904-1965",
@@ -455,8 +455,8 @@
     "name": "Porsche 904 GTS",
     "constructor": "Porsche",
     "era": "Sport Proto 60s",
-    "performance": 76,
-    "reliability": 83
+    "performance": 67,
+    "reliability": 78
   },
   {
     "id": "porsche-907-1971",
@@ -464,8 +464,8 @@
     "name": "Porsche 907",
     "constructor": "Porsche",
     "era": "Sport Proto 70s",
-    "performance": 79,
-    "reliability": 83
+    "performance": 72,
+    "reliability": 78
   },
   {
     "id": "spice-se88c-1988",
@@ -473,8 +473,8 @@
     "name": "Spice SE88C",
     "constructor": "Spice",
     "era": "Groupe C",
-    "performance": 79,
-    "reliability": 82
+    "performance": 72,
+    "reliability": 77
   },
   {
     "id": "chrysler-viper-1998",
@@ -482,8 +482,8 @@
     "name": "Chrysler Viper GTS-R",
     "constructor": "Chrysler",
     "era": "GT1",
-    "performance": 80,
-    "reliability": 84
+    "performance": 73,
+    "reliability": 80
   },
   {
     "id": "lola-b11-2011",
@@ -491,7 +491,7 @@
     "name": "Lola B11/40",
     "constructor": "Lola",
     "era": "Prototype Moderne",
-    "performance": 80,
-    "reliability": 82
+    "performance": 73,
+    "reliability": 77
   }
 ]
