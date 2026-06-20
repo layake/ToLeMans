@@ -66,7 +66,7 @@ function TeamCard({ team, onSelect, disabled, daily }) {
   )
 }
 
-export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect, daily, teamPoolOrder }) {
+export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect, daily, teamPoolOrder, t }) {
   const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState(null)
@@ -96,8 +96,8 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
   return (
     <div className="screen-enter">
       <div className="step-header">
-        <div className="step-eyebrow">Étape {stepNum} / 11 · Équipage</div>
-        <div className="step-title">Pilote {pilotIndex + 1}</div>
+        <div className="step-eyebrow">{t('pilot_eyebrow', { n: stepNum })}</div>
+        <div className="step-title">{t('pilot_title')} {pilotIndex + 1}</div>
         <div className="pilot-slot-info">
           <span className="pilot-slot-car" style={{ color: slotColor }}>🏎️ {slot.label.split('—')[0].trim()}</span>
           <span className="pilot-slot-pos">{slot.label.split('—')[1]?.trim()}</span>
@@ -106,17 +106,15 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
 
       {!teams && !loading && (
         <div className="draw-area">
-          <button className="btn-draw" onClick={fetchTeams}>TIRER</button>
-          <div style={{ fontSize: 13, color: 'var(--text-muted)', textAlign: 'center', maxWidth: 360 }}>
-            Deux écuries vont apparaître. Choisis un pilote parmi les six.
-          </div>
+          <button className="btn-draw" onClick={fetchTeams}>{t('btn_draw')}</button>
+          <div style={{ fontSize: 13, color: 'var(--text-muted)', textAlign: 'center', maxWidth: 360 }}>{t('pilot_draw_hint')}</div>
         </div>
       )}
 
       {loading && (
         <div className="loading-overlay">
           <div className="spinner" />
-          <div className="loading-text">TIRAGE…</div>
+          <div className="loading-text">{t('drawing')}</div>
         </div>
       )}
 
@@ -130,22 +128,22 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
           {selected && (
             <div className="selected-banner">
               <div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--blue-deep)', marginBottom: 3, fontWeight: 700 }}>PILOTE SÉLECTIONNÉ</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--blue-deep)', marginBottom: 3, fontWeight: 700 }}>{t('pilot_selected')}</div>
                 <div style={{ fontWeight: 700, color: 'var(--blue-deep)' }}>{selected.nationality} {selected.name}</div>
               </div>
               <button style={{ background: 'none', border: 'none', color: 'var(--blue-deep)', cursor: 'pointer', fontSize: 12, textDecoration: 'underline', opacity: 0.8 }}
-                onClick={() => setSelected(null)}>Changer</button>
+                onClick={() => setSelected(null)}>{t('pilot_change')}</button>
             </div>
           )}
 
           <div className="btn-row">
             {!daily && (
               <button className="btn btn-secondary" onClick={reroll} disabled={rerolls <= 0 || selected !== null}>
-                🔄 Reroll ({rerolls})
+                🔄 {t('btn_reroll')} ({rerolls})
               </button>
             )}
             <button className="btn btn-primary btn-big" onClick={confirm} disabled={!selected}>
-              Confirmer →
+              {t('btn_confirm')}
             </button>
           </div>
         </>
