@@ -439,5 +439,59 @@
     "era": "Hypercar",
     "performance": 79,
     "reliability": 72
+  },
+  {
+    "id": "porsche-356sl-1951",
+    "year": 1951,
+    "name": "Porsche 356 SL",
+    "constructor": "Porsche",
+    "era": "Années 50",
+    "performance": 72,
+    "reliability": 83
+  },
+  {
+    "id": "porsche-904-1965",
+    "year": 1965,
+    "name": "Porsche 904 GTS",
+    "constructor": "Porsche",
+    "era": "Sport Proto 60s",
+    "performance": 76,
+    "reliability": 83
+  },
+  {
+    "id": "porsche-907-1971",
+    "year": 1971,
+    "name": "Porsche 907",
+    "constructor": "Porsche",
+    "era": "Sport Proto 70s",
+    "performance": 79,
+    "reliability": 83
+  },
+  {
+    "id": "spice-se88c-1988",
+    "year": 1988,
+    "name": "Spice SE88C",
+    "constructor": "Spice",
+    "era": "Groupe C",
+    "performance": 79,
+    "reliability": 82
+  },
+  {
+    "id": "chrysler-viper-1998",
+    "year": 1998,
+    "name": "Chrysler Viper GTS-R",
+    "constructor": "Chrysler",
+    "era": "GT1",
+    "performance": 80,
+    "reliability": 84
+  },
+  {
+    "id": "lola-b11-2011",
+    "year": 2011,
+    "name": "Lola B11/40",
+    "constructor": "Lola",
+    "era": "Prototype Moderne",
+    "performance": 80,
+    "reliability": 82
   }
 ]
