@@ -135,7 +135,7 @@ function PositionBadge({ position, dnf }) {
   return <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, color, letterSpacing: 1 }}>P{position}</span>
 }
 
-export default function SimulationStep({ result, game, onDone }) {
+export default function SimulationStep({ result, game, onDone, t }) {
   const [visibleCount, setVisibleCount] = useState(0)
   const [done, setDone] = useState(false)
   const [progress, setProgress] = useState(0)
@@ -181,9 +181,9 @@ export default function SimulationStep({ result, game, onDone }) {
   return (
     <div>
       <div className="step-header" style={{ marginBottom: 16 }}>
-        <div className="step-label">Course en cours</div>
-        <div className="step-title">24 Heures du Mans</div>
-        <div className="step-desc" style={{ marginBottom: 0 }}>{game.director?.name} au muret des stands</div>
+        <div className="step-eyebrow">{t('sim_eyebrow')}</div>
+        <div className="step-title">{t('sim_title')}</div>
+        <div className="step-desc" style={{ marginBottom: 0 }}>{game.director?.name} {t('sim_at_pitwall')}</div>
       </div>
 
       {/* Horloge analogique + infos course */}
@@ -195,7 +195,7 @@ export default function SimulationStep({ result, game, onDone }) {
         <AnalogClock progress={progress} />
         <div style={{ flex: 1 }}>
           <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#4ea3d9', letterSpacing: 2, marginBottom: 10 }}>
-            PROGRESSION DE COURSE
+            {t('sim_progress')}
           </div>
           {/* Linear bar */}
           <div style={{ position: 'relative', height: 8, background: 'var(--border)', borderRadius: 4, overflow: 'hidden', marginBottom: 8 }}>
@@ -236,7 +236,7 @@ export default function SimulationStep({ result, game, onDone }) {
               <div className="sim-phase-header">
                 <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                   <span style={{ fontSize: 16 }}>{meta?.icon}</span>
-                  <div className="sim-phase-name" style={{ color: meta?.color }}>{phase.label}</div>
+                  <div className="sim-phase-name" style={{ color: meta?.color }}>{t('phase_' + phase.phase_id)}</div>
                 </div>
                 <div className="sim-phase-hours">{phase.hours}</div>
               </div>
@@ -276,14 +276,14 @@ export default function SimulationStep({ result, game, onDone }) {
 
       {done && (
         <div className="btn-row" style={{ marginTop: 24 }}>
-          <button className="btn btn-primary btn-big" onClick={onDone}>Voir le résultat →</button>
+          <button className="btn btn-primary btn-big" onClick={onDone}>{t('sim_see_result')}</button>
         </div>
       )}
 
       {!done && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 16, color: 'var(--text-muted)', fontSize: 13 }}>
           <div className="spinner" style={{ width: 16, height: 16, borderWidth: 2 }} />
-          Course en cours…
+          {t('sim_inprogress')}
         </div>
       )}
     </div>
