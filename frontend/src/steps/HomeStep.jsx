@@ -1,3 +1,5 @@
+import { VERSION, BUILD_DATE } from '../version'
+
 export default function HomeStep({ onStartFree, onStartDaily, dailyDone, t }) {
   const steps = [
     { n: '01', title: t('home_step1_title'), text: t('home_step1_text') },
@@ -50,6 +52,10 @@ export default function HomeStep({ onStartFree, onStartDaily, dailyDone, t }) {
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', textAlign: 'center', marginTop: 2, lineHeight: 1.5 }}>
           {t('home_daily_desc')}
         </div>
+      </div>
+
+      <div style={{ textAlign: 'center', marginTop: 28, fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', letterSpacing: 1 }}>
+        TO LE MANS · {VERSION} · {BUILD_DATE}
       </div>
     </div>
   )
