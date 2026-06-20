@@ -9,7 +9,7 @@ function globalRating(p) {
   return Math.round(p.pace * 0.3 + p.night_skill * 0.25 + p.endurance * 0.25 + p.reliability * 0.2)
 }
 function ratingColor(v) {
-  return v >= 88 ? '#3ecf7a' : v >= 83 ? '#f5c542' : '#e0533a'
+  return v >= 88 ? '#1a8f4e' : v >= 83 ? '#1f6fb2' : '#c0392b'
 }
 
 function PilotPick({ pilot, onSelect, disabled }) {
