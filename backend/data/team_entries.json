@@ -2158,5 +2158,365 @@
         "profile": "Endurant"
       }
     ]
+  },
+  {
+    "id": "bmw-15-2025",
+    "year": 2025,
+    "car": "BMW M Hybrid V8",
+    "number": "15",
+    "constructor": "BMW M Team WRT",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "dries-vanthoor-25",
+        "name": "Dries Vanthoor",
+        "nationality": "🇧🇪",
+        "pace": 85,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 83,
+        "profile": "Rapide"
+      },
+      {
+        "id": "raffaele-marciello-25",
+        "name": "R. Marciello",
+        "nationality": "🇮🇹",
+        "pace": 86,
+        "night_skill": 83,
+        "endurance": 83,
+        "reliability": 83,
+        "profile": "Qualifié"
+      },
+      {
+        "id": "kevin-magnussen-25",
+        "name": "K. Magnussen",
+        "nationality": "🇩🇰",
+        "pace": 85,
+        "night_skill": 82,
+        "endurance": 82,
+        "reliability": 82,
+        "profile": "Pilote F1"
+      }
+    ]
+  },
+  {
+    "id": "bmw-20-2025",
+    "year": 2025,
+    "car": "BMW M Hybrid V8",
+    "number": "20",
+    "constructor": "BMW M Team WRT",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "rene-rast-25",
+        "name": "René Rast",
+        "nationality": "🇩🇪",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 84,
+        "profile": "Expérimenté"
+      },
+      {
+        "id": "robin-frijns-25",
+        "name": "Robin Frijns",
+        "nationality": "🇳🇱",
+        "pace": 85,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 83,
+        "profile": "Rapide"
+      },
+      {
+        "id": "sheldon-vanderlinde-25",
+        "name": "S. van der Linde",
+        "nationality": "🇿🇦",
+        "pace": 84,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 83,
+        "profile": "Régulier"
+      }
+    ]
+  },
+  {
+    "id": "alpine-35-2025",
+    "year": 2025,
+    "car": "Alpine A424",
+    "number": "35",
+    "constructor": "Alpine Endurance Team",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "paulloup-chatin-25",
+        "name": "P-L. Chatin",
+        "nationality": "🇫🇷",
+        "pace": 83,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 82,
+        "profile": "Endurant"
+      },
+      {
+        "id": "ferdinand-habsburg-25",
+        "name": "F. Habsburg",
+        "nationality": "🇦🇹",
+        "pace": 84,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 82,
+        "profile": "Rapide"
+      },
+      {
+        "id": "charles-milesi-25",
+        "name": "Charles Milesi",
+        "nationality": "🇫🇷",
+        "pace": 83,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 82,
+        "profile": "Montant"
+      }
+    ]
+  },
+  {
+    "id": "alpine-36-2025",
+    "year": 2025,
+    "car": "Alpine A424",
+    "number": "36",
+    "constructor": "Alpine Endurance Team",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "mick-schumacher-25",
+        "name": "Mick Schumacher",
+        "nationality": "🇩🇪",
+        "pace": 85,
+        "night_skill": 82,
+        "endurance": 82,
+        "reliability": 82,
+        "profile": "Pilote F1"
+      },
+      {
+        "id": "jules-gounon-25",
+        "name": "Jules Gounon",
+        "nationality": "🇫🇷",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 83,
+        "profile": "Solide"
+      },
+      {
+        "id": "frederic-makowiecki-25",
+        "name": "F. Makowiecki",
+        "nationality": "🇫🇷",
+        "pace": 83,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 84,
+        "profile": "Vétéran"
+      }
+    ]
+  },
+  {
+    "id": "peugeot-93-2025",
+    "year": 2025,
+    "car": "Peugeot 9X8",
+    "number": "93",
+    "constructor": "Peugeot TotalEnergies",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "paul-diresta-25",
+        "name": "Paul di Resta",
+        "nationality": "🇬🇧",
+        "pace": 84,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 83,
+        "profile": "Expérimenté"
+      },
+      {
+        "id": "mikkel-jensen-25",
+        "name": "Mikkel Jensen",
+        "nationality": "🇩🇰",
+        "pace": 83,
+        "night_skill": 82,
+        "endurance": 83,
+        "reliability": 82,
+        "profile": "Régulier"
+      },
+      {
+        "id": "jeaneric-vergne-25",
+        "name": "J-E. Vergne",
+        "nationality": "🇫🇷",
+        "pace": 85,
+        "night_skill": 82,
+        "endurance": 82,
+        "reliability": 81,
+        "profile": "Pilote F1"
+      }
+    ]
+  },
+  {
+    "id": "peugeot-94-2025",
+    "year": 2025,
+    "car": "Peugeot 9X8",
+    "number": "94",
+    "constructor": "Peugeot TotalEnergies",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "loic-duval-25",
+        "name": "Loïc Duval",
+        "nationality": "🇫🇷",
+        "pace": 84,
+        "night_skill": 84,
+        "endurance": 85,
+        "reliability": 84,
+        "profile": "Vétéran"
+      },
+      {
+        "id": "malthe-jakobsen-25",
+        "name": "Malthe Jakobsen",
+        "nationality": "🇩🇰",
+        "pace": 82,
+        "night_skill": 81,
+        "endurance": 82,
+        "reliability": 82,
+        "profile": "Jeune"
+      },
+      {
+        "id": "stoffel-vandoorne-25",
+        "name": "S. Vandoorne",
+        "nationality": "🇧🇪",
+        "pace": 85,
+        "night_skill": 82,
+        "endurance": 82,
+        "reliability": 82,
+        "profile": "Pilote F1"
+      }
+    ]
+  },
+  {
+    "id": "lamborghini-63-2024",
+    "year": 2024,
+    "car": "Lamborghini SC63",
+    "number": "63",
+    "constructor": "Iron Lynx",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "mirko-bortolotti-24",
+        "name": "M. Bortolotti",
+        "nationality": "🇮🇹",
+        "pace": 84,
+        "night_skill": 81,
+        "endurance": 81,
+        "reliability": 78,
+        "profile": "Rapide"
+      },
+      {
+        "id": "daniil-kvyat-24",
+        "name": "Daniil Kvyat",
+        "nationality": "🇷🇺",
+        "pace": 83,
+        "night_skill": 80,
+        "endurance": 80,
+        "reliability": 78,
+        "profile": "Pilote F1"
+      },
+      {
+        "id": "edoardo-mortara-24",
+        "name": "Edoardo Mortara",
+        "nationality": "🇨🇭",
+        "pace": 83,
+        "night_skill": 81,
+        "endurance": 81,
+        "reliability": 79,
+        "profile": "Polyvalent"
+      }
+    ]
+  },
+  {
+    "id": "cadillac-3-2024",
+    "year": 2024,
+    "car": "Cadillac V-Series.R",
+    "number": "3",
+    "constructor": "Cadillac",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "sebastien-bourdais-24",
+        "name": "S. Bourdais",
+        "nationality": "🇫🇷",
+        "pace": 86,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Vétéran"
+      },
+      {
+        "id": "renger-vanderzande-24",
+        "name": "R. van der Zande",
+        "nationality": "🇳🇱",
+        "pace": 84,
+        "night_skill": 83,
+        "endurance": 84,
+        "reliability": 84,
+        "profile": "Endurant"
+      },
+      {
+        "id": "scott-dixon-24",
+        "name": "Scott Dixon",
+        "nationality": "🇳🇿",
+        "pace": 87,
+        "night_skill": 85,
+        "endurance": 86,
+        "reliability": 85,
+        "profile": "Iceman"
+      }
+    ]
+  },
+  {
+    "id": "isotta-11-2024",
+    "year": 2024,
+    "car": "Isotta Fraschini Tipo 6",
+    "number": "11",
+    "constructor": "Isotta Fraschini",
+    "era": "Hypercar",
+    "pilots": [
+      {
+        "id": "jean-karl-vernay-24",
+        "name": "J-K. Vernay",
+        "nationality": "🇫🇷",
+        "pace": 82,
+        "night_skill": 80,
+        "endurance": 80,
+        "reliability": 74,
+        "profile": "Pionnier"
+      },
+      {
+        "id": "antonio-serravalle-24",
+        "name": "A. Serravalle",
+        "nationality": "🇨🇦",
+        "pace": 78,
+        "night_skill": 77,
+        "endurance": 78,
+        "reliability": 74,
+        "profile": "Débutant"
+      },
+      {
+        "id": "carl-wattana-bennett-24",
+        "name": "C. Wattana B.",
+        "nationality": "🇹🇭",
+        "pace": 78,
+        "night_skill": 77,
+        "endurance": 78,
+        "reliability": 74,
+        "profile": "Débutant"
+      }
+    ]
   }
 ]
