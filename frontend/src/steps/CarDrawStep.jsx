@@ -15,7 +15,7 @@ const SPIN_NAMES = [
   'Toyota GR010', 'Jaguar XJR-9', 'Sauber C9', 'BMW V12 LMR', 'McLaren F1 GTR',
 ]
 
-export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onSelect }) {
+export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onSelect, t }) {
   const [car, setCar] = useState(null)
   const [phase, setPhase] = useState('idle') // idle | spinning | revealed
   const [spinName, setSpinName] = useState('')
@@ -67,17 +67,14 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
   return (
     <div className="screen-enter">
       <div className="step-header">
-        <div className="step-eyebrow">Étape {stepNum} / 11 · Machine</div>
-        <div className="step-title">Voiture {carNum}</div>
-        <div className="step-desc">
-          Tire une voiture du panthéon du Mans. La BOP équilibre toutes les machines —
-          ce sont tes choix qui font la différence.
-        </div>
+        <div className="step-eyebrow">{carNum === 1 ? t('car_eyebrow_1') : t('car_eyebrow_2')}</div>
+        <div className="step-title">{t('car_title')} {carNum}</div>
+<div className="step-desc">{t('car_desc')}</div>
       </div>
 
       <div className="draw-area">
         {phase === 'idle' && (
-          <button className="btn-draw" onClick={drawCar}>TIRER</button>
+          <button className="btn-draw" onClick={drawCar}>{t('btn_draw')}</button>
         )}
 
         {phase === 'spinning' && (
@@ -104,7 +101,7 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
                     </div>
                     <div className="rating-badge" style={{ background: color + '1a', border: `1px solid ${color}55` }}>
                       <span className="rating-num" style={{ color }}>{rating}</span>
-                      <span className="rating-lbl" style={{ color }}>NOTE</span>
+                      <span className="rating-lbl" style={{ color }}>{t('note')}</span>
                     </div>
                   </div>
                   <div className="card-name" style={{ marginTop: 8 }}>{car.name}</div>
@@ -128,10 +125,10 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
 
             <div className="btn-row">
               <button className="btn btn-secondary" onClick={rerollCar} disabled={rerolls <= 0}>
-                🔄 Reroll ({rerolls})
+                🔄 {t('btn_reroll')} ({rerolls})
               </button>
               <button className="btn btn-primary btn-big" onClick={() => onSelect(car)}>
-                Choisir →
+                {t('btn_choose')}
               </button>
             </div>
           </>
