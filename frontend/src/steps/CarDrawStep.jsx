@@ -6,7 +6,7 @@ function carRating(c) {
   return Math.round(c.performance * 0.5 + c.reliability * 0.5)
 }
 function ratingColor(v) {
-  return v >= 88 ? '#3ecf7a' : v >= 83 ? '#f5c542' : '#e0533a'
+  return v >= 88 ? '#1a8f4e' : v >= 83 ? '#1f6fb2' : '#c0392b'
 }
 
 // Noms aléatoires pour l'effet machine à sous pendant le roll
