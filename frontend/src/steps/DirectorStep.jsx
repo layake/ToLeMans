@@ -2,15 +2,9 @@ import { useState, useEffect } from 'react'
 
 const API = '/api'
 
-const CONDITION_LABELS = {
-  all: '🏆 Toutes conditions',
-  night: '🌙 Spécialiste nuit',
-  rain: '🌧️ Spécialiste pluie',
-  pace: '⚡ Spécialiste vitesse',
-  strategy: '🧠 Spécialiste stratégie',
-}
 
-export default function DirectorStep({ onSelect }) {
+
+export default function DirectorStep({ onSelect, t }) {
   const [directors, setDirectors] = useState([])
   const [selected, setSelected] = useState(null)
 
@@ -24,12 +18,9 @@ export default function DirectorStep({ onSelect }) {
   return (
     <div className="screen-enter">
       <div className="step-header">
-        <div className="step-eyebrow">Étape 4 / 11 · Direction</div>
-        <div className="step-title">Directeur Technique</div>
-        <div className="step-desc">
-          Choix libre. Il influence la fiabilité de votre équipe et apporte
-          un bonus décisif dans sa spécialité.
-        </div>
+        <div className="step-eyebrow">{t('dir_eyebrow')}</div>
+        <div className="step-title">{t('dir_title')}</div>
+        <div className="step-desc">{t('dir_desc')}</div>
       </div>
 
       <div className="director-grid">
@@ -41,11 +32,11 @@ export default function DirectorStep({ onSelect }) {
           >
             <div className="director-name">{dt.name}</div>
             <div className="director-era">{dt.era}</div>
-            <div className="director-specialty">{CONDITION_LABELS[dt.bonus_condition]}</div>
+            <div className="director-specialty">{({all:'🏆',night:'🌙',rain:'🌧️',pace:'⚡',strategy:'🧠'}[dt.bonus_condition]||'')} {t('cond_'+dt.bonus_condition)}</div>
             <div className="director-desc">{dt.description}</div>
             <div style={{ marginTop: 8, display: 'flex', gap: 8 }}>
-              <span className="tag pos">+{dt.reliability_bonus} fiab.</span>
-              <span className="tag pos">+{dt.bonus_value} bonus</span>
+              <span className="tag pos">+{dt.reliability_bonus} {t('dir_reliability')}</span>
+              <span className="tag pos">+{dt.bonus_value} {t('dir_bonus')}</span>
             </div>
           </div>
         ))}
@@ -57,7 +48,7 @@ export default function DirectorStep({ onSelect }) {
           disabled={!selected}
           onClick={() => onSelect(selected)}
         >
-          Confirmer →
+          {t('btn_confirm')}
         </button>
       </div>
     </div>
