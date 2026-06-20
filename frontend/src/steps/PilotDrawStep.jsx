@@ -12,7 +12,7 @@ function ratingColor(v) {
   return v >= 88 ? '#1a8f4e' : v >= 83 ? '#1f6fb2' : '#c0392b'
 }
 
-function PilotPick({ pilot, onSelect, disabled }) {
+function PilotPick({ pilot, onSelect, disabled, daily }) {
   const [showDetail, setShowDetail] = useState(false)
   const rating = globalRating(pilot)
   const color = ratingColor(rating)
@@ -20,21 +20,23 @@ function PilotPick({ pilot, onSelect, disabled }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <button className="pilot-pick" onClick={() => !disabled && onSelect(pilot)} disabled={disabled}>
-        <div className="rating-badge" style={{ background: color + '1a', border: `1px solid ${color}55` }}>
-          <span className="rating-num" style={{ color }}>{rating}</span>
+        <div className="rating-badge" style={{ background: daily ? 'rgba(10,26,47,0.06)' : color + '1a', border: daily ? '1px solid rgba(10,26,47,0.15)' : `1px solid ${color}55` }}>
+          <span className="rating-num" style={{ color: daily ? '#9bb0c4' : color }}>{daily ? '?' : rating}</span>
         </div>
         <div className="pilot-pick-info">
           <div className="pilot-pick-name">{pilot.nationality} {pilot.name}</div>
           <div className="pilot-pick-profile">{pilot.profile}</div>
         </div>
-        <span
-          onClick={(e) => { e.stopPropagation(); setShowDetail(s => !s) }}
-          style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--text-muted)', padding: '4px 6px', cursor: 'pointer' }}
-        >
-          {showDetail ? '▲' : 'i'}
-        </span>
+        {!daily && (
+          <span
+            onClick={(e) => { e.stopPropagation(); setShowDetail(s => !s) }}
+            style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#6a7d92', padding: '4px 6px', cursor: 'pointer' }}
+          >
+            {showDetail ? '▲' : 'i'}
+          </span>
+        )}
       </button>
-      {showDetail && (
+      {showDetail && !daily && (
         <div className="detail-stats">
           {[['PACE', pilot.pace], ['NUIT', pilot.night_skill], ['ENDU', pilot.endurance], ['FIAB', pilot.reliability]].map(([lbl, val]) => (
             <div key={lbl} className="detail-stat">
@@ -48,7 +50,7 @@ function PilotPick({ pilot, onSelect, disabled }) {
   )
 }
 
-function TeamCard({ team, onSelect, disabled }) {
+function TeamCard({ team, onSelect, disabled, daily }) {
   return (
     <div className="team-card">
       <div className="team-card-head">
@@ -58,13 +60,13 @@ function TeamCard({ team, onSelect, disabled }) {
       </div>
       <div className="team-divider" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-        {team.pilots.map(p => <PilotPick key={p.id} pilot={p} onSelect={onSelect} disabled={disabled} />)}
+        {team.pilots.map(p => <PilotPick key={p.id} pilot={p} onSelect={onSelect} disabled={disabled} daily={daily} />)}
       </div>
     </div>
   )
 }
 
-export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect }) {
+export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect, daily, teamPoolOrder }) {
   const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState(null)
@@ -74,9 +76,13 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
   async function fetchTeams() {
     setLoading(true); setTeams(null); setSelected(null)
     try {
-      const res = await fetch(`${API}/draw/teams`, {
+      const endpoint = daily ? `${API}/daily/teams` : `${API}/draw/teams`
+      const payload = daily
+        ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder }
+        : { chosen_pilot_ids: chosenPilotIds }
+      const res = await fetch(endpoint, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chosen_pilot_ids: chosenPilotIds }),
+        body: JSON.stringify(payload),
       })
       const data = await res.json()
       if (data.error) { console.error(data.error); return }
@@ -117,25 +123,27 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
       {teams && (
         <>
           <div className="team-cards-row" style={{ marginBottom: 16 }}>
-            <TeamCard team={teams.team1} onSelect={setSelected} disabled={selected !== null} />
-            <TeamCard team={teams.team2} onSelect={setSelected} disabled={selected !== null} />
+            <TeamCard team={teams.team1} onSelect={setSelected} disabled={selected !== null} daily={daily} />
+            <TeamCard team={teams.team2} onSelect={setSelected} disabled={selected !== null} daily={daily} />
           </div>
 
           {selected && (
             <div className="selected-banner">
               <div>
-                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--yellow)', marginBottom: 3 }}>PILOTE SÉLECTIONNÉ</div>
-                <div style={{ fontWeight: 700 }}>{selected.nationality} {selected.name}</div>
+                <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--blue-deep)', marginBottom: 3, fontWeight: 700 }}>PILOTE SÉLECTIONNÉ</div>
+                <div style={{ fontWeight: 700, color: 'var(--blue-deep)' }}>{selected.nationality} {selected.name}</div>
               </div>
-              <button style={{ background: 'none', border: 'none', color: 'var(--text-muted)', cursor: 'pointer', fontSize: 12 }}
+              <button style={{ background: 'none', border: 'none', color: 'var(--blue-deep)', cursor: 'pointer', fontSize: 12, textDecoration: 'underline', opacity: 0.8 }}
                 onClick={() => setSelected(null)}>Changer</button>
             </div>
           )}
 
           <div className="btn-row">
-            <button className="btn btn-secondary" onClick={reroll} disabled={rerolls <= 0 || selected !== null}>
-              🔄 Reroll ({rerolls})
-            </button>
+            {!daily && (
+              <button className="btn btn-secondary" onClick={reroll} disabled={rerolls <= 0 || selected !== null}>
+                🔄 Reroll ({rerolls})
+              </button>
+            )}
             <button className="btn btn-primary btn-big" onClick={confirm} disabled={!selected}>
               Confirmer →
             </button>
