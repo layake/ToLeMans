@@ -75,19 +75,31 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
 
   async function fetchTeams() {
     setLoading(true); setTeams(null); setSelected(null)
+    const endpoint = daily ? `${API}/daily/teams` : `${API}/draw/teams`
+    const payload = daily
+      ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder }
+      : { chosen_pilot_ids: chosenPilotIds }
     try {
-      const endpoint = daily ? `${API}/daily/teams` : `${API}/draw/teams`
-      const payload = daily
-        ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder }
-        : { chosen_pilot_ids: chosenPilotIds }
-      const res = await fetch(endpoint, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      })
-      const data = await res.json()
-      if (data.error) { console.error(data.error); return }
+      let data = null
+      for (let i = 0; i < 4; i++) {
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          })
+          if (!res.ok) throw new Error('HTTP ' + res.status)
+          data = await res.json()
+          if (!data || data.error) throw new Error(data?.error || 'no data')
+          break
+        } catch (err) {
+          if (i === 3) throw err
+          await new Promise(r => setTimeout(r, 250 * (i + 1)))
+        }
+      }
       setTeams(data)
-    } catch (e) { console.error(e) } finally { setLoading(false) }
+    } catch (e) {
+      console.error('team draw failed after retries', e)
+    } finally { setLoading(false) }
   }
 
   function reroll() { if (rerolls <= 0) return; onReroll(); fetchTeams() }
