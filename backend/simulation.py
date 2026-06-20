@@ -50,9 +50,20 @@ def pilot_phase_score(pilot, phase_id):
     return 85
 
 def apply_bop(car_perf):
-    """Normalize car performance toward BOP_TARGET within ±6 range."""
+    """Normalize car performance toward BOP_TARGET.
+    BOP rapproche les voitures, mais ne sauve pas les machines vraiment faibles :
+    plus une voiture est sous la cible, moins la BOP compense (pour que les mauvais
+    tirages restent punitifs)."""
     delta = car_perf - BOP_TARGET
-    bop_perf = car_perf - delta * 0.7  # reduce gap by 70%
+    if delta >= 0:
+        # Voitures au-dessus de la cible : forte compensation (équité)
+        bop_perf = car_perf - delta * 0.7
+    else:
+        # Voitures sous la cible : compensation réduite -> elles restent pénalisées
+        # Plus c'est faible, moins on compense (de 55% près de la cible à ~20% loin)
+        gap = -delta
+        comp = max(0.2, 0.55 - gap * 0.04)
+        bop_perf = car_perf - delta * comp
     return bop_perf
 
 def compute_dt_bonus(director, phase_id, has_rain):
