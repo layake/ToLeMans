@@ -250,5 +250,140 @@
     "era": "Hypercar",
     "performance": 91,
     "reliability": 89
+  },
+  {
+    "id": "jaguar-ctype-1951",
+    "year": 1951,
+    "name": "Jaguar C-Type",
+    "constructor": "Jaguar",
+    "era": "Années 50",
+    "performance": 80,
+    "reliability": 82
+  },
+  {
+    "id": "ferrari-375-1954",
+    "year": 1954,
+    "name": "Ferrari 375 Plus",
+    "constructor": "Ferrari",
+    "era": "Années 50",
+    "performance": 83,
+    "reliability": 76
+  },
+  {
+    "id": "jaguar-dtype-1955",
+    "year": 1955,
+    "name": "Jaguar D-Type",
+    "constructor": "Jaguar",
+    "era": "Années 50",
+    "performance": 84,
+    "reliability": 83
+  },
+  {
+    "id": "ferrari-250tr-1958",
+    "year": 1958,
+    "name": "Ferrari 250 TR",
+    "constructor": "Ferrari",
+    "era": "Années 50",
+    "performance": 84,
+    "reliability": 82
+  },
+  {
+    "id": "aston-dbr1-1959",
+    "year": 1959,
+    "name": "Aston Martin DBR1",
+    "constructor": "Aston Martin",
+    "era": "Années 50",
+    "performance": 83,
+    "reliability": 84
+  },
+  {
+    "id": "ferrari-250p-1963",
+    "year": 1963,
+    "name": "Ferrari 250 P",
+    "constructor": "Ferrari",
+    "era": "Sport Proto 60s",
+    "performance": 85,
+    "reliability": 82
+  },
+  {
+    "id": "gulf-mirage-1975",
+    "year": 1975,
+    "name": "Gulf Mirage GR8",
+    "constructor": "Gulf",
+    "era": "Sport Proto 70s",
+    "performance": 86,
+    "reliability": 85
+  },
+  {
+    "id": "renault-a442-1978",
+    "year": 1978,
+    "name": "Renault Alpine A442B",
+    "constructor": "Renault",
+    "era": "Sport Proto 70s",
+    "performance": 88,
+    "reliability": 82
+  },
+  {
+    "id": "porsche-962c-1987",
+    "year": 1987,
+    "name": "Porsche 962C",
+    "constructor": "Porsche",
+    "era": "Groupe C",
+    "performance": 87,
+    "reliability": 88
+  },
+  {
+    "id": "peugeot-905-1993",
+    "year": 1993,
+    "name": "Peugeot 905 Evo 1B",
+    "constructor": "Peugeot",
+    "era": "Groupe C",
+    "performance": 91,
+    "reliability": 86
+  },
+  {
+    "id": "porsche-911gt1-1998",
+    "year": 1998,
+    "name": "Porsche 911 GT1-98",
+    "constructor": "Porsche",
+    "era": "GT1",
+    "performance": 89,
+    "reliability": 86
+  },
+  {
+    "id": "bentley-speed8-2003",
+    "year": 2003,
+    "name": "Bentley Speed 8",
+    "constructor": "Bentley",
+    "era": "Prototype Moderne",
+    "performance": 89,
+    "reliability": 88
+  },
+  {
+    "id": "audi-r15-2010",
+    "year": 2010,
+    "name": "Audi R15 TDI Plus",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "performance": 89,
+    "reliability": 90
+  },
+  {
+    "id": "audi-r18-2014",
+    "year": 2014,
+    "name": "Audi R18 e-tron quattro",
+    "constructor": "Audi",
+    "era": "Prototype Moderne",
+    "performance": 91,
+    "reliability": 88
+  },
+  {
+    "id": "ferrari-499p-2025",
+    "year": 2025,
+    "name": "Ferrari 499P",
+    "constructor": "Ferrari",
+    "era": "Hypercar",
+    "performance": 91,
+    "reliability": 89
   }
 ]
