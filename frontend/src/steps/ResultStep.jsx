@@ -42,7 +42,7 @@ function Confetti() {
   )
 }
 
-export default function ResultStep({ result, game, onRestart, daily }) {
+export default function ResultStep({ result, game, onRestart, daily, t }) {
   // En daily : verrouille le 1er score du jour
   if (daily && typeof window !== 'undefined') {
     const today = new Date().toISOString().slice(0, 10)
@@ -54,7 +54,14 @@ export default function ResultStep({ result, game, onRestart, daily }) {
   const lockedDaily = daily && typeof window !== 'undefined'
     ? JSON.parse(localStorage.getItem('tlm_daily_' + new Date().toISOString().slice(0,10)) || 'null')
     : null
-  const verdict = VERDICT_TEXT[result.verdict] || VERDICT_TEXT.finisher
+  const VERDICT_MAP = {
+    wire_to_wire: { title: t('verdict_wire_title'), subtitle: t('verdict_wire_sub'), emoji: '🌟' },
+    victoire: { title: t('verdict_win_title'), subtitle: t('verdict_win_sub'), emoji: '👑' },
+    podium: { title: t('verdict_podium_title'), subtitle: t('verdict_podium_sub'), emoji: '🥉' },
+    finisher: { title: t('verdict_finish_title'), subtitle: t('verdict_finish_sub'), emoji: '🏁' },
+    abandon: { title: t('verdict_dnf_title'), subtitle: t('verdict_dnf_sub'), emoji: '💀' },
+  }
+  const verdict = VERDICT_MAP[result.verdict] || VERDICT_MAP.finisher
   const phases = result.phase_summaries || []
   const bestCar = result.winning_car === 1 ? game.car1 : game.car2
   const celebrate = ['wire_to_wire', 'victoire'].includes(result.verdict)
@@ -64,7 +71,7 @@ export default function ResultStep({ result, game, onRestart, daily }) {
       {celebrate && <Confetti />}
       <div style={{ fontSize: 64, marginBottom: 8 }}>{verdict.emoji}</div>
 
-      {result.best_position && <div className="result-position">POSITION {result.best_position} / 50</div>}
+      {result.best_position && <div className="result-position">{t('result_position')} {result.best_position} / 50</div>}
 
       <div className={`result-verdict ${result.verdict}`}>{verdict.title}</div>
       <div className="result-subtitle">{verdict.subtitle}</div>
@@ -74,7 +81,7 @@ export default function ResultStep({ result, game, onRestart, daily }) {
           fontFamily: 'var(--font-mono)', fontSize: 13, color: 'var(--text-muted)', marginBottom: 30,
           background: 'var(--card)', border: '1px solid var(--border)', borderRadius: 'var(--radius)', padding: '12px 20px',
         }}>
-          Meilleure voiture : {bestCar.name} · {bestCar.year}
+          {t('result_best_car')} : {bestCar.name} · {bestCar.year}
         </div>
       )}
 
@@ -102,15 +109,15 @@ export default function ResultStep({ result, game, onRestart, daily }) {
       </div>
 
       <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 28, fontStyle: 'italic' }}>
-        DT : {game.director?.name} · Stratégie : {game.strategy}
+        DT : {game.director?.name} · {t('result_strategy')} : {game.strategy}
       </div>
 
       {daily && lockedDaily && (
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', marginBottom: 16, letterSpacing: 1 }}>
-          DÉFI DU JOUR · Score retenu : {lockedDaily.verdict}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
+          {t('result_daily_locked')} : {lockedDaily.verdict}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
         </div>
       )}
-      <button className="btn btn-primary btn-big" onClick={onRestart}>{daily ? 'Retour' : '🔁 Rejouer'}</button>
+      <button className="btn btn-primary btn-big" onClick={onRestart}>{daily ? t('result_back') : t('result_replay')}</button>
     </div>
   )
 }
