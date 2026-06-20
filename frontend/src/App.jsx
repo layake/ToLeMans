@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import './App.css'
+import { useLang } from './i18n/LangContext'
 import HomeStep from './steps/HomeStep'
 import StrategyStep from './steps/StrategyStep'
 import CarDrawStep from './steps/CarDrawStep'
@@ -19,11 +20,12 @@ const PILOT_SLOTS = [
 ]
 
 const STRATEGY_ICONS = { attaque: '⚡', conservation: '🛡️', equilibre: '⚖️' }
-const STRATEGY_LABELS = { attaque: 'Attaque', conservation: 'Conservation', equilibre: 'Équilibré' }
+// strategy labels now via t()
 
 const phaseOrder = ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'review']
 
 export default function App() {
+  const { lang, toggle, t } = useLang()
   const [phase, setPhase] = useState('home')
   const [rerolls, setRerolls] = useState(3)
   const [game, setGame] = useState({
@@ -135,11 +137,14 @@ export default function App() {
   return (
     <div className="app">
       <header className="app-header">
-        <div className="app-logo">TLM <span>Vers Le Mans</span></div>
+        <div className="app-logo">TLM <span>To Le Mans</span></div>
         <div className="header-right">
+          <button onClick={toggle} className="lang-toggle" aria-label="language">
+            {lang === 'fr' ? 'EN' : 'FR'}
+          </button>
           {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && !daily && (
             <div className="rerolls">
-              REROLLS
+              {t('rerolls')}
               {[0, 1, 2].map(i => (
                 <div key={i} className={`reroll-pip ${i >= rerolls ? 'used' : ''}`} />
               ))}
@@ -157,11 +162,11 @@ export default function App() {
 
       <div className="app-body">
         <div className="main-panel">
-          {phase === 'home' && <HomeStep onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} />}
-          {phase === 'strategy' && <StrategyStep onSelect={setStrategy} />}
-          {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} />}
-          {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} />}
-          {phase === 'director' && <DirectorStep onSelect={setDirector} />}
+          {phase === 'home' && <HomeStep t={t} onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} />}
+          {phase === 'strategy' && <StrategyStep onSelect={setStrategy} t={t} />}
+          {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} t={t} />}
+          {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} t={t} />}
+          {phase === 'director' && <DirectorStep onSelect={setDirector} t={t} />}
           {phase.startsWith('pilot') && currentSlot && (
             <PilotDrawStep
               strategy={game.strategy}
@@ -175,29 +180,30 @@ export default function App() {
               onSelect={addPilot}
               daily={daily}
               teamPoolOrder={dailyData?.team_pool_order}
+              t={t}
             />
           )}
-          {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} />}
-          {phase === 'simulation' && simResult && <SimulationStep result={simResult} game={game} onDone={showResult} />}
-          {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} daily={daily} />}
+          {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} t={t} />}
+          {phase === 'simulation' && simResult && <SimulationStep result={simResult} game={game} onDone={showResult} t={t} />}
+          {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} daily={daily} t={t} />}
         </div>
 
         {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
           <aside className="sidebar">
             {game.strategy && (
               <div className="sidebar-section">
-                <div className="sidebar-label">Stratégie</div>
-                <div className="sidebar-strategy">{STRATEGY_ICONS[game.strategy]} {STRATEGY_LABELS[game.strategy]}</div>
+                <div className="sidebar-label">{t('result_strategy')}</div>
+                <div className="sidebar-strategy">{STRATEGY_ICONS[game.strategy]} {t('strat_' + game.strategy + '_name')}</div>
               </div>
             )}
             <div className="sidebar-section">
-              <div className="sidebar-label">Voiture 1</div>
+              <div className="sidebar-label">{t('review_car')} 1</div>
               {game.car1 ? (
                 <div className="sidebar-item">
                   <div className="sidebar-item-name">{game.car1.name}</div>
                   <div className="sidebar-item-sub">{game.car1.year} · {game.car1.constructor}</div>
                 </div>
-              ) : <div className="sidebar-empty">À tirer</div>}
+              ) : <div className="sidebar-empty">—</div>}
               {pilots_car1.map((p, i) => (
                 <div key={p.id} className="sidebar-item">
                   <div className="sidebar-item-name">{p.nationality} {p.name}</div>
@@ -206,13 +212,13 @@ export default function App() {
               ))}
             </div>
             <div className="sidebar-section">
-              <div className="sidebar-label">Voiture 2</div>
+              <div className="sidebar-label">{t('review_car')} 2</div>
               {game.car2 ? (
                 <div className="sidebar-item">
                   <div className="sidebar-item-name">{game.car2.name}</div>
                   <div className="sidebar-item-sub">{game.car2.year} · {game.car2.constructor}</div>
                 </div>
-              ) : <div className="sidebar-empty">À tirer</div>}
+              ) : <div className="sidebar-empty">—</div>}
               {pilots_car2.map((p, i) => (
                 <div key={p.id} className="sidebar-item">
                   <div className="sidebar-item-name">{p.nationality} {p.name}</div>
@@ -222,7 +228,7 @@ export default function App() {
             </div>
             {game.director && (
               <div className="sidebar-section">
-                <div className="sidebar-label">Directeur Technique</div>
+                <div className="sidebar-label">{t('review_dt')}</div>
                 <div className="sidebar-item">
                   <div className="sidebar-item-name">{game.director.name}</div>
                   <div className="sidebar-item-sub">{game.director.specialty}</div>
