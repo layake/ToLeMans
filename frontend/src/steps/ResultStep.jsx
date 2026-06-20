@@ -42,7 +42,18 @@ function Confetti() {
   )
 }
 
-export default function ResultStep({ result, game, onRestart }) {
+export default function ResultStep({ result, game, onRestart, daily }) {
+  // En daily : verrouille le 1er score du jour
+  if (daily && typeof window !== 'undefined') {
+    const today = new Date().toISOString().slice(0, 10)
+    const key = 'tlm_daily_' + today
+    if (!localStorage.getItem(key)) {
+      localStorage.setItem(key, JSON.stringify({ verdict: result.verdict, position: result.best_position }))
+    }
+  }
+  const lockedDaily = daily && typeof window !== 'undefined'
+    ? JSON.parse(localStorage.getItem('tlm_daily_' + new Date().toISOString().slice(0,10)) || 'null')
+    : null
   const verdict = VERDICT_TEXT[result.verdict] || VERDICT_TEXT.finisher
   const phases = result.phase_summaries || []
   const bestCar = result.winning_car === 1 ? game.car1 : game.car2
@@ -79,7 +90,7 @@ export default function ResultStep({ result, game, onRestart }) {
               <div className="result-phase-bar">
                 <div className="result-phase-bar-fill" style={{
                   width: `${Math.min(100, score)}%`,
-                  background: score >= 88 ? 'var(--green)' : score >= 78 ? 'var(--yellow)' : 'var(--red)',
+                  background: score >= 88 ? '#3ecf7a' : score >= 78 ? '#4ea3d9' : '#e0533a',
                 }} />
               </div>
               <span style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--text-muted)', width: 30, textAlign: 'right' }}>
@@ -94,7 +105,12 @@ export default function ResultStep({ result, game, onRestart }) {
         DT : {game.director?.name} · Stratégie : {game.strategy}
       </div>
 
-      <button className="btn btn-primary btn-big" onClick={onRestart}>🔁 Rejouer</button>
+      {daily && lockedDaily && (
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', marginBottom: 16, letterSpacing: 1 }}>
+          DÉFI DU JOUR · Score retenu : {lockedDaily.verdict}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
+        </div>
+      )}
+      <button className="btn btn-primary btn-big" onClick={onRestart}>{daily ? 'Retour' : '🔁 Rejouer'}</button>
     </div>
   )
 }
