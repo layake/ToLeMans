@@ -106,6 +106,8 @@ export const translations = {
     result_back: 'Retour',
     result_daily_locked: 'DÉFI DU JOUR · Score retenu',
     result_strategy: 'Stratégie',
+    result_score: 'SCORE',
+    result_share: 'Partager',
   },
 
   en: {
@@ -206,6 +208,8 @@ export const translations = {
     result_back: 'Back',
     result_daily_locked: 'DAILY CHALLENGE · Locked score',
     result_strategy: 'Strategy',
+    result_score: 'SCORE',
+    result_share: 'Share',
   },
 }
 
