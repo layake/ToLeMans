@@ -62,6 +62,11 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
     abandon: { title: t('verdict_dnf_title'), subtitle: t('verdict_dnf_sub'), emoji: '💀' },
   }
   const verdict = VERDICT_MAP[result.verdict] || VERDICT_MAP.finisher
+  // Médaille dynamique selon la position réelle sur le podium
+  let displayEmoji = verdict.emoji
+  if (result.verdict === 'podium') {
+    displayEmoji = result.best_position === 2 ? '🥈' : '🥉'
+  }
   const phases = result.phase_summaries || []
   const bestCar = result.winning_car === 1 ? game.car1 : game.car2
   const celebrate = ['wire_to_wire', 'victoire'].includes(result.verdict)
@@ -69,7 +74,7 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
   return (
     <div className="result-screen">
       {celebrate && <Confetti />}
-      <div style={{ fontSize: 64, marginBottom: 8 }}>{verdict.emoji}</div>
+      <div style={{ fontSize: 64, marginBottom: 8 }}>{displayEmoji}</div>
 
       {result.best_position && <div className="result-position">{t('result_position')} {result.best_position} / 50</div>}
 
@@ -93,7 +98,7 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
           )
           return (
             <div key={phase.phase_id} className="result-phase-row">
-              <div className="result-phase-label">{phase.label}</div>
+              <div className="result-phase-label">{t('phase_' + phase.phase_id)}</div>
               <div className="result-phase-bar">
                 <div className="result-phase-bar-fill" style={{
                   width: `${Math.min(100, score)}%`,
@@ -109,12 +114,12 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
       </div>
 
       <div style={{ fontSize: 13, color: 'var(--text-muted)', marginBottom: 28, fontStyle: 'italic' }}>
-        DT : {game.director?.name} · {t('result_strategy')} : {game.strategy}
+        DT : {game.director?.name} · {t('result_strategy')} : {t('strat_' + game.strategy + '_name')}
       </div>
 
       {daily && lockedDaily && (
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', marginBottom: 16, letterSpacing: 1 }}>
-          {t('result_daily_locked')} : {lockedDaily.verdict}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
+          {t('result_daily_locked')} : {(VERDICT_MAP[lockedDaily.verdict] || VERDICT_MAP.finisher).title}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
         </div>
       )}
       <button className="btn btn-primary btn-big" onClick={onRestart}>{daily ? t('result_back') : t('result_replay')}</button>
