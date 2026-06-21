@@ -284,30 +284,28 @@ export default function SimulationStep({ result, game, onDone, t }) {
     const sc = document.querySelector('.app-body'); if (sc) sc.scrollTop = 0
     // Smooth analog clock animation
     startRef.current = performance.now()
+    let finished = false
+    // Bornes de fin de chaque phase en % de course (20h, 00h, 04h, 08h, 16h depuis 16h)
+    const BOUNDS = [4, 8, 12, 16, 24].map(h => (h / 24) * 100)
     const animate = (now) => {
       const elapsed = now - startRef.current
       const pct = Math.min(100, (elapsed / TOTAL_RACE_MS) * 100)
       setProgress(pct)
+      // Phases révélées quand l'horloge passe leur heure de fin → calé sur le jour/nuit
+      const revealed = Math.min(totalPhases, BOUNDS.filter(b => pct >= b - 1e-6).length)
+      setVisibleCount(revealed)
       if (pct < 100) {
         rafRef.current = requestAnimationFrame(animate)
+      } else if (!finished) {
+        finished = true
+        setVisibleCount(totalPhases)
+        setTimeout(() => setDone(true), 600)
       }
     }
     rafRef.current = requestAnimationFrame(animate)
 
-    // Phase reveals (independent)
-    let idx = 0
-    const interval = setInterval(() => {
-      idx++
-      setVisibleCount(idx)
-      if (idx >= totalPhases) {
-        clearInterval(interval)
-        setTimeout(() => setDone(true), 700)
-      }
-    }, 1400)
-
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      clearInterval(interval)
     }
   }, [totalPhases])
 
