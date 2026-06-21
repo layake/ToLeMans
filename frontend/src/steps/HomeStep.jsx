@@ -17,7 +17,7 @@ export default function HomeStep({ onStartFree, onStartDaily, dailyDone, t }) {
       </div>
 
       <div style={{ textAlign: 'center', marginBottom: 8 }}>
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', letterSpacing: 4, marginBottom: 10 }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--cream)', letterSpacing: 4, marginBottom: 10, opacity: 0.85 }}>
           {t('home_eyebrow')}
         </div>
         <div style={{ fontFamily: 'var(--font-display)', fontSize: 92, letterSpacing: 2, color: 'var(--cream)', lineHeight: 0.82 }}>
@@ -47,7 +47,7 @@ export default function HomeStep({ onStartFree, onStartDaily, dailyDone, t }) {
         </button>
         <button className="btn btn-secondary" onClick={onStartDaily} style={{ width: '100%', padding: 16, fontSize: 18, letterSpacing: 1, fontFamily: 'var(--font-display)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
           {t('home_btn_daily')}
-          {dailyDone && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--blue-sky)', letterSpacing: 1 }}>{t('home_daily_done')}</span>}
+          {dailyDone && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--gold)', letterSpacing: 1 }}>{t('home_daily_done')}</span>}
         </button>
         <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)', textAlign: 'center', marginTop: 2, lineHeight: 1.5 }}>
           {t('home_daily_desc')}
