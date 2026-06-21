@@ -22,7 +22,7 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
   const spinRef = useRef(null)
   const stepNum = carNum === 1 ? 2 : 3
 
-  async function fetchCarWithRetry(tries = 4) {
+  async function fetchCarWithRetry(tries = 8) {
     for (let i = 0; i < tries; i++) {
       try {
         const res = await fetch(`${API}/draw/car`, {
@@ -35,7 +35,7 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
         return data
       } catch (e) {
         if (i === tries - 1) throw e
-        await new Promise(r => setTimeout(r, 250 * (i + 1)))
+        await new Promise(r => setTimeout(r, 300))
       }
     }
   }
@@ -44,31 +44,40 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
     setPhase('spinning')
     setCar(null)
 
+    // L'animation tourne EN CONTINU jusqu'à l'arrivée des données (ne se fige jamais)
+    let stopped = false
     let speed = 50
-    let elapsed = 0
+    const minReveal = Date.now() + 1500 // au moins 1,5s de suspense
     const spin = () => {
+      if (stopped) return
       setSpinName(SPIN_NAMES[Math.floor(Math.random() * SPIN_NAMES.length)])
-      elapsed += speed
-      speed *= 1.12
-      if (elapsed < 1400) {
-        spinRef.current = setTimeout(spin, speed)
-      }
+      speed = Math.min(speed * 1.08, 130) // ralentit puis se stabilise, sans figer
+      spinRef.current = setTimeout(spin, speed)
     }
     spin()
 
-    const startedAt = Date.now()
-    try {
-      const data = await fetchCarWithRetry()
-      const wait = Math.max(0, 1500 - (Date.now() - startedAt))
+    const reveal = (data) => {
+      const wait = Math.max(0, minReveal - Date.now())
       setTimeout(() => {
+        stopped = true
         if (spinRef.current) clearTimeout(spinRef.current)
         setCar(data)
         setPhase('revealed')
       }, wait)
+    }
+
+    try {
+      reveal(await fetchCarWithRetry())
     } catch (e) {
-      console.error('draw failed after retries', e)
-      if (spinRef.current) clearTimeout(spinRef.current)
-      setPhase('idle')
+      console.error('draw: 1er cycle échoué, nouvelle tentative complète', e)
+      try {
+        reveal(await fetchCarWithRetry())
+      } catch (e2) {
+        console.error('draw: abandon après 2 cycles', e2)
+        stopped = true
+        if (spinRef.current) clearTimeout(spinRef.current)
+        setPhase('idle')
+      }
     }
   }
 
