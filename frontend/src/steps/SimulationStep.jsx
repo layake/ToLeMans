@@ -10,6 +10,9 @@ const PHASES = [
 
 const TOTAL_RACE_MS = 7000 // durée totale de l'animation = 5 phases × 1.4s
 
+// % de course au DÉBUT de chaque phase (16h,20h,00h,04h,08h depuis 16h) — pour allumer les icônes pile à l'heure
+const PHASE_START_PCT = [0, 4, 8, 12, 16].map(h => (h / 24) * 100)
+
 function pad(n) { return String(n).padStart(2, '0') }
 
 function raceTimeFromProgress(pct) {
@@ -340,7 +343,7 @@ export default function SimulationStep({ result, game, onDone, t }) {
           {/* Phase icons */}
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             {PHASES.map((ph, i) => (
-              <div key={ph.id} style={{ textAlign: 'center', opacity: visibleCount > i ? 1 : 0.25, transition: 'opacity 0.4s' }}>
+              <div key={ph.id} style={{ textAlign: 'center', opacity: progress >= PHASE_START_PCT[i] - 1e-6 ? 1 : 0.25, transition: 'opacity 0.4s' }}>
                 <div style={{ fontSize: 16 }}>{ph.icon}</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color: ph.color, marginTop: 2 }}>{ph.hours.split('→')[0].trim()}</div>
               </div>
