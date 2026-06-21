@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { shareResult } from '../shareCard'
+import { VERSION } from '../version'
 
 const VERDICT_TEXT = {
   wire_to_wire: { title: 'WIRE-TO-WIRE', subtitle: 'Le parfait absolu. Ton équipe a mené de la première à la dernière minute. Le Mans t\'appartient.', emoji: '🌟' },
@@ -70,6 +72,14 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
   const phases = result.phase_summaries || []
   const bestCar = result.winning_car === 1 ? game.car1 : game.car2
   const celebrate = ['wire_to_wire', 'victoire'].includes(result.verdict)
+  const [sharing, setSharing] = useState(false)
+
+  async function handleShare() {
+    setSharing(true)
+    try { await shareResult(result, game, VERSION) }
+    catch (e) { console.error('share failed', e) }
+    finally { setSharing(false) }
+  }
 
   return (
     <div className="result-screen">
@@ -80,6 +90,17 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
 
       <div className={`result-verdict ${result.verdict}`}>{verdict.title}</div>
       <div className="result-subtitle">{verdict.subtitle}</div>
+
+      {typeof result.score === 'number' && (
+        <div style={{
+          display: 'inline-flex', flexDirection: 'column', alignItems: 'center',
+          background: 'rgba(8,32,61,0.45)', border: '1px solid rgba(232,181,63,0.5)',
+          borderRadius: 'var(--radius-lg)', padding: '12px 40px', margin: '4px 0 26px',
+        }}>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-dim)', letterSpacing: 3 }}>{t('result_score')}</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 56, lineHeight: 1, color: 'var(--gold)' }}>{result.score}</div>
+        </div>
+      )}
 
       {bestCar && result.best_position && (
         <div style={{
@@ -122,7 +143,13 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
           {t('result_daily_locked')} : {(VERDICT_MAP[lockedDaily.verdict] || VERDICT_MAP.finisher).title}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
         </div>
       )}
-      <button className="btn btn-primary btn-big" onClick={onRestart}>{daily ? t('result_back') : t('result_replay')}</button>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 10, width: '100%', maxWidth: 420, margin: '0 auto' }}>
+        <button className="btn btn-secondary" onClick={handleShare} disabled={sharing}
+          style={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10 }}>
+          {sharing ? '…' : `📸 ${t('result_share')}`}
+        </button>
+        <button className="btn btn-primary btn-big" onClick={onRestart} style={{ width: '100%' }}>{daily ? t('result_back') : t('result_replay')}</button>
+      </div>
     </div>
   )
 }
