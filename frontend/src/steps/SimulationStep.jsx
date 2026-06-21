@@ -221,12 +221,16 @@ function LiveLeaderboard({ field, visibleCount, t }) {
       <div style={{ position: 'relative', height: ranked.length * rowH }}>
         {ranked.map((car, rank) => (
           <div key={car.id} style={{
-            position: 'absolute', top: rank * rowH, left: 0, right: 0, height: rowH - 6,
+            position: 'absolute', top: 0, left: 0, right: 0, height: rowH - 6,
+            transform: `translateY(${rank * rowH}px)`,
+            willChange: 'transform',
+            zIndex: car.isPlayer ? 20 : ranked.length - rank,
             display: 'flex', alignItems: 'center', gap: 10, padding: '0 12px',
             borderRadius: 'var(--radius)',
             background: car.isPlayer ? 'var(--cream)' : 'var(--card)',
             border: car.isPlayer ? '1px solid var(--blue-sky)' : '1px solid var(--border)',
-            transition: 'top 0.7s cubic-bezier(0.2,0.7,0.2,1)',
+            boxShadow: car.isPlayer ? '0 2px 8px rgba(0,0,0,0.25)' : 'none',
+            transition: 'transform 0.65s cubic-bezier(0.4,0.0,0.2,1)',
             opacity: car.dnf ? 0.5 : 1,
           }}>
             <div style={{
