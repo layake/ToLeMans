@@ -118,7 +118,7 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
       </div>
 
       {daily && lockedDaily && (
-        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: 'var(--blue-sky)', marginBottom: 16, letterSpacing: 1 }}>
+        <div style={{ fontFamily: 'var(--font-mono)', fontSize: 12, color: '#bcdcf2', marginBottom: 16, letterSpacing: 1 }}>
           {t('result_daily_locked')} : {(VERDICT_MAP[lockedDaily.verdict] || VERDICT_MAP.finisher).title}{lockedDaily.position ? ` (P${lockedDaily.position})` : ''}
         </div>
       )}
