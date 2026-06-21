@@ -1,3 +1,3 @@
 // Version du jeu — incrémenter à chaque évolution notable
-export const VERSION = 'v1.3.4'
+export const VERSION = 'v1.3.5'
 export const BUILD_DATE = '2026-06-21'
