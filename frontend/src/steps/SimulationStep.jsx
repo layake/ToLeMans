@@ -215,7 +215,7 @@ function LiveLeaderboard({ field, visibleCount, t }) {
   const rowH = 42
   return (
     <div style={{ marginBottom: 24 }}>
-      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#4ea3d9', letterSpacing: 2, marginBottom: 10 }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#bcdcf2', letterSpacing: 2, marginBottom: 10 }}>
         {t('sim_leaderboard')}
       </div>
       <div style={{ position: 'relative', height: ranked.length * rowH }}>
