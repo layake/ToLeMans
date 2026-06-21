@@ -187,7 +187,7 @@ def simulate_car(car, pilots, strategy, director):
             dnf_phase = phase["id"]
             score = 0
         
-        if score >= 85:
+        if score >= 87:
             leading_phases += 1
         
         phase_results.append({
@@ -220,7 +220,14 @@ def simulate_car(car, pilots, strategy, director):
     else:
         position = random.randint(20, 45)
     
-    wire_to_wire = (position == 1 and leading_phases == 5)
+    # Wire-to-Wire : un exploit rare. Il faut finir P1, avoir dominé les 5 phases
+    # (score >= 92 partout), une moyenne très haute, ET passer un verrou aléatoire.
+    wire_to_wire = (
+        position == 1
+        and leading_phases == 5
+        and final_score >= 92
+        and random.random() < 0.6
+    )
     
     return {
         "dnf": False,
