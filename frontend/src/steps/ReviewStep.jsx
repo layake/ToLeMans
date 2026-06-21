@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 const API = '/api'
-const STRATEGY_LABELS = { attaque: '⚡ Attaque', conservation: '🛡️ Conservation', equilibre: '⚖️ Équilibré' }
+const STRATEGY_ICONS = { attaque: '⚡', conservation: '🛡️', equilibre: '⚖️' }
 
 export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, t }) {
   const [loading, setLoading] = useState(false)
@@ -39,7 +39,7 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, t 
       </div>
 
       <div className="review-strategy-block">
-        {STRATEGY_LABELS[game.strategy]} — {t('relay')} {game.strategy === 'attaque' ? '2h' : game.strategy === 'equilibre' ? '3h' : '4h'}
+        {STRATEGY_ICONS[game.strategy]} {t('strat_' + game.strategy + '_name')} — {t('relay')} {game.strategy === 'attaque' ? '2h' : game.strategy === 'equilibre' ? '3h' : '4h'}
       </div>
 
       <div className="review-grid">
