@@ -297,6 +297,25 @@ def simulate_race(body):
             "car2_dnf": r2["dnf"],
         })
     
+    # ── Score chiffré : verdict + position + difficulté du tirage gagnant ──
+    win_car = car1 if best is result_car1 else car2
+    win_pilots = pilots_car1 if best is result_car1 else pilots_car2
+
+    def pilot_overall(p):
+        return p["pace"]*0.3 + p["night_skill"]*0.25 + p["endurance"]*0.25 + p["reliability"]*0.2
+    car_overall = (win_car["performance"] + win_car["reliability"]) / 2
+    pilot_avg = sum(pilot_overall(p) for p in win_pilots) / len(win_pilots) if win_pilots else 0
+    draft_rating = car_overall * 0.5 + pilot_avg * 0.5  # niveau global du tirage gagnant
+
+    VERDICT_BASE = {"wire_to_wire": 1000, "victoire": 750, "podium": 500, "finisher": 250, "abandon": 50}
+    base = VERDICT_BASE[verdict]
+    pos = best["position"] if not best["dnf"] else 50
+    pos_bonus = max(0, (50 - pos)) * 5                       # P1 → +245
+    diff_bonus = round(max(0, (85 - draft_rating)) * 8)      # mauvais tirage qui surperforme → bonus
+    # léger bonus de risque selon la stratégie
+    strat_bonus = {"attaque": 60, "equilibre": 20, "conservation": 0}.get(strategy, 0)
+    score = round(base + pos_bonus + diff_bonus + strat_bonus)
+
     return {
         "car1": result_car1,
         "car2": result_car2,
@@ -304,4 +323,10 @@ def simulate_race(body):
         "verdict": verdict,
         "best_position": best["position"] if not best["dnf"] else None,
         "winning_car": 1 if best is result_car1 else 2,
+        "score": score,
+        "score_parts": {
+            "base": base, "position": pos_bonus,
+            "difficulty": diff_bonus, "strategy": strat_bonus,
+            "draft_rating": round(draft_rating),
+        },
     }
