@@ -128,6 +128,133 @@ function scoreClass(score, dnf) {
   return 'bad'
 }
 
+// Petit générateur pseudo-aléatoire gaussien
+function gauss(mean, sd) {
+  let u = 0, v = 0
+  while (u === 0) u = Math.random()
+  while (v === 0) v = Math.random()
+  return mean + sd * Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v)
+}
+
+const RIVAL_POOL = [
+  { num: '7',  constructor: 'Toyota',   color: '#e0533a' },
+  { num: '51', constructor: 'Ferrari',  color: '#d32f2f' },
+  { num: '6',  constructor: 'Porsche',  color: '#cfae5e' },
+  { num: '2',  constructor: 'Cadillac', color: '#c0c0c0' },
+  { num: '15', constructor: 'BMW',      color: '#4a90d9' },
+  { num: '93', constructor: 'Peugeot',  color: '#6a8f3c' },
+  { num: '35', constructor: 'Alpine',   color: '#3f7fc4' },
+  { num: '8',  constructor: 'Toyota',   color: '#b03030' },
+  { num: '12', constructor: 'Cadillac', color: '#9aa0a6' },
+  { num: '5',  constructor: 'Porsche',  color: '#d8b25e' },
+]
+
+// Construit le peloton : 2 voitures du joueur (scores réels) + rivales fictives calibrées
+function buildField(result, game) {
+  const phases = result.phase_summaries || []
+  const n = phases.length
+
+  // Voitures joueur — scores réels par phase
+  function playerCar(idx, name, color) {
+    const scores = []
+    let dnfFrom = null
+    phases.forEach((ph, i) => {
+      const dnf = idx === 1 ? ph.car1_dnf : ph.car2_dnf
+      const sc = idx === 1 ? ph.car1_score : ph.car2_score
+      if (dnf && dnfFrom === null) dnfFrom = i
+      scores.push(dnfFrom !== null ? 0 : (sc ?? 0))
+    })
+    return { id: 'p' + idx, name, num: idx === 1 ? '①' : '②', color, isPlayer: true, scores, dnfFrom }
+  }
+
+  const c1 = playerCar(1, game.car1?.name || 'Voiture 1', '#f5c542')
+  const c2 = playerCar(2, game.car2?.name || 'Voiture 2', '#4ea3d9')
+
+  // Moyenne de la meilleure voiture joueur (hors phases DNF)
+  const avg = (c) => {
+    const valid = c.scores.filter((_, i) => c.dnfFrom === null || i < c.dnfFrom)
+    return valid.length ? valid.reduce((a, b) => a + b, 0) / valid.length : 0
+  }
+  const bestAvg = Math.max(avg(c1), avg(c2))
+
+  // Combien de rivales doivent finir AU-DESSUS du joueur, selon sa vraie position
+  const bestPos = result.best_position || 50
+  const nRivals = 8
+  const nAbove = Math.max(0, Math.min(nRivals, bestPos - 1))
+
+  const pool = [...RIVAL_POOL].sort(() => Math.random() - 0.5).slice(0, nRivals)
+  const rivals = pool.map((r, i) => {
+    const target = i < nAbove
+      ? bestAvg + (1 + Math.random() * 6)
+      : bestAvg - (1 + Math.random() * 9)
+    const scores = phases.map(() => Math.max(40, Math.min(99, gauss(target, 3.5))))
+    return { id: 'r' + i, name: `#${r.num} ${r.constructor}`, num: r.num, color: r.color, isPlayer: false, scores, dnfFrom: null }
+  })
+
+  return [c1, c2, ...rivals]
+}
+
+// Classement cumulé jusqu'à la phase visible
+function rankField(field, visibleCount) {
+  const withCum = field.map(car => {
+    let cum = 0
+    let dnf = false
+    for (let i = 0; i < visibleCount; i++) {
+      if (car.dnfFrom !== null && i >= car.dnfFrom) { dnf = true; break }
+      cum += car.scores[i] || 0
+    }
+    return { ...car, cum: dnf ? -1 : cum, dnf }
+  })
+  // tri : DNF en bas, sinon par cumul décroissant
+  withCum.sort((a, b) => b.cum - a.cum)
+  return withCum
+}
+
+function LiveLeaderboard({ field, visibleCount, t }) {
+  const ranked = rankField(field, Math.max(1, visibleCount))
+  const rowH = 42
+  return (
+    <div style={{ marginBottom: 24 }}>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#4ea3d9', letterSpacing: 2, marginBottom: 10 }}>
+        {t('sim_leaderboard')}
+      </div>
+      <div style={{ position: 'relative', height: ranked.length * rowH }}>
+        {ranked.map((car, rank) => (
+          <div key={car.id} style={{
+            position: 'absolute', top: rank * rowH, left: 0, right: 0, height: rowH - 6,
+            display: 'flex', alignItems: 'center', gap: 10, padding: '0 12px',
+            borderRadius: 'var(--radius)',
+            background: car.isPlayer ? 'var(--cream)' : 'var(--card)',
+            border: car.isPlayer ? '1px solid var(--blue-sky)' : '1px solid var(--border)',
+            transition: 'top 0.7s cubic-bezier(0.2,0.7,0.2,1)',
+            opacity: car.dnf ? 0.5 : 1,
+          }}>
+            <div style={{
+              fontFamily: 'var(--font-display)', fontSize: 18, minWidth: 26, textAlign: 'center',
+              color: car.dnf ? '#e0533a' : car.isPlayer ? 'var(--blue-deep)' : 'var(--text-muted)',
+            }}>
+              {car.dnf ? '—' : rank + 1}
+            </div>
+            <div style={{ width: 8, height: 8, borderRadius: 2, background: car.color, flexShrink: 0 }} />
+            <div style={{
+              flex: 1, fontSize: 13, fontWeight: car.isPlayer ? 700 : 500,
+              color: car.isPlayer ? 'var(--blue-deep)' : 'var(--text-dim)',
+              whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+            }}>
+              {car.isPlayer && <span style={{ marginRight: 6 }}>{car.num}</span>}
+              {car.name}
+            </div>
+            {car.dnf
+              ? <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: '#e0533a' }}>{t('abandon_caps')}</span>
+              : car.isPlayer && <span style={{ fontFamily: 'var(--font-mono)', fontSize: 10, color: 'var(--blue-mid)' }}>{t('sim_you')}</span>
+            }
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function PositionBadge({ position, dnf }) {
   if (dnf) return <span style={{ color: '#e0533a', fontFamily: 'var(--font-display)', fontSize: 20 }}>DNF</span>
   if (!position) return null
@@ -141,6 +268,8 @@ export default function SimulationStep({ result, game, onDone, t }) {
   const [progress, setProgress] = useState(0)
   const startRef = useRef(null)
   const rafRef = useRef(null)
+  const fieldRef = useRef(null)
+  if (fieldRef.current === null) fieldRef.current = buildField(result, game)
 
   const phases = result.phase_summaries || []
   const totalPhases = phases.length
@@ -224,6 +353,9 @@ export default function SimulationStep({ result, game, onDone, t }) {
           </div>
         </div>
       </div>
+
+      {/* Classement live */}
+      <LiveLeaderboard field={fieldRef.current} visibleCount={visibleCount} t={t} />
 
       {/* Phase cards */}
       <div className="sim-phase-list">
