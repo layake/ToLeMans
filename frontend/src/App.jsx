@@ -28,6 +28,7 @@ export default function App() {
   const { lang, toggle, t } = useLang()
   const [phase, setPhase] = useState('home')
   const [rerolls, setRerolls] = useState(3)
+  const [config, setConfig] = useState({ start_budget: 280, max_start_position: 20, currency: 'M€' })
   const [game, setGame] = useState({
     strategy: null,
     car1: null,
@@ -35,6 +36,8 @@ export default function App() {
     director: null,
     pilots: [],
     chosenPilotIds: [],
+    budgetSpent: 0,
+    startPositions: null, // { car1: 5, car2: 12 } révélé après le draft
   })
   const [simResult, setSimResult] = useState(null)
   const [daily, setDaily] = useState(false)
@@ -42,6 +45,12 @@ export default function App() {
   const [dailyDone, setDailyDone] = useState(false)
 
   const API = '/api'
+  const budgetLeft = config.start_budget - game.budgetSpent
+
+  // Récupère la config au démarrage
+  useEffect(() => {
+    fetch(`${API}/config`).then(r => r.json()).then(setConfig).catch(() => {})
+  }, [])
 
   // Vérifie si la daily du jour est déjà jouée
   useEffect(() => {
@@ -71,17 +80,17 @@ export default function App() {
   }
 
   function setCar1(car) {
-    setGame(g => ({ ...g, car1: car }))
+    setGame(g => ({ ...g, car1: car, budgetSpent: g.budgetSpent + (car.cost || 0) }))
     setPhase('car2')
   }
 
   function setCar2(car) {
-    setGame(g => ({ ...g, car2: car }))
+    setGame(g => ({ ...g, car2: car, budgetSpent: g.budgetSpent + (car.cost || 0) }))
     setPhase('director')
   }
 
   function setDirector(dt) {
-    setGame(g => ({ ...g, director: dt }))
+    setGame(g => ({ ...g, director: dt, budgetSpent: g.budgetSpent + (dt.cost || 0) }))
     setPhase('pilot0')
   }
 
@@ -90,6 +99,7 @@ export default function App() {
       ...g,
       pilots: [...g.pilots, pilot],
       chosenPilotIds: [...g.chosenPilotIds, pilot.id],
+      budgetSpent: g.budgetSpent + (pilot.cost || 0),
     }))
     const nextIndex = currentPilotIndex + 1
     setPhase(nextIndex >= 6 ? 'review' : `pilot${nextIndex}`)
@@ -108,7 +118,7 @@ export default function App() {
     setDaily(false)
     setDailyData(null)
     setRerolls(3)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0, startPositions: null })
     setPhase('strategy')
   }
 
@@ -119,8 +129,15 @@ export default function App() {
       setDailyData(data)
       setDaily(true)
       setRerolls(0)
-      // Voitures imposées directement
-      setGame({ strategy: null, car1: data.car1, car2: data.car2, director: null, pilots: [], chosenPilotIds: [] })
+      // Voitures imposées directement (avec coûts)
+      setGame({
+        strategy: null,
+        car1: { ...data.car1, cost: data.car1.cost || 0 },
+        car2: { ...data.car2, cost: data.car2.cost || 0 },
+        director: null, pilots: [], chosenPilotIds: [],
+        budgetSpent: (data.car1.cost || 0) + (data.car2.cost || 0),
+        startPositions: null,
+      })
       setPhase('strategy')
     } catch (e) { console.error(e) }
   }
@@ -130,7 +147,7 @@ export default function App() {
     setRerolls(3)
     setDaily(false)
     setDailyData(null)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0, startPositions: null })
     setSimResult(null)
   }
 
@@ -142,6 +159,18 @@ export default function App() {
           <button onClick={toggle} className="lang-toggle" aria-label="language">
             {lang === 'fr' ? 'EN' : 'FR'}
           </button>
+          {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && (
+            <div className="budget-pill" style={{
+              fontFamily: 'var(--font-mono)', fontSize: 11,
+              padding: '4px 10px', borderRadius: 6,
+              background: budgetLeft < 20 ? 'rgba(216,58,44,0.15)' : 'rgba(232,181,63,0.12)',
+              border: `1px solid ${budgetLeft < 20 ? 'rgba(216,58,44,0.5)' : 'rgba(232,181,63,0.4)'}`,
+              color: budgetLeft < 20 ? '#ff8a7a' : '#e8b53f',
+              letterSpacing: 1, whiteSpace: 'nowrap',
+            }}>
+              {budgetLeft}{config.currency}
+            </div>
+          )}
           {phase !== 'result' && phase !== 'simulation' && phase !== 'home' && !daily && (
             <div className="rerolls">
               {t('rerolls')}
@@ -162,11 +191,11 @@ export default function App() {
 
       <div className="app-body">
         <div className="main-panel">
-          {phase === 'home' && <HomeStep t={t} onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} />}
+          {phase === 'home' && <HomeStep t={t} onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} budget={config.start_budget} />}
           {phase === 'strategy' && <StrategyStep onSelect={setStrategy} t={t} />}
-          {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} t={t} />}
-          {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} t={t} />}
-          {phase === 'director' && <DirectorStep onSelect={setDirector} t={t} />}
+          {phase === 'car1' && <CarDrawStep carNum={1} excludeIds={drawnCarIds} budgetLeft={budgetLeft} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar1} t={t} />}
+          {phase === 'car2' && <CarDrawStep carNum={2} excludeIds={drawnCarIds} budgetLeft={budgetLeft} rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)} onSelect={setCar2} t={t} />}
+          {phase === 'director' && <DirectorStep budgetLeft={budgetLeft} onSelect={setDirector} t={t} />}
           {phase.startsWith('pilot') && currentSlot && (
             <PilotDrawStep
               strategy={game.strategy}
@@ -175,6 +204,7 @@ export default function App() {
               slot={currentSlot}
               pilotIndex={currentPilotIndex}
               chosenPilotIds={game.chosenPilotIds}
+              budgetLeft={budgetLeft}
               rerolls={rerolls}
               onReroll={() => setRerolls(r => r - 1)}
               onSelect={addPilot}
@@ -183,7 +213,7 @@ export default function App() {
               t={t}
             />
           )}
-          {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} t={t} />}
+          {phase === 'review' && <ReviewStep game={game} pilots_car1={pilots_car1} pilots_car2={pilots_car2} onStart={startSimulation} budgetLeft={budgetLeft} budgetTotal={config.start_budget} t={t} />}
           {phase === 'simulation' && simResult && <SimulationStep result={simResult} game={game} onDone={showResult} t={t} />}
           {phase === 'result' && simResult && <ResultStep result={simResult} game={game} onRestart={restart} daily={daily} t={t} />}
         </div>
