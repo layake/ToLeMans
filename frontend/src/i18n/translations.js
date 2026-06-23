@@ -107,6 +107,8 @@ export const translations = {
     result_daily_locked: 'DÉFI DU JOUR · Score retenu',
     result_strategy: 'Stratégie',
     result_score: 'SCORE',
+    cost: 'COÛT',
+    budget_too_low: 'BUDGET INSUFFISANT',
     result_share: 'Partager',
   },
 
@@ -209,6 +211,8 @@ export const translations = {
     result_daily_locked: 'DAILY CHALLENGE · Locked score',
     result_strategy: 'Strategy',
     result_score: 'SCORE',
+    cost: 'COST',
+    budget_too_low: 'OVER BUDGET',
     result_share: 'Share',
   },
 }
