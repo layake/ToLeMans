@@ -119,10 +119,14 @@ def roll_event(reliability, phase_id):
             return event
     return None
 
-def simulate_car(car, pilots, strategy, director):
-    """Simulate a single car through all 5 phases."""
+def simulate_car(car, pilots, strategy, director, start_position=10):
+    """Simulate a single car through all 5 phases.
+    start_position: position de départ (1-20). Influence légèrement le score."""
     bop_perf = apply_bop(car["performance"])
     pilot_map = {"P1": pilots[0], "P2": pilots[1], "P3": pilots[2]}
+
+    # Bonus/malus de position de départ : P1 → +2.5, P10 → 0, P20 → -2.5
+    position_mod = (10.5 - start_position) * 0.25
     
     avg_pilot_reliability = sum(p["reliability"] for p in pilots) / 3
     car_reliability = car["reliability"]
@@ -170,6 +174,7 @@ def simulate_car(car, pilots, strategy, director):
             base +
             dt_bonus * 0.35 +
             strategy_mod +
+            position_mod +
             random.gauss(0, 4)
         )
         
@@ -246,9 +251,11 @@ def simulate_race(body):
     director = body["director"]
     pilots_car1 = body["pilots_car1"]
     pilots_car2 = body["pilots_car2"]
-    
-    result_car1 = simulate_car(car1, pilots_car1, strategy, director)
-    result_car2 = simulate_car(car2, pilots_car2, strategy, director)
+    start_pos1 = body.get("start_position_car1", 10)
+    start_pos2 = body.get("start_position_car2", 10)
+
+    result_car1 = simulate_car(car1, pilots_car1, strategy, director, start_pos1)
+    result_car2 = simulate_car(car2, pilots_car2, strategy, director, start_pos2)
     
     # Team result = best car
     def car_rank(r):
@@ -323,6 +330,8 @@ def simulate_race(body):
         "verdict": verdict,
         "best_position": best["position"] if not best["dnf"] else None,
         "winning_car": 1 if best is result_car1 else 2,
+        "start_position_car1": start_pos1,
+        "start_position_car2": start_pos2,
         "score": score,
         "score_parts": {
             "base": base, "position": pos_bonus,
