@@ -12,20 +12,31 @@ function ratingColor(v) {
   return v >= 88 ? '#1a8f4e' : v >= 83 ? '#1f6fb2' : '#c0392b'
 }
 
-function PilotPick({ pilot, onSelect, disabled, daily }) {
+function PilotPick({ pilot, onSelect, disabled, daily, budgetLeft }) {
   const [showDetail, setShowDetail] = useState(false)
   const rating = globalRating(pilot)
   const color = ratingColor(rating)
+  const cost = pilot.cost || 0
+  const tooExpensive = cost > budgetLeft
+  const realDisabled = disabled || tooExpensive
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <button className="pilot-pick" onClick={() => !disabled && onSelect(pilot)} disabled={disabled}>
+    <div style={{ display: 'flex', flexDirection: 'column', opacity: tooExpensive ? 0.45 : 1 }}>
+      <button className="pilot-pick" onClick={() => !realDisabled && onSelect(pilot)} disabled={realDisabled}>
         <div className="rating-badge" style={{ background: daily ? 'rgba(10,26,47,0.06)' : color + '1a', border: daily ? '1px solid rgba(10,26,47,0.15)' : `1px solid ${color}55` }}>
           <span className="rating-num" style={{ color: daily ? '#9bb0c4' : color }}>{daily ? '?' : rating}</span>
         </div>
         <div className="pilot-pick-info">
           <div className="pilot-pick-name">{pilot.nationality} {pilot.name}</div>
           <div className="pilot-pick-profile">{pilot.profile}</div>
+        </div>
+        {/* Coût pilote */}
+        <div style={{
+          fontFamily: 'var(--font-mono)', fontSize: 11,
+          color: tooExpensive ? '#c0392b' : '#e8b53f',
+          fontWeight: 700, padding: '0 8px', whiteSpace: 'nowrap',
+        }}>
+          {cost}M€
         </div>
         {!daily && (
           <span
@@ -50,7 +61,7 @@ function PilotPick({ pilot, onSelect, disabled, daily }) {
   )
 }
 
-function TeamCard({ team, onSelect, disabled, daily }) {
+function TeamCard({ team, onSelect, disabled, daily, budgetLeft }) {
   return (
     <div className="team-card">
       <div className="team-card-head">
@@ -60,13 +71,13 @@ function TeamCard({ team, onSelect, disabled, daily }) {
       </div>
       <div className="team-divider" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
-        {team.pilots.map(p => <PilotPick key={p.id} pilot={p} onSelect={onSelect} disabled={disabled} daily={daily} />)}
+        {team.pilots.map(p => <PilotPick key={p.id} pilot={p} onSelect={onSelect} disabled={disabled} daily={daily} budgetLeft={budgetLeft} />)}
       </div>
     </div>
   )
 }
 
-export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, rerolls, onReroll, onSelect, daily, teamPoolOrder, t }) {
+export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, budgetLeft, rerolls, onReroll, onSelect, daily, teamPoolOrder, t }) {
   const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(false)
   const [selected, setSelected] = useState(null)
@@ -77,8 +88,8 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
     setLoading(true); setTeams(null); setSelected(null)
     const endpoint = daily ? `${API}/daily/teams` : `${API}/draw/teams`
     const payload = daily
-      ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder }
-      : { chosen_pilot_ids: chosenPilotIds }
+      ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder, budget_left: budgetLeft }
+      : { chosen_pilot_ids: chosenPilotIds, budget_left: budgetLeft }
     try {
       let data = null
       for (let i = 0; i < 4; i++) {
@@ -133,8 +144,8 @@ export default function PilotDrawStep({ slot, pilotIndex, chosenPilotIds, reroll
       {teams && (
         <>
           <div className="team-cards-row" style={{ marginBottom: 16 }}>
-            <TeamCard team={teams.team1} onSelect={setSelected} disabled={selected !== null} daily={daily} />
-            <TeamCard team={teams.team2} onSelect={setSelected} disabled={selected !== null} daily={daily} />
+            <TeamCard team={teams.team1} onSelect={setSelected} disabled={selected !== null} daily={daily} budgetLeft={budgetLeft} />
+            <TeamCard team={teams.team2} onSelect={setSelected} disabled={selected !== null} daily={daily} budgetLeft={budgetLeft} />
           </div>
 
           {selected && (
