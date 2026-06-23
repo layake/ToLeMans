@@ -3,12 +3,20 @@ import { useState } from 'react'
 const API = '/api'
 const STRATEGY_ICONS = { attaque: '⚡', conservation: '🛡️', equilibre: '⚖️' }
 
-export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, t }) {
+export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, budgetLeft, budgetTotal, t }) {
   const [loading, setLoading] = useState(false)
 
   async function launch() {
     setLoading(true)
     try {
+      // 1. Tire les positions de départ
+      const posRes = await fetch(`${API}/start-positions`, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({}),
+      })
+      const positions = await posRes.json()
+
+      // 2. Lance la sim avec les positions
       const res = await fetch(`${API}/simulate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -19,9 +27,14 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, t 
           director: game.director,
           pilots_car1,
           pilots_car2,
+          start_position_car1: positions.car1,
+          start_position_car2: positions.car2,
         }),
       })
       const data = await res.json()
+      // S'assure que les positions sont dans le résultat
+      data.start_position_car1 = positions.car1
+      data.start_position_car2 = positions.car2
       onStart(data)
     } catch (e) {
       console.error(e)
