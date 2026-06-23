@@ -88,6 +88,23 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
 
       {result.best_position && <div className="result-position">{t('result_position')} {result.best_position} / 50</div>}
 
+      {/* Position de départ → arrivée */}
+      {result.best_position && (result.start_position_car1 || result.start_position_car2) && (
+        <div style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
+          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)',
+          marginTop: 4, marginBottom: 8, letterSpacing: 1,
+        }}>
+          <span style={{ opacity: 0.7 }}>
+            Départ P{result.winning_car === 1 ? result.start_position_car1 : result.start_position_car2}
+          </span>
+          <span style={{ color: 'var(--gold)' }}>→</span>
+          <span style={{ color: 'var(--cream)', fontWeight: 700 }}>
+            P{result.best_position}
+          </span>
+        </div>
+      )}
+
       <div className={`result-verdict ${result.verdict}`}>{verdict.title}</div>
       <div className="result-subtitle">{verdict.subtitle}</div>
 
