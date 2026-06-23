@@ -9,29 +9,88 @@ function ratingColor(v) {
   return v >= 88 ? '#1a8f4e' : v >= 83 ? '#1f6fb2' : '#c0392b'
 }
 
-// Noms aléatoires pour l'effet machine à sous pendant le roll
 const SPIN_NAMES = [
   'Porsche 956', 'Audi R8', 'Ferrari 499P', 'Mazda 787B', 'Peugeot 905',
   'Toyota GR010', 'Jaguar XJR-9', 'Sauber C9', 'BMW V12 LMR', 'McLaren F1 GTR',
 ]
 
-export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onSelect, t }) {
-  const [car, setCar] = useState(null)
-  const [phase, setPhase] = useState('idle') // idle | spinning | revealed
+function CarCard({ car, onSelect, budgetLeft, t }) {
+  const rating = carRating(car)
+  const color = ratingColor(rating)
+  const cost = car.cost || 0
+  const tooExpensive = cost > budgetLeft
+
+  return (
+    <div className={`draw-card flipped ${tooExpensive ? 'too-expensive' : ''}`} style={{ opacity: tooExpensive ? 0.5 : 1 }}>
+      <div className="draw-card-face draw-card-back">
+        <div className="draw-card-back-icon">🏎️</div>
+      </div>
+      <div className="draw-card-face draw-card-front">
+        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
+          <div>
+            <div className="card-year">{car.year}</div>
+            <div className="card-era">{car.era}</div>
+          </div>
+          <div className="rating-badge" style={{ background: color + '1a', border: `1px solid ${color}55` }}>
+            <span className="rating-num" style={{ color }}>{rating}</span>
+            <span className="rating-lbl" style={{ color }}>{t('note')}</span>
+          </div>
+        </div>
+        <div className="card-name" style={{ marginTop: 8 }}>{car.name}</div>
+        <div className="card-subtitle">{car.constructor}</div>
+        <div style={{ display: 'flex', gap: 18, marginTop: 14 }}>
+          {[['PERF', car.performance], ['FIAB', car.reliability]].map(([lbl, val]) => (
+            <div key={lbl} style={{ flex: 1 }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', letterSpacing: 1 }}>{lbl}</span>
+                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: ratingColor(val), fontWeight: 700 }}>{val}</span>
+              </div>
+              <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${val}%`, background: ratingColor(val), borderRadius: 2 }} />
+              </div>
+            </div>
+          ))}
+        </div>
+        <div style={{
+          marginTop: 14, padding: '8px 12px',
+          background: tooExpensive ? 'rgba(216,58,44,0.12)' : 'rgba(232,181,63,0.1)',
+          border: `1px solid ${tooExpensive ? 'rgba(216,58,44,0.4)' : 'rgba(232,181,63,0.3)'}`,
+          borderRadius: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        }}>
+          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', letterSpacing: 2 }}>{t('cost') || 'COÛT'}</span>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: tooExpensive ? '#c0392b' : '#e8b53f', letterSpacing: 1 }}>
+            {cost}M€
+          </span>
+        </div>
+        <button
+          className="btn btn-primary"
+          style={{ marginTop: 12, width: '100%' }}
+          disabled={tooExpensive}
+          onClick={() => onSelect(car)}
+        >
+          {tooExpensive ? (t('budget_too_low') || 'BUDGET INSUFFISANT') : t('btn_choose')}
+        </button>
+      </div>
+    </div>
+  )
+}
+
+export default function CarDrawStep({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onSelect, t }) {
+  const [options, setOptions] = useState(null)
+  const [phase, setPhase] = useState('idle')
   const [spinName, setSpinName] = useState('')
   const spinRef = useRef(null)
-  const stepNum = carNum === 1 ? 2 : 3
 
-  async function fetchCarWithRetry(tries = 8) {
+  async function fetchOptionsWithRetry(tries = 8) {
     for (let i = 0; i < tries; i++) {
       try {
         const res = await fetch(`${API}/draw/car`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ exclude: excludeIds || [] }),
+          body: JSON.stringify({ exclude: excludeIds || [], budget_left: budgetLeft }),
         })
         if (!res.ok) throw new Error('HTTP ' + res.status)
         const data = await res.json()
-        if (!data || data.error) throw new Error(data?.error || 'no data')
+        if (!data || data.error || !data.options) throw new Error(data?.error || 'no options')
         return data
       } catch (e) {
         if (i === tries - 1) throw e
@@ -42,16 +101,15 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
 
   async function drawCar() {
     setPhase('spinning')
-    setCar(null)
+    setOptions(null)
 
-    // L'animation tourne EN CONTINU jusqu'à l'arrivée des données (ne se fige jamais)
     let stopped = false
     let speed = 50
-    const minReveal = Date.now() + 1500 // au moins 1,5s de suspense
+    const minReveal = Date.now() + 1500
     const spin = () => {
       if (stopped) return
       setSpinName(SPIN_NAMES[Math.floor(Math.random() * SPIN_NAMES.length)])
-      speed = Math.min(speed * 1.08, 130) // ralentit puis se stabilise, sans figer
+      speed = Math.min(speed * 1.08, 130)
       spinRef.current = setTimeout(spin, speed)
     }
     spin()
@@ -61,19 +119,17 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
       setTimeout(() => {
         stopped = true
         if (spinRef.current) clearTimeout(spinRef.current)
-        setCar(data)
+        setOptions(data.options)
         setPhase('revealed')
       }, wait)
     }
 
     try {
-      reveal(await fetchCarWithRetry())
+      reveal(await fetchOptionsWithRetry())
     } catch (e) {
-      console.error('draw: 1er cycle échoué, nouvelle tentative complète', e)
-      try {
-        reveal(await fetchCarWithRetry())
-      } catch (e2) {
-        console.error('draw: abandon après 2 cycles', e2)
+      console.error('draw failed', e)
+      try { reveal(await fetchOptionsWithRetry()) }
+      catch (e2) {
         stopped = true
         if (spinRef.current) clearTimeout(spinRef.current)
         setPhase('idle')
@@ -87,15 +143,12 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
     drawCar()
   }
 
-  const rating = car ? carRating(car) : 0
-  const color = car ? ratingColor(rating) : '#f5c542'
-
   return (
     <div className="screen-enter">
       <div className="step-header">
         <div className="step-eyebrow">{carNum === 1 ? t('car_eyebrow_1') : t('car_eyebrow_2')}</div>
         <div className="step-title">{t('car_title')} {carNum}</div>
-<div className="step-desc">{t('car_desc')}</div>
+        <div className="step-desc">{t('car_desc')}</div>
       </div>
 
       <div className="draw-area">
@@ -112,49 +165,21 @@ export default function CarDrawStep({ carNum, excludeIds, rerolls, onReroll, onS
           </div>
         )}
 
-        {phase === 'revealed' && car && (
+        {phase === 'revealed' && options && (
           <>
-            <div className="draw-card-container">
-              <div className="draw-card flipped">
-                <div className="draw-card-face draw-card-back">
-                  <div className="draw-card-back-icon">🏎️</div>
-                </div>
-                <div className="draw-card-face draw-card-front">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
-                    <div>
-                      <div className="card-year">{car.year}</div>
-                      <div className="card-era">{car.era}</div>
-                    </div>
-                    <div className="rating-badge" style={{ background: color + '1a', border: `1px solid ${color}55` }}>
-                      <span className="rating-num" style={{ color }}>{rating}</span>
-                      <span className="rating-lbl" style={{ color }}>{t('note')}</span>
-                    </div>
-                  </div>
-                  <div className="card-name" style={{ marginTop: 8 }}>{car.name}</div>
-                  <div className="card-subtitle">{car.constructor}</div>
-                  <div style={{ display: 'flex', gap: 18, marginTop: 14 }}>
-                    {[['PERF', car.performance], ['FIAB', car.reliability]].map(([lbl, val]) => (
-                      <div key={lbl} style={{ flex: 1 }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', letterSpacing: 1 }}>{lbl}</span>
-                          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: ratingColor(val), fontWeight: 700 }}>{val}</span>
-                        </div>
-                        <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, overflow: 'hidden' }}>
-                          <div style={{ height: '100%', width: `${val}%`, background: ratingColor(val), borderRadius: 2 }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: 14, width: '100%',
+            }}>
+              {options.map((c, i) => (
+                <CarCard key={c.id + i} car={c} onSelect={onSelect} budgetLeft={budgetLeft} t={t} />
+              ))}
             </div>
 
-            <div className="btn-row">
+            <div className="btn-row" style={{ marginTop: 14 }}>
               <button className="btn btn-secondary" onClick={rerollCar} disabled={rerolls <= 0}>
                 🔄 {t('btn_reroll')} ({rerolls})
-              </button>
-              <button className="btn btn-primary btn-big" onClick={() => onSelect(car)}>
-                {t('btn_choose')}
               </button>
             </div>
           </>
