@@ -4,8 +4,14 @@ import json
 import random
 from datetime import date
 from simulation import simulate_race
+from costs import car_cost, pilot_cost, director_cost, team_entry_cost, pilot_rating, car_rating
 
-app = FastAPI(title="TLM – Vers Le Mans API")
+app = FastAPI(title="TLM – To Le Mans API")
+
+# Budget de départ (M€)
+START_BUDGET = 280
+# Position de départ : entre P1 et MAX_START
+MAX_START_POSITION = 20
 
 app.add_middleware(
     CORSMiddleware,
@@ -35,16 +41,77 @@ def health():
 
 @app.get("/directors")
 def get_directors():
-    return DIRECTORS
+    return [{**d, "cost": director_cost(d)} for d in DIRECTORS]
+
+
+@app.get("/config")
+def get_config():
+    """Configuration globale du jeu : budget, position max, etc."""
+    return {
+        "start_budget": START_BUDGET,
+        "max_start_position": MAX_START_POSITION,
+        "currency": "M€",
+    }
+
+
+@app.post("/start-positions")
+def start_positions(body: dict):
+    """Tire les 2 positions de départ V1/V2 entre P1 et MAX_START_POSITION."""
+    # Optionnellement : la qualité du tirage influence la médiane de la position
+    # Pour l'instant : simple tirage aléatoire, distinct
+    pos1 = random.randint(1, MAX_START_POSITION)
+    pos2 = random.randint(1, MAX_START_POSITION)
+    while pos2 == pos1:
+        pos2 = random.randint(1, MAX_START_POSITION)
+    return {"car1": pos1, "car2": pos2}
 
 
 @app.post("/draw/car")
 def draw_car(body: dict):
+    """Tire 2 voitures (1 chère + 1 abordable), avec coûts. Respecte le budget restant."""
     exclude = body.get("exclude", [])
+    budget_left = body.get("budget_left", START_BUDGET)
     available = [c for c in CARS if c["id"] not in exclude]
     if not available:
         return {"error": "No cars available"}
-    return random.choice(available)
+
+    # Filtre par budget
+    affordable = [c for c in available if car_cost(c) <= budget_left]
+    if not affordable:
+        # Fallback : on propose les 2 moins chères même si dépassement
+        sorted_by_cost = sorted(available, key=car_cost)
+        return {
+            "options": [
+                {**c, "cost": car_cost(c)} for c in sorted_by_cost[:2]
+            ],
+            "budget_warning": True,
+        }
+
+    # Sépare en 2 groupes : au-dessus et en-dessous de la médiane des coûts
+    affordable_sorted = sorted(affordable, key=car_cost)
+    n = len(affordable_sorted)
+    if n == 1:
+        c = affordable_sorted[0]
+        return {"options": [{**c, "cost": car_cost(c)}]}
+
+    median_idx = n // 2
+    cheap_group = affordable_sorted[:median_idx]
+    expensive_group = affordable_sorted[median_idx:]
+    cheap_pick = random.choice(cheap_group)
+    expensive_pick = random.choice(expensive_group)
+    # Ordre aléatoire pour que le joueur ne sache pas quelle est laquelle
+    options = [cheap_pick, expensive_pick]
+    random.shuffle(options)
+    return {
+        "options": [{**c, "cost": car_cost(c)} for c in options],
+    }
+
+
+@app.get("/single-car")
+def single_car():
+    """Compat : tire une seule voiture (utilisé par certains anciens flows)."""
+    c = random.choice(CARS)
+    return {**c, "cost": car_cost(c)}
 
 
 # Map id -> nom de pilote (un même vrai pilote a plusieurs ids selon l'année)
@@ -59,9 +126,10 @@ def chosen_names(chosen_pilot_ids):
 
 @app.post("/draw/teams")
 def draw_teams(body: dict):
-    """Draw 2 team entries, excluding any team containing an already-chosen driver
-    (matched by name, so the same real driver can't appear twice)."""
+    """Tire 2 écuries (1 chère + 1 abordable), avec coûts pilote.
+    Exclut celles contenant un pilote déjà choisi (par nom). Respecte le budget restant."""
     chosen_pilot_ids = body.get("chosen_pilot_ids", [])
+    budget_left = body.get("budget_left", START_BUDGET)
     taken = chosen_names(chosen_pilot_ids)
     available = [
         t for t in TEAM_ENTRIES
@@ -69,8 +137,30 @@ def draw_teams(body: dict):
     ]
     if len(available) < 2:
         return {"error": "Not enough teams available", "available": len(available)}
-    selected = random.sample(available, 2)
-    return {"team1": selected[0], "team2": selected[1]}
+
+    def with_costs(t):
+        pilots_with_cost = [{**p, "cost": pilot_cost(p)} for p in t["pilots"]]
+        return {**t, "pilots": pilots_with_cost, "min_pilot_cost": min(p["cost"] for p in pilots_with_cost)}
+
+    # On filtre par "au moins un pilote dans le budget"
+    affordable = [t for t in available if min(pilot_cost(p) for p in t["pilots"]) <= budget_left]
+    if len(affordable) < 2:
+        sorted_by_min = sorted(available, key=lambda t: min(pilot_cost(p) for p in t["pilots"]))
+        return {
+            "team1": with_costs(sorted_by_min[0]),
+            "team2": with_costs(sorted_by_min[1]),
+            "budget_warning": True,
+        }
+
+    # Split par coût total écurie
+    affordable_sorted = sorted(affordable, key=team_entry_cost)
+    n = len(affordable_sorted)
+    median_idx = n // 2
+    cheap_pick = random.choice(affordable_sorted[:median_idx])
+    expensive_pick = random.choice(affordable_sorted[median_idx:])
+    options = [cheap_pick, expensive_pick]
+    random.shuffle(options)
+    return {"team1": with_costs(options[0]), "team2": with_costs(options[1])}
 
 
 @app.get("/daily")
