@@ -18,58 +18,78 @@ function CarCard({ car, onSelect, budgetLeft, t }) {
   const rating = carRating(car)
   const color = ratingColor(rating)
   const cost = car.cost || 0
-  const tooExpensive = cost > budgetLeft
+  const over = cost > budgetLeft
 
   return (
-    <div className={`draw-card flipped ${tooExpensive ? 'too-expensive' : ''}`} style={{ opacity: tooExpensive ? 0.5 : 1 }}>
-      <div className="draw-card-face draw-card-back">
-        <div className="draw-card-back-icon">🏎️</div>
-      </div>
-      <div className="draw-card-face draw-card-front">
-        <div style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'flex-start' }}>
-          <div>
-            <div className="card-year">{car.year}</div>
-            <div className="card-era">{car.era}</div>
-          </div>
-          <div className="rating-badge" style={{ background: color + '1a', border: `1px solid ${color}55` }}>
-            <span className="rating-num" style={{ color }}>{rating}</span>
-            <span className="rating-lbl" style={{ color }}>{t('note')}</span>
-          </div>
-        </div>
-        <div className="card-name" style={{ marginTop: 8 }}>{car.name}</div>
-        <div className="card-subtitle">{car.constructor}</div>
-        <div style={{ display: 'flex', gap: 18, marginTop: 14 }}>
-          {[['PERF', car.performance], ['FIAB', car.reliability]].map(([lbl, val]) => (
-            <div key={lbl} style={{ flex: 1 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', letterSpacing: 1 }}>{lbl}</span>
-                <span style={{ fontFamily: 'var(--font-mono)', fontSize: 11, color: ratingColor(val), fontWeight: 700 }}>{val}</span>
-              </div>
-              <div style={{ height: 4, background: 'var(--border)', borderRadius: 2, overflow: 'hidden' }}>
-                <div style={{ height: '100%', width: `${val}%`, background: ratingColor(val), borderRadius: 2 }} />
-              </div>
-            </div>
-          ))}
+    <div style={{
+      background: 'var(--cream)',
+      color: 'var(--ink)',
+      borderRadius: 'var(--radius-lg)',
+      padding: 'clamp(16px, 4vw, 22px)',
+      boxShadow: '0 8px 28px rgba(0,0,0,0.35)',
+      width: '100%',
+      boxSizing: 'border-box',
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 6,
+    }}>
+      {/* Ligne année + note */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        <div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(20px, 5vw, 26px)', color: 'var(--ink)', lineHeight: 1 }}>{car.year}</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(9px, 2.2vw, 11px)', color: '#6a7d92', letterSpacing: 1, marginTop: 2 }}>{car.era}</div>
         </div>
         <div style={{
-          marginTop: 14, padding: '8px 12px',
-          background: tooExpensive ? 'rgba(216,58,44,0.12)' : 'rgba(232,181,63,0.1)',
-          border: `1px solid ${tooExpensive ? 'rgba(216,58,44,0.4)' : 'rgba(232,181,63,0.3)'}`,
-          borderRadius: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          background: color + '1a', border: `1px solid ${color}55`,
+          borderRadius: 8, padding: '6px 10px', textAlign: 'center', minWidth: 48,
         }}>
-          <span style={{ fontFamily: 'var(--font-mono)', fontSize: 9, color: 'var(--text-muted)', letterSpacing: 2 }}>{t('cost') || 'COÛT'}</span>
-          <span style={{ fontFamily: 'var(--font-display)', fontSize: 22, color: tooExpensive ? '#c0392b' : '#e8b53f', letterSpacing: 1 }}>
-            {cost}M€
-          </span>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 4.5vw, 24px)', color, lineHeight: 1 }}>{rating}</div>
+          <div style={{ fontFamily: 'var(--font-mono)', fontSize: 8, color, letterSpacing: 1 }}>{t('note')}</div>
         </div>
-        <button
-          className="btn btn-primary"
-          style={{ marginTop: 12, width: '100%', opacity: tooExpensive ? 0.7 : 1 }}
-          onClick={() => onSelect(car)}
-        >
-          {tooExpensive ? `⚠️ ${t('btn_choose')} (malus)` : t('btn_choose')}
-        </button>
       </div>
+
+      {/* Nom voiture */}
+      <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 4.5vw, 24px)', color: 'var(--ink)', lineHeight: 1.05, marginTop: 4 }}>
+        {car.name}
+      </div>
+      <div style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(10px, 2.5vw, 12px)', color: '#6a7d92' }}>{car.constructor}</div>
+
+      {/* Stats */}
+      <div style={{ display: 'flex', gap: 16, marginTop: 10 }}>
+        {[['PERF', car.performance], ['FIAB', car.reliability]].map(([lbl, val]) => (
+          <div key={lbl} style={{ flex: 1 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 2vw, 10px)', color: '#6a7d92', letterSpacing: 1 }}>{lbl}</span>
+              <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(9px, 2.2vw, 11px)', color: ratingColor(val), fontWeight: 700 }}>{val}</span>
+            </div>
+            <div style={{ height: 4, background: '#d8d2c4', borderRadius: 2, overflow: 'hidden' }}>
+              <div style={{ height: '100%', width: `${val}%`, background: ratingColor(val), borderRadius: 2 }} />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Coût */}
+      <div style={{
+        marginTop: 12, padding: '8px 12px',
+        background: over ? 'rgba(216,58,44,0.1)' : 'rgba(232,181,63,0.12)',
+        border: `1px solid ${over ? 'rgba(216,58,44,0.4)' : 'rgba(232,181,63,0.45)'}`,
+        borderRadius: 6, display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+      }}>
+        <span style={{ fontFamily: 'var(--font-mono)', fontSize: 'clamp(8px, 2vw, 10px)', color: '#6a7d92', letterSpacing: 2 }}>{t('cost') || 'COÛT'}</span>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(18px, 4.5vw, 22px)', color: over ? '#c0392b' : '#b8901f', letterSpacing: 1 }}>
+          {cost}M€
+        </span>
+      </div>
+
+      {/* Bouton */}
+      <button
+        className="btn btn-primary"
+        style={{ marginTop: 10, width: '100%', opacity: over ? 0.85 : 1 }}
+        onClick={() => onSelect(car)}
+      >
+        {over ? `⚠️ ${t('btn_choose')} (malus)` : t('btn_choose')}
+      </button>
     </div>
   )
 }
@@ -169,7 +189,9 @@ export default function CarDrawStep({ carNum, excludeIds, budgetLeft, rerolls, o
             <div style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: 12, width: '100%',
+              gap: 14,
+              width: '100%',
+              maxWidth: 380,
             }}>
               {options.map((c, i) => (
                 <CarCard key={c.id + i} car={c} onSelect={onSelect} budgetLeft={budgetLeft} t={t} />
