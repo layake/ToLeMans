@@ -119,7 +119,7 @@ def roll_event(reliability, phase_id):
             return event
     return None
 
-def simulate_car(car, pilots, strategy, director, start_position=10):
+def simulate_car(car, pilots, strategy, director, start_position=10, budget_malus=0):
     """Simulate a single car through all 5 phases.
     start_position: position de départ (1-20). Influence légèrement le score."""
     bop_perf = apply_bop(car["performance"])
@@ -174,7 +174,8 @@ def simulate_car(car, pilots, strategy, director, start_position=10):
             base +
             dt_bonus * 0.35 +
             strategy_mod +
-            position_mod +
+            position_mod -
+            budget_malus +
             random.gauss(0, 4)
         )
         
@@ -253,9 +254,13 @@ def simulate_race(body):
     pilots_car2 = body["pilots_car2"]
     start_pos1 = body.get("start_position_car1", 10)
     start_pos2 = body.get("start_position_car2", 10)
+    # Malus si budget dépassé (budget_overspend = M€ au-delà du budget)
+    budget_overspend = max(0, body.get("budget_overspend", 0))
+    # Malus progressif : -1 pt par 10M€ de dépassement (max -6 pts)
+    budget_malus = min(6, budget_overspend / 10)
 
-    result_car1 = simulate_car(car1, pilots_car1, strategy, director, start_pos1)
-    result_car2 = simulate_car(car2, pilots_car2, strategy, director, start_pos2)
+    result_car1 = simulate_car(car1, pilots_car1, strategy, director, start_pos1, budget_malus)
+    result_car2 = simulate_car(car2, pilots_car2, strategy, director, start_pos2, budget_malus)
     
     # Team result = best car
     def car_rank(r):
