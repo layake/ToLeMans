@@ -91,25 +91,29 @@ EVENTS = [
     {"id": "nuit_rapide", "label": "Nuit express", "description": "Les chrono tombent dans le noir.", "score_delta": 5, "dnf": False, "prob": 0.10, "phase_only": ["nuit", "nuit_profonde"]},
 ]
 
-def roll_event(reliability, phase_id):
-    """Roll for a random event. Returns event or None."""
+def roll_event(reliability, phase_id, strategy="equilibre"):
+    """Roll for a random event. Returns event or None.
+    La stratégie module fortement le risque de casse (DNF)."""
     # Base chance of something happening
     event_chance = max(0.3, 0.7 - reliability / 200)
     if random.random() > event_chance:
         return None
-    
+
     # Filter events to phase-relevant ones
     candidates = [e for e in EVENTS if "phase_only" not in e or phase_id in e.get("phase_only", [])]
-    
-    # Weight DNF by reliability
+
+    # Multiplicateur de risque DNF selon la stratégie
+    strat_dnf_mult = {"attaque": 5.0, "equilibre": 2.0, "conservation": 0.7}.get(strategy, 2.0)
+
+    # Weight DNF by reliability AND strategy
     weighted = []
     for e in candidates:
         weight = e["prob"]
         if e["dnf"]:
-            # DNF chance scales inversely with reliability
-            weight = weight * (100 - reliability) / 40
+            # DNF chance scales inversely with reliability, fortement modulé par la stratégie
+            weight = weight * (100 - reliability) / 35 * strat_dnf_mult
         weighted.append((e, weight))
-    
+
     total = sum(w for _, w in weighted)
     r = random.random() * total
     cumulative = 0
@@ -157,15 +161,15 @@ def simulate_car(car, pilots, strategy, director, start_position=10, budget_malu
             for key, weight in phase_map
         )
         
-        # Roll for event
-        event = roll_event(effective_reliability, phase["id"])
+        # Roll for event (le risque DNF dépend de la stratégie)
+        event = roll_event(effective_reliability, phase["id"], strategy)
         has_rain = event is not None and event.get("rain", False)
         
         # DT bonus
         dt_bonus = compute_dt_bonus(director, phase["id"], has_rain)
         
-        # Strategy modifier
-        strategy_mod = {"attaque": 3, "equilibre": 1, "conservation": -1}[strategy]
+        # Strategy modifier — écart de pace plus marqué (attaque pousse, conservation lève le pied)
+        strategy_mod = {"attaque": 4, "equilibre": 1, "conservation": -1.5}[strategy]
         
         # Compose score
         # Base = blend of pilot skill and BOP-normalized car, bonuses on top.
@@ -256,8 +260,9 @@ def simulate_race(body):
     start_pos2 = body.get("start_position_car2", 10)
     # Malus si budget dépassé (budget_overspend = M€ au-delà du budget)
     budget_overspend = max(0, body.get("budget_overspend", 0))
-    # Malus progressif : -1 pt par 10M€ de dépassement (max -6 pts)
-    budget_malus = min(6, budget_overspend / 10)
+    # Malus progressif non plafonné : -1 pt par 8M€ de dépassement
+    # (dépasser beaucoup devient vraiment punitif)
+    budget_malus = budget_overspend / 8
 
     result_car1 = simulate_car(car1, pilots_car1, strategy, director, start_pos1, budget_malus)
     result_car2 = simulate_car(car2, pilots_car2, strategy, director, start_pos2, budget_malus)
@@ -323,7 +328,9 @@ def simulate_race(body):
     base = VERDICT_BASE[verdict]
     pos = best["position"] if not best["dnf"] else 50
     pos_bonus = max(0, (50 - pos)) * 5                       # P1 → +245
-    diff_bonus = round(max(0, (85 - draft_rating)) * 8)      # mauvais tirage qui surperforme → bonus
+    # Bonus underdog : récompense un tirage faible qui performe, mais plafonné
+    # pour ne jamais inverser la hiérarchie (un bon tirage doit rester mieux noté)
+    diff_bonus = round(min(90, max(0, (80 - draft_rating)) * 3))
     # léger bonus de risque selon la stratégie
     strat_bonus = {"attaque": 60, "equilibre": 20, "conservation": 0}.get(strategy, 0)
     score = round(base + pos_bonus + diff_bonus + strat_bonus)
