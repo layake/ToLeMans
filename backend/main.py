@@ -68,50 +68,21 @@ def start_positions(body: dict):
 
 @app.post("/draw/car")
 def draw_car(body: dict):
-    """Tire 2 voitures (1 chère + 1 abordable), avec coûts. Respecte le budget restant."""
+    """Tire 2 voitures aléatoires avec coûts. Si budget insuffisant, malus signalé."""
     exclude = body.get("exclude", [])
     budget_left = body.get("budget_left", START_BUDGET)
     available = [c for c in CARS if c["id"] not in exclude]
     if not available:
         return {"error": "No cars available"}
-
-    # Filtre par budget
-    affordable = [c for c in available if car_cost(c) <= budget_left]
-    if not affordable:
-        # Fallback : on propose les 2 moins chères même si dépassement
-        sorted_by_cost = sorted(available, key=car_cost)
-        return {
-            "options": [
-                {**c, "cost": car_cost(c)} for c in sorted_by_cost[:2]
-            ],
-            "budget_warning": True,
-        }
-
-    # Sépare en 2 groupes : au-dessus et en-dessous de la médiane des coûts
-    affordable_sorted = sorted(affordable, key=car_cost)
-    n = len(affordable_sorted)
-    if n == 1:
-        c = affordable_sorted[0]
-        return {"options": [{**c, "cost": car_cost(c)}]}
-
-    median_idx = n // 2
-    cheap_group = affordable_sorted[:median_idx]
-    expensive_group = affordable_sorted[median_idx:]
-    cheap_pick = random.choice(cheap_group)
-    expensive_pick = random.choice(expensive_group)
-    # Ordre aléatoire pour que le joueur ne sache pas quelle est laquelle
-    options = [cheap_pick, expensive_pick]
-    random.shuffle(options)
-    return {
-        "options": [{**c, "cost": car_cost(c)} for c in options],
-    }
-
-
-@app.get("/single-car")
-def single_car():
-    """Compat : tire une seule voiture (utilisé par certains anciens flows)."""
-    c = random.choice(CARS)
-    return {**c, "cost": car_cost(c)}
+    if len(available) < 2:
+        selected = available
+    else:
+        selected = random.sample(available, 2)
+    options = []
+    for c in selected:
+        cost = car_cost(c)
+        options.append({**c, "cost": cost, "over_budget": cost > budget_left})
+    return {"options": options}
 
 
 # Map id -> nom de pilote (un même vrai pilote a plusieurs ids selon l'année)
@@ -126,8 +97,7 @@ def chosen_names(chosen_pilot_ids):
 
 @app.post("/draw/teams")
 def draw_teams(body: dict):
-    """Tire 2 écuries (1 chère + 1 abordable), avec coûts pilote.
-    Exclut celles contenant un pilote déjà choisi (par nom). Respecte le budget restant."""
+    """Tire 2 écuries aléatoires avec coûts pilote. Exclut celles avec un pilote déjà choisi."""
     chosen_pilot_ids = body.get("chosen_pilot_ids", [])
     budget_left = body.get("budget_left", START_BUDGET)
     taken = chosen_names(chosen_pilot_ids)
@@ -138,29 +108,14 @@ def draw_teams(body: dict):
     if len(available) < 2:
         return {"error": "Not enough teams available", "available": len(available)}
 
+    selected = random.sample(available, 2)
+
     def with_costs(t):
         pilots_with_cost = [{**p, "cost": pilot_cost(p)} for p in t["pilots"]]
-        return {**t, "pilots": pilots_with_cost, "min_pilot_cost": min(p["cost"] for p in pilots_with_cost)}
+        min_cost = min(p["cost"] for p in pilots_with_cost)
+        return {**t, "pilots": pilots_with_cost, "min_pilot_cost": min_cost, "over_budget": min_cost > budget_left}
 
-    # On filtre par "au moins un pilote dans le budget"
-    affordable = [t for t in available if min(pilot_cost(p) for p in t["pilots"]) <= budget_left]
-    if len(affordable) < 2:
-        sorted_by_min = sorted(available, key=lambda t: min(pilot_cost(p) for p in t["pilots"]))
-        return {
-            "team1": with_costs(sorted_by_min[0]),
-            "team2": with_costs(sorted_by_min[1]),
-            "budget_warning": True,
-        }
-
-    # Split par coût total écurie
-    affordable_sorted = sorted(affordable, key=team_entry_cost)
-    n = len(affordable_sorted)
-    median_idx = n // 2
-    cheap_pick = random.choice(affordable_sorted[:median_idx])
-    expensive_pick = random.choice(affordable_sorted[median_idx:])
-    options = [cheap_pick, expensive_pick]
-    random.shuffle(options)
-    return {"team1": with_costs(options[0]), "team2": with_costs(options[1])}
+    return {"team1": with_costs(selected[0]), "team2": with_costs(selected[1])}
 
 
 @app.get("/daily")
