@@ -29,6 +29,7 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, bu
           pilots_car2,
           start_position_car1: positions.car1,
           start_position_car2: positions.car2,
+          budget_overspend: Math.max(0, (game.budgetSpent || 0) - (budgetTotal || 280)),
         }),
       })
       const data = await res.json()
