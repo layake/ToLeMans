@@ -64,11 +64,10 @@ function CarCard({ car, onSelect, budgetLeft, t }) {
         </div>
         <button
           className="btn btn-primary"
-          style={{ marginTop: 12, width: '100%' }}
-          disabled={tooExpensive}
+          style={{ marginTop: 12, width: '100%', opacity: tooExpensive ? 0.7 : 1 }}
           onClick={() => onSelect(car)}
         >
-          {tooExpensive ? (t('budget_too_low') || 'BUDGET INSUFFISANT') : t('btn_choose')}
+          {tooExpensive ? `⚠️ ${t('btn_choose')} (malus)` : t('btn_choose')}
         </button>
       </div>
     </div>
@@ -168,9 +167,9 @@ export default function CarDrawStep({ carNum, excludeIds, budgetLeft, rerolls, o
         {phase === 'revealed' && options && (
           <>
             <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-              gap: 14, width: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12, width: '100%',
             }}>
               {options.map((c, i) => (
                 <CarCard key={c.id + i} car={c} onSelect={onSelect} budgetLeft={budgetLeft} t={t} />
