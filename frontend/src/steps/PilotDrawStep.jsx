@@ -18,10 +18,10 @@ function PilotPick({ pilot, onSelect, disabled, daily, budgetLeft }) {
   const color = ratingColor(rating)
   const cost = pilot.cost || 0
   const tooExpensive = cost > budgetLeft
-  const realDisabled = disabled || tooExpensive
+  const realDisabled = disabled
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', opacity: tooExpensive ? 0.45 : 1 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', opacity: tooExpensive ? 0.7 : 1 }}>
       <button className="pilot-pick" onClick={() => !realDisabled && onSelect(pilot)} disabled={realDisabled}>
         <div className="rating-badge" style={{ background: daily ? 'rgba(10,26,47,0.06)' : color + '1a', border: daily ? '1px solid rgba(10,26,47,0.15)' : `1px solid ${color}55` }}>
           <span className="rating-num" style={{ color: daily ? '#9bb0c4' : color }}>{daily ? '?' : rating}</span>
