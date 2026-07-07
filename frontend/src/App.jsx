@@ -37,7 +37,6 @@ export default function App() {
     pilots: [],
     chosenPilotIds: [],
     budgetSpent: 0,
-    startPositions: null, // { car1: 5, car2: 12 } révélé après le draft
   })
   const [simResult, setSimResult] = useState(null)
   const [daily, setDaily] = useState(false)
@@ -118,7 +117,7 @@ export default function App() {
     setDaily(false)
     setDailyData(null)
     setRerolls(3)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0, startPositions: null })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0 })
     setPhase('strategy')
   }
 
@@ -147,7 +146,7 @@ export default function App() {
     setRerolls(3)
     setDaily(false)
     setDailyData(null)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0, startPositions: null })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0 })
     setSimResult(null)
   }
 
