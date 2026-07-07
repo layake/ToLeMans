@@ -14,7 +14,7 @@ function StartingGrid() {
   const playerRows = [2, 3]
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(2px, 0.6vw, 5px)', alignItems: 'center' }}>
-      <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', color: 'rgba(244,239,227,0.55)', letterSpacing: 3, marginBottom: 'clamp(4px, 1vw, 8px)', fontFamily: 'var(--font-mono)' }}>GRILLE</div>
+      <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', color: 'rgba(244,239,227,0.55)', letterSpacing: 3, marginBottom: 'clamp(4px, 1vw, 8px)', fontFamily: 'var(--font-mono)' }}>GRILLE · APERÇU</div>
 
       <div style={{ display: 'flex', gap: 4, alignItems: 'center', marginBottom: 4 }}>
         <div style={{ width: 'clamp(16px, 4vw, 28px)', height: 2, background: 'rgba(244,239,227,0.5)' }} />
