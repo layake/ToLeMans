@@ -78,6 +78,20 @@ export default function ReviewStep({ game, pilots_car1, pilots_car2, onStart, bu
         ))}
       </div>
 
+      <div style={{
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+        background: (game.budgetSpent > budgetTotal) ? 'rgba(216,58,44,0.12)' : 'rgba(232,181,63,0.1)',
+        border: `1px solid ${(game.budgetSpent > budgetTotal) ? 'rgba(216,58,44,0.5)' : 'rgba(232,181,63,0.35)'}`,
+        borderRadius: 8, padding: '12px 18px', marginBottom: 22,
+        fontFamily: 'var(--font-mono)',
+      }}>
+        <span style={{ fontSize: 10, letterSpacing: 2, color: 'var(--text-muted)' }}>BUDGET</span>
+        <span style={{ fontSize: 16, fontWeight: 700, color: (game.budgetSpent > budgetTotal) ? '#ff8a7a' : 'var(--gold)' }}>
+          {game.budgetSpent} / {budgetTotal}M€
+          {game.budgetSpent > budgetTotal && ' ⚠️ malus'}
+        </span>
+      </div>
+
       <div className="review-director-block">
         <div className="review-car-title">{t('review_dt')}</div>
         <div className="review-car-name">{game.director?.name}</div>
