@@ -190,13 +190,13 @@ body::after {
 
 /* ── DIRECTORS ── */
 .director-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.director-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 18px 20px; cursor: pointer; transition: all 0.18s; }
-.director-card:hover { border-color: var(--blue-sky); background: var(--card-hover); }
-.director-card.selected { border-color: var(--blue-sky); border-width: 2px; background: var(--card-hover); }
+.director-card { background: var(--cream); color: var(--ink); border: none; border-radius: var(--radius-lg); padding: 18px 20px; cursor: pointer; transition: all 0.18s; box-shadow: 0 8px 28px rgba(0,0,0,0.3); }
+.director-card:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.4); }
+
 .director-name { font-family: var(--font-display); font-size: 21px; letter-spacing: 0.5px; color: var(--cream); margin-bottom: 3px; }
-.director-era { font-size: 11px; font-family: var(--font-mono); color: var(--blue-sky); margin-bottom: 8px; }
-.director-specialty { font-size: 12px; color: var(--text-dim); margin-bottom: 8px; font-weight: 600; }
-.director-desc { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
+.director-era { font-size: 11px; font-family: var(--font-mono); color: #6a7d92; margin-bottom: 8px; }
+.director-specialty { font-size: 12px; color: #1f6fb2; margin-bottom: 8px; font-weight: 600; }
+.director-desc { font-size: 12px; color: #4a5a6e; line-height: 1.5; }
 
 /* ── REVIEW ── */
 .review-strategy-block { background: var(--blue-sky); border-radius: var(--radius); padding: 14px 20px; margin-bottom: 22px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--blue-deep); font-family: var(--font-mono); letter-spacing: 1px; font-weight: 600; }
