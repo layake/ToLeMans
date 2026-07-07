@@ -6,8 +6,7 @@ const API = '/api'
 
 export default function DirectorStep({ onSelect, budgetLeft, t }) {
   const [directors, setDirectors] = useState([])
-  const [selected, setSelected] = useState(null)
-
+  
   useEffect(() => {
     fetch(`${API}/directors`)
       .then(r => r.json())
@@ -26,13 +25,12 @@ export default function DirectorStep({ onSelect, budgetLeft, t }) {
       <div className="director-grid">
         {directors.map(dt => {
           const tooExpensive = (dt.cost || 0) > budgetLeft
-          const isSelected = selected?.id === dt.id
           return (
             <div
               key={dt.id}
-              className={`director-card ${isSelected ? 'selected' : ''}`}
+              className="director-card"
               style={{ opacity: tooExpensive ? 0.45 : 1, cursor: tooExpensive ? 'not-allowed' : 'pointer' }}
-              onClick={() => !tooExpensive && setSelected(dt)}
+              onClick={() => !tooExpensive && onSelect(dt)}
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                 <div>
@@ -60,15 +58,6 @@ export default function DirectorStep({ onSelect, budgetLeft, t }) {
         })}
       </div>
 
-      <div className="btn-row" style={{ marginTop: 24 }}>
-        <button
-          className="btn btn-primary btn-big"
-          disabled={!selected}
-          onClick={() => onSelect(selected)}
-        >
-          {t('btn_confirm')}
-        </button>
-      </div>
     </div>
   )
 }
