@@ -89,6 +89,15 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
       {result.best_position && <div className="result-position">{t('result_position')} {result.best_position} / 50</div>}
 
       {/* Position de départ → arrivée */}
+      {result.budget_overspend > 0 && (
+        <div style={{
+          textAlign: 'center', fontFamily: 'var(--font-mono)', fontSize: 11,
+          color: '#ff8a7a', letterSpacing: 1, marginBottom: 8,
+        }}>
+          ⚠️ Budget dépassé de {result.budget_overspend}M€ → malus appliqué
+        </div>
+      )}
+
       {result.best_position && (result.start_position_car1 || result.start_position_car2) && (
         <div style={{
           display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
