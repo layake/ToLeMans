@@ -344,6 +344,7 @@ def simulate_race(body):
         "winning_car": 1 if best is result_car1 else 2,
         "start_position_car1": start_pos1,
         "start_position_car2": start_pos2,
+        "budget_overspend": round(budget_overspend),
         "score": score,
         "score_parts": {
             "base": base, "position": pos_bonus,
