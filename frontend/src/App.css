@@ -32,6 +32,20 @@
 
   --radius: 4px;
   --radius-lg: 8px;
+
+  /* ===== Design tokens responsive (échelle fluide, définie UNE fois) ===== */
+  --fs-2xs: clamp(0.563rem, 0.4vw + 0.45rem, 0.688rem);
+  --fs-xs:  clamp(0.625rem, 0.5vw + 0.5rem, 0.813rem);
+  --fs-sm:  clamp(0.75rem, 0.6vw + 0.6rem, 0.938rem);
+  --fs-md:  clamp(0.875rem, 0.8vw + 0.65rem, 1.125rem);
+  --fs-lg:  clamp(1.063rem, 1.2vw + 0.75rem, 1.5rem);
+  --fs-xl:  clamp(1.375rem, 2vw + 1rem, 2.125rem);
+  --sp-1: clamp(0.25rem, 0.3vw, 0.375rem);
+  --sp-2: clamp(0.5rem, 0.6vw, 0.75rem);
+  --sp-3: clamp(0.75rem, 1vw, 1.125rem);
+  --sp-4: clamp(1rem, 1.4vw, 1.5rem);
+  --sp-5: clamp(1.5rem, 2vw, 2.25rem);
+
   --radius-xl: 12px;
 
   --pad-screen: 32px;
@@ -299,3 +313,11 @@ body::after {
   transition: all 0.15s;
 }
 .lang-toggle:hover { border-color: var(--cream); background: rgba(255,255,255,0.05); }
+
+/* ===== Layout draft : empilé mobile, 2 colonnes desktop ===== */
+.draft-layout { display: flex; flex-direction: column; gap: var(--sp-4); width: 100%; max-width: 640px; margin: 0 auto; }
+@media (min-width: 900px) {
+  .draft-layout { flex-direction: row; max-width: 1080px; align-items: flex-start; }
+  .draft-dash { flex: 1.1; position: sticky; top: 16px; }
+  .draft-action { flex: 1; }
+}
