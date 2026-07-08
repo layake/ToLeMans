@@ -38,7 +38,7 @@ function CarCol({ label, color, car, pilots, side, active }) {
   return (
     <div style={{ flex: 1, minWidth: 0 }}>
       <div style={{ fontSize: 'var(--fs-xs)', letterSpacing: 2, color, fontWeight: 700, textAlign: align, marginBottom: 'clamp(4px, 1.1vw, 11px)' }}>{label}</div>
-      <div style={{
+      <div key={car ? car.id : 'empty'} className={car ? 'slot-filled' : ''} style={{
         border: car ? `1px solid ${color}` : `1px dashed ${color}66`,
         borderRadius: 6, padding: 'clamp(5px, 1.4vw, 12px)',
         background: car ? `${color}22` : `${color}0d`,
@@ -59,7 +59,7 @@ function CarCol({ label, color, car, pilots, side, active }) {
         {[0, 1, 2].map(i => {
           const p = pilots[i]
           return (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, flexDirection: side === 'right' ? 'row-reverse' : 'row' }}>
+            <div key={p ? p.id : i} className={p ? 'slot-filled' : ''} style={{ display: 'flex', alignItems: 'center', gap: 4, flexDirection: side === 'right' ? 'row-reverse' : 'row' }}>
               <div style={{
                 width: 'clamp(5px, 1.4vw, 9px)', height: 'clamp(5px, 1.4vw, 9px)', borderRadius: '50%',
                 background: p ? color : 'transparent', border: `1px solid ${color}88`, flexShrink: 0,
@@ -79,7 +79,7 @@ function CarCol({ label, color, car, pilots, side, active }) {
   )
 }
 
-export function Dashboard({ game, step, t }) {
+export function Dashboard({ game, step, positions, t }) {
   const p1 = game.pilots.slice(0, 3)
   const p2 = game.pilots.slice(3, 6)
   return (
@@ -104,12 +104,12 @@ export function Dashboard({ game, step, t }) {
 
       <div style={{ display: 'flex', gap: 'clamp(8px, 2.3vw, 19px)', alignItems: 'flex-start' }}>
         <CarCol label="V1" color={C1} car={game.car1} pilots={p1} side="left" active={step === 'car1' || (step?.startsWith('pilot') && parseInt(step.slice(5)) < 3)} />
-        <GridCenter />
+        <GridCenter positions={positions} />
         <CarCol label="V2" color={C2} car={game.car2} pilots={p2} side="right" active={step === 'car2' || (step?.startsWith('pilot') && parseInt(step.slice(5)) >= 3)} />
       </div>
 
       {/* DT */}
-      <div style={{
+      <div key={game.director ? game.director.id : 'dt-empty'} className={game.director ? 'slot-filled' : ''} style={{
         marginTop: 'clamp(8px, 2.3vw, 16px)',
         border: game.director ? '1px solid rgba(244,239,227,0.4)' : '1px dashed rgba(244,239,227,0.25)',
         borderRadius: 6, padding: 'clamp(5px, 1.6vw, 12px) clamp(8px, 2.3vw, 16px)',
@@ -196,7 +196,15 @@ function CarAction({ carNum, excludeIds, rerolls, onReroll, onPick, t }) {
     setTimeout(() => { stop = true; clearTimeout(spinRef.current); setSpin(false); if (opts) setOptions(opts) }, Math.max(0, minT - Date.now()))
   }
 
-  if (spin) return <div style={{ textAlign: 'center', padding: '24px 0', fontFamily: 'var(--font-display)', fontSize: 'var(--fs-lg)', color: 'rgba(244,239,227,0.7)' }}>{spinName}</div>
+  if (spin) return (
+    <div style={{ textAlign: 'center', padding: '20px 0' }}>
+      <div style={{ fontSize: 'var(--fs-2xs)', letterSpacing: 3, color: 'rgba(244,239,227,0.4)', marginBottom: 8 }}>TIRAGE…</div>
+      <div key={spinName} className="roll-name" style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-xl)', color: 'var(--cream)' }}>{spinName}</div>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 5, marginTop: 12 }}>
+        {[0,1,2].map(i => <div key={i} style={{ width: 6, height: 6, borderRadius: '50%', background: 'rgba(244,239,227,0.35)', animation: `rollBlur 0.5s ${i*0.15}s infinite alternate` }} />)}
+      </div>
+    </div>
+  )
 
   if (!options) return (
     <div style={{ textAlign: 'center' }}>
@@ -324,7 +332,7 @@ function PilotsAction({ chosenPilotIds, rerolls, onReroll, onPick, daily, teamPo
   )
 }
 
-function LaunchAction({ game, onLaunch, t }) {
+function LaunchAction({ game, onLaunch, onPositions, t }) {
   const [loading, setLoading] = useState(false)
 
   async function launch() {
@@ -332,6 +340,9 @@ function LaunchAction({ game, onLaunch, t }) {
     try {
       const posRes = await fetch(`${API}/start-positions`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({}) })
       const positions = await posRes.json()
+      // Révèle les positions sur la grille du dashboard, temps de tension
+      onPositions(positions)
+      await new Promise(r => setTimeout(r, 1600))
       const res = await fetch(`${API}/simulate`, {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -365,6 +376,7 @@ export default function DraftScreen({ game, setGame, config, daily, dailyData, r
     ? ['strategy', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'launch']
     : ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'launch']
   const [step, setStep] = useState(steps[0])
+  const [positions, setPositions] = useState(null)
   const next = () => setStep(s => steps[Math.min(steps.indexOf(s) + 1, steps.length - 1)])
 
   const pick = {
@@ -398,7 +410,7 @@ export default function DraftScreen({ game, setGame, config, daily, dailyData, r
   return (
     <div className="screen-enter draft-layout">
       <div className="draft-dash">
-        <Dashboard game={game} step={step} t={t} />
+        <Dashboard game={game} step={step} positions={positions} t={t} />
       </div>
 
       <div className="draft-action">
@@ -415,7 +427,7 @@ export default function DraftScreen({ game, setGame, config, daily, dailyData, r
             rerolls={rerolls} onReroll={onReroll} onPick={pick.pilot}
             daily={daily} teamPoolOrder={dailyData?.team_pool_order} t={t} />
         )}
-        {step === 'launch' && <LaunchAction game={game} onLaunch={onLaunch} t={t} />}
+        {step === 'launch' && <LaunchAction game={game} onLaunch={onLaunch} onPositions={setPositions} t={t} />}
       </ActionShell>
       </div>
     </div>
