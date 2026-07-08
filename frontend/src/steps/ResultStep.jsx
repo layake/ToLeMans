@@ -89,18 +89,17 @@ export default function ResultStep({ result, game, onRestart, daily, t }) {
       {result.best_position && <div className="result-position">{t('result_position')} {result.best_position} / 50</div>}
 
       {/* Position de départ → arrivée */}
-      {result.best_position && (result.start_position_car1 || result.start_position_car2) && (
+      {(result.start_position_car1 || result.start_position_car2) && (
         <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 10,
-          fontFamily: 'var(--font-mono)', fontSize: 11, color: 'var(--text-muted)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 16,
+          fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-xs)',
           marginTop: 4, marginBottom: 8, letterSpacing: 1,
         }}>
-          <span style={{ opacity: 0.7 }}>
-            Départ P{result.winning_car === 1 ? result.start_position_car1 : result.start_position_car2}
+          <span style={{ color: '#7ad0ff' }}>
+            V1 · P{result.start_position_car1} → {result.car1?.dnf ? 'DNF' : 'P' + result.car1?.position}
           </span>
-          <span style={{ color: 'var(--gold)' }}>→</span>
-          <span style={{ color: 'var(--cream)', fontWeight: 700 }}>
-            P{result.best_position}
+          <span style={{ color: '#e8b53f' }}>
+            V2 · P{result.start_position_car2} → {result.car2?.dnf ? 'DNF' : 'P' + result.car2?.position}
           </span>
         </div>
       )}
