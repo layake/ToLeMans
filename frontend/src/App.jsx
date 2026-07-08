@@ -23,7 +23,7 @@ export default function App() {
   const { lang, toggle, t } = useLang()
   const [phase, setPhase] = useState('home')
   const [rerolls, setRerolls] = useState(3)
-  const [config, setConfig] = useState({ start_budget: 280, max_start_position: 20, currency: 'M€' })
+  const [config, setConfig] = useState({ max_start_position: 20 })
   const [game, setGame] = useState({
     strategy: null,
     car1: null,
@@ -39,7 +39,6 @@ export default function App() {
   const [dailyDone, setDailyDone] = useState(false)
 
   const API = '/api'
-  const budgetLeft = config.start_budget - game.budgetSpent
 
   // Récupère la config au démarrage
   useEffect(() => {
@@ -75,7 +74,7 @@ export default function App() {
     setDaily(false)
     setDailyData(null)
     setRerolls(3)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0 })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
     setPhase('draft')
   }
 
@@ -104,7 +103,7 @@ export default function App() {
     setRerolls(3)
     setDaily(false)
     setDailyData(null)
-    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [], budgetSpent: 0 })
+    setGame({ strategy: null, car1: null, car2: null, director: null, pilots: [], chosenPilotIds: [] })
     setSimResult(null)
   }
 
@@ -116,18 +115,6 @@ export default function App() {
           <button onClick={toggle} className="lang-toggle" aria-label="language">
             {lang === 'fr' ? 'EN' : 'FR'}
           </button>
-          {phase === 'draft' && (
-            <div className="budget-pill" style={{
-              fontFamily: 'var(--font-mono)', fontSize: 11,
-              padding: '4px 10px', borderRadius: 6,
-              background: budgetLeft < 20 ? 'rgba(216,58,44,0.15)' : 'rgba(232,181,63,0.12)',
-              border: `1px solid ${budgetLeft < 20 ? 'rgba(216,58,44,0.5)' : 'rgba(232,181,63,0.4)'}`,
-              color: budgetLeft < 20 ? '#ff8a7a' : '#e8b53f',
-              letterSpacing: 1, whiteSpace: 'nowrap',
-            }}>
-              {budgetLeft}{config.currency}
-            </div>
-          )}
           {phase === 'draft' && !daily && (
             <div className="rerolls">
               {t('rerolls')}
@@ -141,10 +128,10 @@ export default function App() {
 
       <div className="app-body">
         <div className="main-panel">
-          {phase === 'home' && <HomeStep t={t} onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} budget={config.start_budget} />}
+          {phase === 'home' && <HomeStep t={t} onStartFree={startFree} onStartDaily={startDaily} dailyDone={dailyDone} />}
           {phase === 'draft' && (
             <DraftScreen
-              game={game} setGame={setGame} config={config} budgetLeft={budgetLeft}
+              game={game} setGame={setGame} config={config}
               daily={daily} dailyData={dailyData}
               rerolls={rerolls} onReroll={() => setRerolls(r => r - 1)}
               onLaunch={startSimulation} t={t}
