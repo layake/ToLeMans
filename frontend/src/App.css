@@ -52,7 +52,8 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+html {
+  font-size: clamp(14px, 0.45vw + 9px, 21px); -webkit-text-size-adjust: 100%; }
 
 body {
   background: var(--blue-deep);
@@ -112,8 +113,8 @@ body::after {
 .step-dot.active { background: var(--cream); transform: scale(1.3); }
 
 /* ── BODY ── */
-.app-body { flex: 1; display: flex; }
-.main-panel { flex: 1; padding: var(--pad-screen); max-width: 760px; margin: 0 auto; width: 100%; }
+.app-body { min-height: calc(100vh - 60px); flex: 1; display: flex; }
+.main-panel { flex: 1; padding: var(--pad-screen); max-width: 1100px; margin: 0 auto; width: 100%; display: flex; flex-direction: column; justify-content: center; }
 
 /* ── SIDEBAR ── */
 .sidebar { width: 256px; background: var(--blue-night); border-left: 2px solid var(--cream); padding: 24px 18px; display: flex; flex-direction: column; gap: 16px; }
@@ -277,7 +278,7 @@ body::after {
 @media (max-width: 720px) {
   :root { --pad-screen: 16px; }
   .app { height: 100dvh; min-height: 100dvh; overflow: hidden; }
-  .app-body { flex: 1; min-height: 0; overflow-y: auto; -webkit-overflow-scrolling: touch; flex-direction: column; align-items: stretch; }
+  .app-body { min-height: 0; flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; flex-direction: column; align-items: stretch; }
   .main-panel { align-self: flex-start; padding-top: 18px; padding-bottom: 16px; max-width: 100%; }
   .app-header { padding: 14px 16px; position: static; }
   .app-logo { font-size: 22px; }
