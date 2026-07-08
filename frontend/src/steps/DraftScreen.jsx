@@ -49,7 +49,7 @@ function CarCol({ label, color, car, pilots, side, active }) {
         {car ? (
           <>
             <div style={{ fontSize: 'var(--fs-xs)', color: 'var(--cream)', fontWeight: 700, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{car.name}</div>
-            <div style={{ fontSize: 'var(--fs-2xs)', color: 'rgba(244,239,227,0.6)', marginTop: 2 }}>{car.year} · {carRating(car)} · {car.cost}M€</div>
+            <div style={{ fontSize: 'var(--fs-2xs)', color: 'rgba(244,239,227,0.6)', marginTop: 2 }}>{car.year} · {carRating(car)}</div>
           </>
         ) : (
           <div style={{ fontSize: 'var(--fs-xs)', color: `${color}88` }}>— — —</div>
@@ -79,7 +79,7 @@ function CarCol({ label, color, car, pilots, side, active }) {
   )
 }
 
-export function Dashboard({ game, budgetLeft, currency, step, t }) {
+export function Dashboard({ game, step, t }) {
   const p1 = game.pilots.slice(0, 3)
   const p2 = game.pilots.slice(3, 6)
   return (
@@ -119,7 +119,7 @@ export function Dashboard({ game, budgetLeft, currency, step, t }) {
       }}>
         <span style={{ fontSize: 'var(--fs-2xs)', letterSpacing: 2, color: 'rgba(244,239,227,0.5)' }}>D.T.</span>
         <span style={{ fontSize: 'var(--fs-sm)', color: game.director ? 'var(--cream)' : 'rgba(244,239,227,0.35)', fontWeight: 700 }}>
-          {game.director ? `${game.director.name} · ${game.director.cost}M€` : '— — —'}
+          {game.director ? game.director.name : '— — —'}
         </span>
       </div>
     </div>
@@ -164,7 +164,7 @@ function StrategyAction({ onPick, t }) {
   )
 }
 
-function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, t }) {
+function CarAction({ carNum, excludeIds, rerolls, onReroll, onPick, t }) {
   const [options, setOptions] = useState(null)
   const [spin, setSpin] = useState(false)
   const [spinName, setSpinName] = useState('')
@@ -175,7 +175,7 @@ function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, 
       try {
         const r = await fetch(`${API}/draw/car`, {
           method: 'POST', headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ exclude: excludeIds, budget_left: budgetLeft }),
+          body: JSON.stringify({ exclude: excludeIds }),
         })
         if (!r.ok) throw new Error()
         const d = await r.json()
@@ -207,14 +207,13 @@ function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
       {options.map((c, i) => {
-        const over = (c.cost || 0) > budgetLeft
         const r = carRating(c)
         return (
           <button key={c.id + i} onClick={() => onPick(c)} style={{
             background: 'var(--cream)', color: 'var(--ink)', border: 'none', borderRadius: 8,
             padding: 'clamp(10px, 2.9vw, 19px)', cursor: 'pointer', textAlign: 'left',
             display: 'flex', alignItems: 'center', gap: 12, width: '100%',
-            boxShadow: '0 6px 20px rgba(0,0,0,0.3)', opacity: over ? 0.75 : 1,
+            boxShadow: '0 6px 20px rgba(0,0,0,0.3)',
             fontFamily: 'var(--font-mono)',
           }}>
             <div style={{
@@ -239,19 +238,18 @@ function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, 
   )
 }
 
-function DirectorAction({ budgetLeft, onPick, t }) {
+function DirectorAction({ onPick, t }) {
   const [directors, setDirectors] = useState([])
   useEffect(() => { fetch(`${API}/directors`).then(r => r.json()).then(setDirectors).catch(console.error) }, [])
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 8, maxHeight: '42vh', overflowY: 'auto' }}>
       {directors.map(dt => {
-        const over = (dt.cost || 0) > budgetLeft
         return (
           <button key={dt.id} onClick={() => onPick(dt)} style={{
             background: 'var(--cream)', color: 'var(--ink)', border: 'none', borderRadius: 8,
             padding: 'clamp(8px, 2.3vw, 16px)', cursor: 'pointer', textAlign: 'left',
             display: 'flex', alignItems: 'center', gap: 10, width: '100%',
-            opacity: over ? 0.75 : 1, fontFamily: 'var(--font-mono)',
+            fontFamily: 'var(--font-mono)',
             boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
           }}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -268,15 +266,15 @@ function DirectorAction({ budgetLeft, onPick, t }) {
   )
 }
 
-function PilotsAction({ chosenPilotIds, budgetLeft, rerolls, onReroll, onPick, daily, teamPoolOrder, t }) {
+function PilotsAction({ chosenPilotIds, rerolls, onReroll, onPick, daily, teamPoolOrder, t }) {
   const [teams, setTeams] = useState(null)
   const [loading, setLoading] = useState(true)
 
   async function fetchTeams() {
     setLoading(true)
     const payload = daily
-      ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder, budget_left: budgetLeft }
-      : { chosen_pilot_ids: chosenPilotIds, budget_left: budgetLeft }
+      ? { chosen_pilot_ids: chosenPilotIds, team_pool_order: teamPoolOrder }
+      : { chosen_pilot_ids: chosenPilotIds }
     const url = daily ? `${API}/daily/teams` : `${API}/draw/teams`
     for (let i = 0; i < 8; i++) {
       try {
@@ -306,14 +304,13 @@ function PilotsAction({ chosenPilotIds, budgetLeft, rerolls, onReroll, onPick, d
           <div style={{ fontSize: 'var(--fs-xs)', color: '#6a7d92', marginBottom: 6 }}>#{team.number} · {team.year} · {team.car}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {team.pilots.map(p => {
-              const over = (p.cost || 0) > budgetLeft
               const r = pilotRating(p)
               return (
                 <button key={p.id} onClick={() => onPick(p)} style={{
                   display: 'flex', alignItems: 'center', gap: 8, width: '100%',
                   background: 'rgba(10,26,47,0.05)', border: '1px solid rgba(10,26,47,0.1)',
                   borderRadius: 6, padding: 'clamp(6px, 1.7vw, 12px)', cursor: 'pointer',
-                  opacity: over ? 0.7 : 1, fontFamily: 'var(--font-mono)',
+                  fontFamily: 'var(--font-mono)',
                 }}>
                   <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-md)', color: daily ? '#9bb0c4' : ratingColor(r), minWidth: 26 }}>{daily ? '?' : r}</span>
                   <span style={{ flex: 1, textAlign: 'left', fontSize: 'var(--fs-sm)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{p.nationality} {p.name}</span>
@@ -333,9 +330,8 @@ function PilotsAction({ chosenPilotIds, budgetLeft, rerolls, onReroll, onPick, d
   )
 }
 
-function LaunchAction({ game, budgetTotal, onLaunch, t }) {
+function LaunchAction({ game, onLaunch, t }) {
   const [loading, setLoading] = useState(false)
-  const over = game.budgetSpent - budgetTotal
 
   async function launch() {
     setLoading(true)
@@ -348,7 +344,6 @@ function LaunchAction({ game, budgetTotal, onLaunch, t }) {
           strategy: game.strategy, car1: game.car1, car2: game.car2, director: game.director,
           pilots_car1: game.pilots.slice(0, 3), pilots_car2: game.pilots.slice(3, 6),
           start_position_car1: positions.car1, start_position_car2: positions.car2,
-          budget_overspend: Math.max(0, over),
         }),
       })
       const data = await res.json()
@@ -362,17 +357,6 @@ function LaunchAction({ game, budgetTotal, onLaunch, t }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-      <div style={{
-        display: 'flex', justifyContent: 'space-between', padding: '10px 14px', borderRadius: 8,
-        background: over > 0 ? 'rgba(216,58,44,0.12)' : 'rgba(232,181,63,0.1)',
-        border: `1px solid ${over > 0 ? 'rgba(216,58,44,0.5)' : 'rgba(232,181,63,0.35)'}`,
-        fontFamily: 'var(--font-mono)', fontSize: 'var(--fs-sm)',
-      }}>
-        <span style={{ color: 'rgba(244,239,227,0.6)', letterSpacing: 2, fontSize: 'var(--fs-xs)', alignSelf: 'center' }}>BUDGET</span>
-        <span style={{ fontWeight: 700, color: over > 0 ? '#ff8a7a' : 'var(--gold)' }}>
-          {game.budgetSpent} / {budgetTotal}M€{over > 0 ? ` ⚠️ malus` : ''}
-        </span>
-      </div>
       <button className="btn btn-primary btn-big" onClick={launch} style={{ width: '100%' }}>
         {t('review_launch')}
       </button>
@@ -382,7 +366,7 @@ function LaunchAction({ game, budgetTotal, onLaunch, t }) {
 
 /* ============ ÉCRAN UNIQUE ============ */
 
-export default function DraftScreen({ game, setGame, config, budgetLeft, daily, dailyData, rerolls, onReroll, onLaunch, t }) {
+export default function DraftScreen({ game, setGame, config, daily, dailyData, rerolls, onReroll, onLaunch, t }) {
   const steps = daily
     ? ['strategy', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'launch']
     : ['strategy', 'car1', 'car2', 'director', 'pilot0', 'pilot1', 'pilot2', 'pilot3', 'pilot4', 'pilot5', 'launch']
@@ -397,9 +381,9 @@ export default function DraftScreen({ game, setGame, config, budgetLeft, daily, 
         : { ...g, car2: c, budgetSpent: g.budgetSpent + (c.cost || 0) })
       next()
     },
-    director: d => { setGame(g => ({ ...g, director: d, budgetSpent: g.budgetSpent + (d.cost || 0) })); next() },
+    director: d => { setGame(g => ({ ...g, director: d })); next() },
     pilot: p => {
-      setGame(g => ({ ...g, pilots: [...g.pilots, p], chosenPilotIds: [...g.chosenPilotIds, p.id], budgetSpent: g.budgetSpent + (p.cost || 0) }))
+      setGame(g => ({ ...g, pilots: [...g.pilots, p], chosenPilotIds: [...g.chosenPilotIds, p.id] }))
       next()
     },
   }
@@ -420,7 +404,7 @@ export default function DraftScreen({ game, setGame, config, budgetLeft, daily, 
   return (
     <div className="screen-enter draft-layout">
       <div className="draft-dash">
-        <Dashboard game={game} budgetLeft={budgetLeft} currency={config.currency} step={step} t={t} />
+        <Dashboard game={game} step={step} t={t} />
       </div>
 
       <div className="draft-action">
@@ -429,15 +413,15 @@ export default function DraftScreen({ game, setGame, config, budgetLeft, daily, 
         {(step === 'car1' || step === 'car2') && (
           <CarAction key={step} carNum={step === 'car1' ? 1 : 2}
             excludeIds={[game.car1?.id, game.car2?.id].filter(Boolean)}
-            budgetLeft={budgetLeft} rerolls={rerolls} onReroll={onReroll} onPick={pick.car} t={t} />
+            rerolls={rerolls} onReroll={onReroll} onPick={pick.car} t={t} />
         )}
-        {step === 'director' && <DirectorAction budgetLeft={budgetLeft} onPick={pick.director} t={t} />}
+        {step === 'director' && <DirectorAction onPick={pick.director} t={t} />}
         {step.startsWith('pilot') && (
-          <PilotsAction key={step} chosenPilotIds={game.chosenPilotIds} budgetLeft={budgetLeft}
+          <PilotsAction key={step} chosenPilotIds={game.chosenPilotIds}
             rerolls={rerolls} onReroll={onReroll} onPick={pick.pilot}
             daily={daily} teamPoolOrder={dailyData?.team_pool_order} t={t} />
         )}
-        {step === 'launch' && <LaunchAction game={game} budgetTotal={config.start_budget} onLaunch={onLaunch} t={t} />}
+        {step === 'launch' && <LaunchAction game={game} onLaunch={onLaunch} t={t} />}
       </ActionShell>
       </div>
     </div>
