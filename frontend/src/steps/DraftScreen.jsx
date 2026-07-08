@@ -16,19 +16,19 @@ function GridCenter() {
   const rows = 8
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3, alignItems: 'center', flexShrink: 0 }}>
-      <div style={{ fontSize: 'clamp(7px, 1.8vw, 10px)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2, marginBottom: 3 }}>GRILLE</div>
+      <div style={{ fontSize: 'clamp(7px, 2.1vw, 14px)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2, marginBottom: 3 }}>GRILLE</div>
       {Array.from({ length: rows }).map((_, i) => (
         <div key={i} style={{ display: 'flex', gap: 3 }}>
           {[0, 1].map(c => (
             <div key={c} style={{
-              width: 'clamp(14px, 3.6vw, 22px)', height: 'clamp(9px, 2.2vw, 13px)', borderRadius: 2,
+              width: 'clamp(14px, 4.1vw, 30px)', height: 'clamp(9px, 2.5vw, 18px)', borderRadius: 2,
               border: '1px solid rgba(244,239,227,0.15)',
               background: (i + c) % 3 === 0 ? 'rgba(244,239,227,0.05)' : 'transparent',
             }} />
           ))}
         </div>
       ))}
-      <div style={{ fontSize: 'clamp(6px, 1.5vw, 8px)', color: 'rgba(244,239,227,0.3)', marginTop: 2 }}>P1–P20</div>
+      <div style={{ fontSize: 'clamp(6px, 1.7vw, 11px)', color: 'rgba(244,239,227,0.3)', marginTop: 2 }}>P1–P20</div>
     </div>
   )
 }
@@ -37,35 +37,35 @@ function CarCol({ label, color, car, pilots, side, active }) {
   const align = side === 'left' ? 'left' : 'right'
   return (
     <div style={{ flex: 1, minWidth: 0 }}>
-      <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', letterSpacing: 2, color, fontWeight: 700, textAlign: align, marginBottom: 'clamp(4px, 1vw, 8px)' }}>{label}</div>
+      <div style={{ fontSize: 'clamp(8px, 2.3vw, 15px)', letterSpacing: 2, color, fontWeight: 700, textAlign: align, marginBottom: 'clamp(4px, 1.1vw, 11px)' }}>{label}</div>
       <div style={{
         border: car ? `1px solid ${color}` : `1px dashed ${color}66`,
-        borderRadius: 6, padding: 'clamp(5px, 1.2vw, 9px)',
+        borderRadius: 6, padding: 'clamp(5px, 1.4vw, 12px)',
         background: car ? `${color}22` : `${color}0d`,
-        marginBottom: 'clamp(4px, 1vw, 8px)', textAlign: align,
+        marginBottom: 'clamp(4px, 1.1vw, 11px)', textAlign: align,
         boxShadow: active ? `0 0 0 2px ${color}55` : 'none',
         overflow: 'hidden',
       }}>
         {car ? (
           <>
-            <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', color: 'var(--cream)', fontWeight: 700, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{car.name}</div>
-            <div style={{ fontSize: 'clamp(7px, 1.7vw, 9px)', color: 'rgba(244,239,227,0.6)', marginTop: 2 }}>{car.year} · {carRating(car)} · {car.cost}M€</div>
+            <div style={{ fontSize: 'clamp(8px, 2.3vw, 15px)', color: 'var(--cream)', fontWeight: 700, whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{car.name}</div>
+            <div style={{ fontSize: 'clamp(7px, 2.0vw, 12px)', color: 'rgba(244,239,227,0.6)', marginTop: 2 }}>{car.year} · {carRating(car)} · {car.cost}M€</div>
           </>
         ) : (
-          <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', color: `${color}88` }}>— — —</div>
+          <div style={{ fontSize: 'clamp(8px, 2.3vw, 15px)', color: `${color}88` }}>— — —</div>
         )}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(2px, 0.6vw, 5px)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(2px, 0.7vw, 7px)' }}>
         {[0, 1, 2].map(i => {
           const p = pilots[i]
           return (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 4, flexDirection: side === 'right' ? 'row-reverse' : 'row' }}>
               <div style={{
-                width: 'clamp(5px, 1.2vw, 7px)', height: 'clamp(5px, 1.2vw, 7px)', borderRadius: '50%',
+                width: 'clamp(5px, 1.4vw, 9px)', height: 'clamp(5px, 1.4vw, 9px)', borderRadius: '50%',
                 background: p ? color : 'transparent', border: `1px solid ${color}88`, flexShrink: 0,
               }} />
               <div style={{
-                fontSize: 'clamp(7px, 1.8vw, 10px)',
+                fontSize: 'clamp(7px, 2.1vw, 14px)',
                 color: p ? 'var(--cream)' : 'rgba(244,239,227,0.4)',
                 whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden',
               }}>
@@ -79,30 +79,30 @@ function CarCol({ label, color, car, pilots, side, active }) {
   )
 }
 
-function Dashboard({ game, budgetLeft, currency, step, t }) {
+export function Dashboard({ game, budgetLeft, currency, step, t }) {
   const p1 = game.pilots.slice(0, 3)
   const p2 = game.pilots.slice(3, 6)
   return (
-    <div style={{ fontFamily: 'var(--font-mono)', marginBottom: 'clamp(10px, 2.5vw, 18px)' }}>
+    <div style={{ fontFamily: 'var(--font-mono)', marginBottom: 'clamp(10px, 2.9vw, 24px)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 8 }}>
         <div>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(17px, 4.5vw, 24px)', letterSpacing: 3, color: 'var(--cream)', lineHeight: 1 }}>TO LE MANS</div>
-          <div style={{ fontSize: 'clamp(7px, 1.7vw, 9px)', letterSpacing: 2, color: 'rgba(244,239,227,0.5)', marginTop: 3 }}>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(17px, 5.2vw, 32px)', letterSpacing: 3, color: 'var(--cream)', lineHeight: 1 }}>TO LE MANS</div>
+          <div style={{ fontSize: 'clamp(7px, 2.0vw, 12px)', letterSpacing: 2, color: 'rgba(244,239,227,0.5)', marginTop: 3 }}>
             {game.strategy ? `${{ attaque: '⚡', equilibre: '⚖️', conservation: '🛡️' }[game.strategy]} ${t('strat_' + game.strategy + '_name').toUpperCase()}` : '24H · 1923 — 2025'}
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: 'clamp(7px, 1.7vw, 9px)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2 }}>BUDGET</div>
+          <div style={{ fontSize: 'clamp(7px, 2.0vw, 12px)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2 }}>BUDGET</div>
           <div style={{
-            fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 4vw, 21px)', lineHeight: 1,
+            fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 4.6vw, 28px)', lineHeight: 1,
             color: budgetLeft < 0 ? '#ff8a7a' : budgetLeft < 30 ? '#ffb27a' : 'var(--gold)',
           }}>{budgetLeft}{currency}</div>
         </div>
       </div>
 
-      <div style={{ height: 1, background: 'rgba(244,239,227,0.12)', marginBottom: 'clamp(8px, 2vw, 14px)' }} />
+      <div style={{ height: 1, background: 'rgba(244,239,227,0.12)', marginBottom: 'clamp(8px, 2.3vw, 19px)' }} />
 
-      <div style={{ display: 'flex', gap: 'clamp(8px, 2vw, 14px)', alignItems: 'flex-start' }}>
+      <div style={{ display: 'flex', gap: 'clamp(8px, 2.3vw, 19px)', alignItems: 'flex-start' }}>
         <CarCol label="V1" color={C1} car={game.car1} pilots={p1} side="left" active={step === 'car1' || (step?.startsWith('pilot') && parseInt(step.slice(5)) < 3)} />
         <GridCenter />
         <CarCol label="V2" color={C2} car={game.car2} pilots={p2} side="right" active={step === 'car2' || (step?.startsWith('pilot') && parseInt(step.slice(5)) >= 3)} />
@@ -110,15 +110,15 @@ function Dashboard({ game, budgetLeft, currency, step, t }) {
 
       {/* DT */}
       <div style={{
-        marginTop: 'clamp(8px, 2vw, 12px)',
+        marginTop: 'clamp(8px, 2.3vw, 16px)',
         border: game.director ? '1px solid rgba(244,239,227,0.4)' : '1px dashed rgba(244,239,227,0.25)',
-        borderRadius: 6, padding: 'clamp(5px, 1.4vw, 9px) clamp(8px, 2vw, 12px)',
+        borderRadius: 6, padding: 'clamp(5px, 1.6vw, 12px) clamp(8px, 2.3vw, 16px)',
         background: game.director ? 'rgba(244,239,227,0.07)' : 'transparent',
         display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         boxShadow: step === 'director' ? '0 0 0 2px rgba(244,239,227,0.3)' : 'none',
       }}>
-        <span style={{ fontSize: 'clamp(7px, 1.7vw, 9px)', letterSpacing: 2, color: 'rgba(244,239,227,0.5)' }}>D.T.</span>
-        <span style={{ fontSize: 'clamp(9px, 2.2vw, 12px)', color: game.director ? 'var(--cream)' : 'rgba(244,239,227,0.35)', fontWeight: 700 }}>
+        <span style={{ fontSize: 'clamp(7px, 2.0vw, 12px)', letterSpacing: 2, color: 'rgba(244,239,227,0.5)' }}>D.T.</span>
+        <span style={{ fontSize: 'clamp(9px, 2.5vw, 16px)', color: game.director ? 'var(--cream)' : 'rgba(244,239,227,0.35)', fontWeight: 700 }}>
           {game.director ? `${game.director.name} · ${game.director.cost}M€` : '— — —'}
         </span>
       </div>
@@ -128,14 +128,14 @@ function Dashboard({ game, budgetLeft, currency, step, t }) {
 
 /* ============ ZONE D'ACTION (bas) ============ */
 
-function ActionShell({ title, children }) {
+export function ActionShell({ title, children }) {
   return (
     <div style={{
       background: 'rgba(8,32,61,0.75)', border: '1px solid rgba(244,239,227,0.12)',
-      borderRadius: 12, padding: 'clamp(12px, 3vw, 18px)',
+      borderRadius: 12, padding: 'clamp(12px, 3.4vw, 24px)',
       fontFamily: 'var(--font-mono)',
     }}>
-      <div style={{ fontSize: 'clamp(9px, 2.2vw, 11px)', letterSpacing: 3, color: 'var(--blue-sky, #4ea3d9)', marginBottom: 'clamp(8px, 2vw, 14px)', textTransform: 'uppercase', color: '#7ad0ff' }}>{title}</div>
+      <div style={{ fontSize: 'clamp(9px, 2.5vw, 15px)', letterSpacing: 3, color: 'var(--blue-sky, #4ea3d9)', marginBottom: 'clamp(8px, 2.3vw, 19px)', textTransform: 'uppercase', color: '#7ad0ff' }}>{title}</div>
       {children}
     </div>
   )
@@ -152,12 +152,12 @@ function StrategyAction({ onPick, t }) {
       {S.map(s => (
         <button key={s.id} onClick={() => onPick(s.id)} style={{
           border: '1px solid rgba(244,239,227,0.25)', borderRadius: 8,
-          padding: 'clamp(10px, 2.5vw, 16px) 6px', background: 'transparent', cursor: 'pointer',
+          padding: 'clamp(10px, 2.9vw, 22px) 6px', background: 'transparent', cursor: 'pointer',
           color: 'var(--cream)', fontFamily: 'var(--font-mono)', transition: 'all 0.15s',
         }}>
-          <div style={{ fontSize: 'clamp(16px, 4vw, 22px)' }}>{s.icon}</div>
-          <div style={{ fontSize: 'clamp(8px, 2vw, 11px)', letterSpacing: 1, marginTop: 5 }}>{t('strat_' + s.id + '_name').toUpperCase()}</div>
-          <div style={{ fontSize: 'clamp(7px, 1.7vw, 9px)', color: 'rgba(244,239,227,0.5)', marginTop: 3 }}>{s.risk}</div>
+          <div style={{ fontSize: 'clamp(16px, 4.6vw, 30px)' }}>{s.icon}</div>
+          <div style={{ fontSize: 'clamp(8px, 2.3vw, 15px)', letterSpacing: 1, marginTop: 5 }}>{t('strat_' + s.id + '_name').toUpperCase()}</div>
+          <div style={{ fontSize: 'clamp(7px, 2.0vw, 12px)', color: 'rgba(244,239,227,0.5)', marginTop: 3 }}>{s.risk}</div>
         </button>
       ))}
     </div>
@@ -196,7 +196,7 @@ function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, 
     setTimeout(() => { stop = true; clearTimeout(spinRef.current); setSpin(false); if (opts) setOptions(opts) }, Math.max(0, minT - Date.now()))
   }
 
-  if (spin) return <div style={{ textAlign: 'center', padding: '24px 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 4vw, 20px)', color: 'rgba(244,239,227,0.7)' }}>{spinName}</div>
+  if (spin) return <div style={{ textAlign: 'center', padding: '24px 0', fontFamily: 'var(--font-display)', fontSize: 'clamp(15px, 4.6vw, 27px)', color: 'rgba(244,239,227,0.7)' }}>{spinName}</div>
 
   if (!options) return (
     <div style={{ textAlign: 'center' }}>
@@ -212,21 +212,21 @@ function CarAction({ carNum, excludeIds, budgetLeft, rerolls, onReroll, onPick, 
         return (
           <button key={c.id + i} onClick={() => onPick(c)} style={{
             background: 'var(--cream)', color: 'var(--ink)', border: 'none', borderRadius: 8,
-            padding: 'clamp(10px, 2.5vw, 14px)', cursor: 'pointer', textAlign: 'left',
+            padding: 'clamp(10px, 2.9vw, 19px)', cursor: 'pointer', textAlign: 'left',
             display: 'flex', alignItems: 'center', gap: 12, width: '100%',
             boxShadow: '0 6px 20px rgba(0,0,0,0.3)', opacity: over ? 0.75 : 1,
             fontFamily: 'var(--font-mono)',
           }}>
             <div style={{
-              fontFamily: 'var(--font-display)', fontSize: 'clamp(16px, 4vw, 20px)',
+              fontFamily: 'var(--font-display)', fontSize: 'clamp(16px, 4.6vw, 27px)',
               color: ratingColor(r), minWidth: 34, textAlign: 'center',
             }}>{r}</div>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 3.2vw, 16px)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{c.name}</div>
-              <div style={{ fontSize: 'clamp(8px, 2vw, 10px)', color: '#6a7d92', marginTop: 2 }}>{c.year} · {c.era} · P{c.performance} F{c.reliability}</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 3.7vw, 22px)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{c.name}</div>
+              <div style={{ fontSize: 'clamp(8px, 2.3vw, 14px)', color: '#6a7d92', marginTop: 2 }}>{c.year} · {c.era} · P{c.performance} F{c.reliability}</div>
             </div>
             <div style={{ textAlign: 'right' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(14px, 3.5vw, 18px)', color: over ? '#c0392b' : '#b8901f' }}>{c.cost}M€</div>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(14px, 4.0vw, 24px)', color: over ? '#c0392b' : '#b8901f' }}>{c.cost}M€</div>
               {over && <div style={{ fontSize: 8, color: '#c0392b' }}>⚠️ malus</div>}
             </div>
           </button>
@@ -249,18 +249,18 @@ function DirectorAction({ budgetLeft, onPick, t }) {
         return (
           <button key={dt.id} onClick={() => onPick(dt)} style={{
             background: 'var(--cream)', color: 'var(--ink)', border: 'none', borderRadius: 8,
-            padding: 'clamp(8px, 2vw, 12px)', cursor: 'pointer', textAlign: 'left',
+            padding: 'clamp(8px, 2.3vw, 16px)', cursor: 'pointer', textAlign: 'left',
             display: 'flex', alignItems: 'center', gap: 10, width: '100%',
             opacity: over ? 0.75 : 1, fontFamily: 'var(--font-mono)',
             boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
           }}>
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(12px, 3vw, 15px)' }}>{dt.name}</div>
-              <div style={{ fontSize: 'clamp(8px, 2vw, 10px)', color: '#1f6fb2', marginTop: 2 }}>
+              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(12px, 3.4vw, 20px)' }}>{dt.name}</div>
+              <div style={{ fontSize: 'clamp(8px, 2.3vw, 14px)', color: '#1f6fb2', marginTop: 2 }}>
                 {({ all: '🏆', night: '🌙', rain: '🌧️', pace: '⚡', strategy: '🧠' }[dt.bonus_condition] || '')} {t('cond_' + dt.bonus_condition)} · +{dt.reliability_bonus} fiab
               </div>
             </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 3.2vw, 16px)', color: over ? '#c0392b' : '#b8901f' }}>{dt.cost}M€{over ? ' ⚠️' : ''}</div>
+            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(13px, 3.7vw, 22px)', color: over ? '#c0392b' : '#b8901f' }}>{dt.cost}M€{over ? ' ⚠️' : ''}</div>
           </button>
         )
       })}
@@ -300,10 +300,10 @@ function PilotsAction({ chosenPilotIds, budgetLeft, rerolls, onReroll, onPick, d
       {[teams.team1, teams.team2].map(team => (
         <div key={team.id} style={{
           background: 'var(--cream)', color: 'var(--ink)', borderRadius: 8,
-          padding: 'clamp(8px, 2vw, 12px)', boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
+          padding: 'clamp(8px, 2.3vw, 16px)', boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
           fontFamily: 'var(--font-mono)',
         }}>
-          <div style={{ fontSize: 'clamp(8px, 2vw, 10px)', color: '#6a7d92', marginBottom: 6 }}>#{team.number} · {team.year} · {team.car}</div>
+          <div style={{ fontSize: 'clamp(8px, 2.3vw, 14px)', color: '#6a7d92', marginBottom: 6 }}>#{team.number} · {team.year} · {team.car}</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
             {team.pilots.map(p => {
               const over = (p.cost || 0) > budgetLeft
@@ -312,12 +312,12 @@ function PilotsAction({ chosenPilotIds, budgetLeft, rerolls, onReroll, onPick, d
                 <button key={p.id} onClick={() => onPick(p)} style={{
                   display: 'flex', alignItems: 'center', gap: 8, width: '100%',
                   background: 'rgba(10,26,47,0.05)', border: '1px solid rgba(10,26,47,0.1)',
-                  borderRadius: 6, padding: 'clamp(6px, 1.5vw, 9px)', cursor: 'pointer',
+                  borderRadius: 6, padding: 'clamp(6px, 1.7vw, 12px)', cursor: 'pointer',
                   opacity: over ? 0.7 : 1, fontFamily: 'var(--font-mono)',
                 }}>
-                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(12px, 3vw, 15px)', color: daily ? '#9bb0c4' : ratingColor(r), minWidth: 26 }}>{daily ? '?' : r}</span>
-                  <span style={{ flex: 1, textAlign: 'left', fontSize: 'clamp(10px, 2.5vw, 13px)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{p.nationality} {p.name}</span>
-                  <span style={{ fontSize: 'clamp(9px, 2.2vw, 12px)', fontWeight: 700, color: over ? '#c0392b' : '#b8901f' }}>{p.cost}M€{over ? ' ⚠️' : ''}</span>
+                  <span style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(12px, 3.4vw, 20px)', color: daily ? '#9bb0c4' : ratingColor(r), minWidth: 26 }}>{daily ? '?' : r}</span>
+                  <span style={{ flex: 1, textAlign: 'left', fontSize: 'clamp(10px, 2.9vw, 18px)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{p.nationality} {p.name}</span>
+                  <span style={{ fontSize: 'clamp(9px, 2.5vw, 16px)', fontWeight: 700, color: over ? '#c0392b' : '#b8901f' }}>{p.cost}M€{over ? ' ⚠️' : ''}</span>
                 </button>
               )
             })}
@@ -366,9 +366,9 @@ function LaunchAction({ game, budgetTotal, onLaunch, t }) {
         display: 'flex', justifyContent: 'space-between', padding: '10px 14px', borderRadius: 8,
         background: over > 0 ? 'rgba(216,58,44,0.12)' : 'rgba(232,181,63,0.1)',
         border: `1px solid ${over > 0 ? 'rgba(216,58,44,0.5)' : 'rgba(232,181,63,0.35)'}`,
-        fontFamily: 'var(--font-mono)', fontSize: 'clamp(11px, 2.8vw, 14px)',
+        fontFamily: 'var(--font-mono)', fontSize: 'clamp(11px, 3.2vw, 19px)',
       }}>
-        <span style={{ color: 'rgba(244,239,227,0.6)', letterSpacing: 2, fontSize: 'clamp(8px, 2vw, 10px)', alignSelf: 'center' }}>BUDGET</span>
+        <span style={{ color: 'rgba(244,239,227,0.6)', letterSpacing: 2, fontSize: 'clamp(8px, 2.3vw, 14px)', alignSelf: 'center' }}>BUDGET</span>
         <span style={{ fontWeight: 700, color: over > 0 ? '#ff8a7a' : 'var(--gold)' }}>
           {game.budgetSpent} / {budgetTotal}M€{over > 0 ? ` ⚠️ malus` : ''}
         </span>
@@ -418,7 +418,7 @@ export default function DraftScreen({ game, setGame, config, budgetLeft, daily, 
   const title = step.startsWith('pilot') ? `${carLabel} · ${t('pilot_title') || 'PILOTE'} ${slotNum}` : titles[step]
 
   return (
-    <div className="screen-enter" style={{ width: '100%', maxWidth: 520, margin: '0 auto' }}>
+    <div className="screen-enter" style={{ width: '100%', maxWidth: 680, margin: '0 auto' }}>
       <Dashboard game={game} budgetLeft={budgetLeft} currency={config.currency} step={step} t={t} />
 
       <ActionShell title={title}>
