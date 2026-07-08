@@ -4,12 +4,9 @@ import json
 import random
 from datetime import date
 from simulation import simulate_race
-from costs import car_cost, pilot_cost, director_cost, team_entry_cost, pilot_rating, car_rating
 
 app = FastAPI(title="TLM – To Le Mans API")
 
-# Budget de départ (M€)
-START_BUDGET = 280
 # Position de départ : entre P1 et MAX_START
 MAX_START_POSITION = 20
 
@@ -41,16 +38,14 @@ def health():
 
 @app.get("/directors")
 def get_directors():
-    return [{**d, "cost": director_cost(d)} for d in DIRECTORS]
+    return DIRECTORS
 
 
 @app.get("/config")
 def get_config():
     """Configuration globale du jeu : budget, position max, etc."""
     return {
-        "start_budget": START_BUDGET,
         "max_start_position": MAX_START_POSITION,
-        "currency": "M€",
     }
 
 
@@ -70,19 +65,11 @@ def start_positions(body: dict):
 def draw_car(body: dict):
     """Tire 2 voitures aléatoires avec coûts. Si budget insuffisant, malus signalé."""
     exclude = body.get("exclude", [])
-    budget_left = body.get("budget_left", START_BUDGET)
     available = [c for c in CARS if c["id"] not in exclude]
     if not available:
         return {"error": "No cars available"}
-    if len(available) < 2:
-        selected = available
-    else:
-        selected = random.sample(available, 2)
-    options = []
-    for c in selected:
-        cost = car_cost(c)
-        options.append({**c, "cost": cost, "over_budget": cost > budget_left})
-    return {"options": options}
+    selected = available if len(available) < 2 else random.sample(available, 2)
+    return {"options": selected}
 
 
 # Map id -> nom de pilote (un même vrai pilote a plusieurs ids selon l'année)
@@ -99,7 +86,6 @@ def chosen_names(chosen_pilot_ids):
 def draw_teams(body: dict):
     """Tire 2 écuries aléatoires avec coûts pilote. Exclut celles avec un pilote déjà choisi."""
     chosen_pilot_ids = body.get("chosen_pilot_ids", [])
-    budget_left = body.get("budget_left", START_BUDGET)
     taken = chosen_names(chosen_pilot_ids)
     available = [
         t for t in TEAM_ENTRIES
@@ -107,15 +93,8 @@ def draw_teams(body: dict):
     ]
     if len(available) < 2:
         return {"error": "Not enough teams available", "available": len(available)}
-
     selected = random.sample(available, 2)
-
-    def with_costs(t):
-        pilots_with_cost = [{**p, "cost": pilot_cost(p)} for p in t["pilots"]]
-        min_cost = min(p["cost"] for p in pilots_with_cost)
-        return {**t, "pilots": pilots_with_cost, "min_pilot_cost": min_cost, "over_budget": min_cost > budget_left}
-
-    return {"team1": with_costs(selected[0]), "team2": with_costs(selected[1])}
+    return {"team1": selected[0], "team2": selected[1]}
 
 
 @app.get("/daily")
