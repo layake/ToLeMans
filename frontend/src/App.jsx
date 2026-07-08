@@ -31,7 +31,6 @@ export default function App() {
     director: null,
     pilots: [],
     chosenPilotIds: [],
-    budgetSpent: 0,
   })
   const [simResult, setSimResult] = useState(null)
   const [daily, setDaily] = useState(false)
@@ -91,7 +90,6 @@ export default function App() {
         car1: { ...data.car1, cost: data.car1.cost || 0 },
         car2: { ...data.car2, cost: data.car2.cost || 0 },
         director: null, pilots: [], chosenPilotIds: [],
-        budgetSpent: (data.car1.cost || 0) + (data.car2.cost || 0),
         startPositions: null,
       })
       setPhase('draft')
