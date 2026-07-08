@@ -224,10 +224,6 @@ function CarAction({ carNum, excludeIds, rerolls, onReroll, onPick, t }) {
               <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-md)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{c.name}</div>
               <div style={{ fontSize: 'var(--fs-xs)', color: '#6a7d92', marginTop: 2 }}>{c.year} · {c.era} · P{c.performance} F{c.reliability}</div>
             </div>
-            <div style={{ textAlign: 'right' }}>
-              <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-md)', color: over ? '#c0392b' : '#b8901f' }}>{c.cost}M€</div>
-              {over && <div style={{ fontSize: 8, color: '#c0392b' }}>⚠️ malus</div>}
-            </div>
           </button>
         )
       })}
@@ -258,7 +254,6 @@ function DirectorAction({ onPick, t }) {
                 {({ all: '🏆', night: '🌙', rain: '🌧️', pace: '⚡', strategy: '🧠' }[dt.bonus_condition] || '')} {t('cond_' + dt.bonus_condition)} · +{dt.reliability_bonus} fiab
               </div>
             </div>
-            <div style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-md)', color: over ? '#c0392b' : '#b8901f' }}>{dt.cost}M€{over ? ' ⚠️' : ''}</div>
           </button>
         )
       })}
@@ -314,7 +309,6 @@ function PilotsAction({ chosenPilotIds, rerolls, onReroll, onPick, daily, teamPo
                 }}>
                   <span style={{ fontFamily: 'var(--font-display)', fontSize: 'var(--fs-md)', color: daily ? '#9bb0c4' : ratingColor(r), minWidth: 26 }}>{daily ? '?' : r}</span>
                   <span style={{ flex: 1, textAlign: 'left', fontSize: 'var(--fs-sm)', whiteSpace: 'nowrap', textOverflow: 'ellipsis', overflow: 'hidden' }}>{p.nationality} {p.name}</span>
-                  <span style={{ fontSize: 'var(--fs-sm)', fontWeight: 700, color: over ? '#c0392b' : '#b8901f' }}>{p.cost}M€{over ? ' ⚠️' : ''}</span>
                 </button>
               )
             })}
