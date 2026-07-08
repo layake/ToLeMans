@@ -1,13 +1,13 @@
 import { VERSION, BUILD_DATE } from '../version'
 import { Dashboard, ActionShell } from './DraftScreen'
 
-const EMPTY_GAME = { strategy: null, car1: null, car2: null, director: null, pilots: [], budgetSpent: 0 }
+const EMPTY_GAME = { strategy: null, car1: null, car2: null, director: null, pilots: [] }
 
-export default function HomeStep({ onStartFree, onStartDaily, dailyDone, budget, t }) {
+export default function HomeStep({ onStartFree, onStartDaily, dailyDone, t }) {
   return (
     <div className="screen-enter draft-layout">
       <div className="draft-dash">
-        <Dashboard game={EMPTY_GAME} budgetLeft={budget || 280} currency="M€" step={null} t={t} />
+        <Dashboard game={EMPTY_GAME} step={null} t={t} />
       </div>
 
       <div className="draft-action">
