@@ -92,11 +92,11 @@ export function Dashboard({ game, step, t }) {
           </div>
         </div>
         <div style={{ textAlign: 'right' }}>
-          <div style={{ fontSize: 'var(--fs-2xs)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2 }}>BUDGET</div>
+          <div style={{ fontSize: 'var(--fs-2xs)', color: 'rgba(244,239,227,0.5)', letterSpacing: 2 }}>24 HEURES</div>
           <div style={{
             fontFamily: 'var(--font-display)', fontSize: 'var(--fs-lg)', lineHeight: 1,
-            color: budgetLeft < 0 ? '#ff8a7a' : budgetLeft < 30 ? '#ffb27a' : 'var(--gold)',
-          }}>{budgetLeft}{currency}</div>
+            color: 'var(--gold)',
+          }}>LE MANS</div>
         </div>
       </div>
 
@@ -377,8 +377,8 @@ export default function DraftScreen({ game, setGame, config, daily, dailyData, r
     strategy: s => { setGame(g => ({ ...g, strategy: s })); next() },
     car: c => {
       setGame(g => step === 'car1'
-        ? { ...g, car1: c, budgetSpent: g.budgetSpent + (c.cost || 0) }
-        : { ...g, car2: c, budgetSpent: g.budgetSpent + (c.cost || 0) })
+        ? { ...g, car1: c }
+        : { ...g, car2: c })
       next()
     },
     director: d => { setGame(g => ({ ...g, director: d })); next() },
