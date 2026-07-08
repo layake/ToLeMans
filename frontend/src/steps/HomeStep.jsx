@@ -11,7 +11,7 @@ export default function HomeStep({ onStartFree, onStartDaily, dailyDone, budget,
       </div>
 
       <div className="draft-action">
-      <ActionShell title={t('home_btn_free')}>
+      <ActionShell title="24 HEURES DU MANS">
         <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
           <button className="btn btn-primary btn-big" onClick={onStartFree} style={{ width: '100%' }}>
             {t('home_btn_free')}
